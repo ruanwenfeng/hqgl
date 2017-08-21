@@ -1,0 +1,10 @@
+{   "name":"wkky/hqgl",
+    "repositories": [
+        {"type": "composer", "url": "https://packagist.phpcomposer.com"},
+        {"packagist": false}
+    ],
+    "require": {
+        "topthink/think-captcha": "^1.0",
+	    "phpoffice/phpexcel":"^1.0"
+    }
+}
