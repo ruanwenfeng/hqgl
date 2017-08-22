@@ -7,6 +7,7 @@
     <script type="text/javascript" data-main="__PUBLIC__/js/main"  src="__PUBLIC__/js/require.js"></script>
 </head>
 <body>
+zheshi test1
 <script type="text/javascript">
     (function () {
         var app = function () {

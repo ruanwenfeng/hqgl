@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:34:"../application/tpl/index/index.php";i:1503316542;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:34:"../application/tpl/index/index.php";i:1503330801;}*/ ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,6 +8,7 @@
     <script type="text/javascript" data-main="__PUBLIC__/js/main"  src="__PUBLIC__/js/require.js"></script>
 </head>
 <body>
+zheshi test1
 <script type="text/javascript">
     (function () {
         var app = function () {
