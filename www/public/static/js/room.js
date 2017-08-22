@@ -8,19 +8,26 @@ window.require(['jquery','layui'],function ($) {
         });
         layui.use(['element','table'], function(){
             var element = layui.element,table = layui.table;
-            var schoolpart_id = $('.main-div-body').attr('data-schoolpart-id');
-            var college = new window.WkkyData('/index/queryCollege',{
+            var main = $('.main-div-body');
+            var schoolpart_id = main.attr('data-schoolpart-id');
+            var college_id = main.attr('data-college-id');
+            var building_id = main.attr('data-building-id');
+            var room_id = main.attr('data-room-id');
+            var college = new window.WkkyData('/index/queryRoom',{
                 credentials: 'include',
                 method: "POST"
-            },{schoolpart_id:schoolpart_id});
+            },{schoolpart_id:schoolpart_id,college_id:college_id,building_id:building_id});
             college.setOnSuccess(function (handleResponse) {
                 table.render({
-                    elem: '#college-table'
+                    elem: '#room-table'
                     ,cols:  [[ //标题栏
                          {checkbox: true,width:200}
                         ,{field: 'index', title: '编号', align: 'center',width: 80}
                         ,{field: '校区名称', title: '校区名称', width: 150}
-                        ,{field: 'text_description', title: '学院（部门）名称', width: 200}
+                        ,{field: '学院名称', title: '学院（部门）名称', width: 200}
+                        ,{field: '楼宇名称', title: '楼宇名称', width: 100}
+                        ,{field: 'room_num', title: '房间号', width: 100}
+                        ,{field: 'use_type', title: '房间用途', width: 100}
                         ,{title:'操作',width: 160,align: 'center',toolbar:'#actionBar',fixed:'right'}
 
                     ]], //设置表头
@@ -38,7 +45,11 @@ window.require(['jquery','layui'],function ($) {
                     var tr = obj.tr; //获得当前行 tr 的DOM对象
                     if(layEvent === 'detail'){ //查看
                         console.log(obj.data);
-                        window.location.href = '/index/showBuilding/schoolpart_id/'+obj['data']['schoolpart_id']+'/college_id/'+obj['data']['college_id'];
+                        window.location.href =
+                            '/index/showEquipMent/schoolpart_id/'+obj['data']['schoolpart_id']+
+                            '/college_id/'+obj['data']['college_id']+
+                            '/building_id/'+obj['data']['building_id']+
+                            '/room_id/'+obj['data']['room_id'];
                     } else if(layEvent === 'del'){ //删除
                         layer.confirm('真的删除行么', function(index){
                             obj.del(); //删除对应行（tr）的DOM结构
