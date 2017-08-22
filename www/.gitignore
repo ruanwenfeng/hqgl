@@ -1,10 +1,6 @@
 .idea
 composer.lock
 *.log
-<<<<<<< HEAD
 thinkphp
 runtime
-=======
-runtime
 layui
->>>>>>> d699253682fbc5c0ea791dc9e142dabcbb03a66c

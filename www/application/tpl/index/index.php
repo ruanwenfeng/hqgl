@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,8 +7,6 @@
     <script type="text/javascript" data-main="__PUBLIC__/js/main"  src="__PUBLIC__/js/require.js"></script>
 </head>
 <body>
-zheshi test1
-=======
 {extend name="base" /}
 {block name="css"}
 <link rel="stylesheet" href="__PUBLIC__/css/index.css">
@@ -27,7 +24,6 @@ zheshi test1
 </div>
 {/block}
 {block name="script"}
->>>>>>> d699253682fbc5c0ea791dc9e142dabcbb03a66c
 <script type="text/javascript">
     (function () {
         var app = function () {

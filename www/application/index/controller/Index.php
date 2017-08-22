@@ -16,6 +16,7 @@ class Index extends Controller
         $this->queryAuthorization();
         $schoolpart= new Schoolpart();
         $table = $schoolpart->where($this->filterSchoolpart)->order('schoolpart_id')->select();
+        $this->assign('schoolpart_id',-1);
         $this->assign('school_part',$table);
     }
 
@@ -23,10 +24,6 @@ class Index extends Controller
     public function index(){
         return $this->fetch();
     }
-    public function test2(){
-        return $this->fetch();
-    }
-
     public function data(){
         $result = new ResponseData();
         $table = array();
@@ -92,4 +89,13 @@ class Index extends Controller
         $table = (new Viewcollege())->where($where)->select();
         return ResponseData::getInstance (1,null,array($table),array('total'=>count($table)),$this->request->isAjax());
     }
+    /*
+     * 显示报修
+     * */
+    public function  faultRepair(){
+        return $this->fetch();
+    }
+
+
+
 }
