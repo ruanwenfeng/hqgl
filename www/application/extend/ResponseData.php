@@ -48,4 +48,8 @@ class ResponseData
         }
         return $meta;
     }
+
+    public static function getInstance($status=1,$message=null,$data=array(),$extra=null,$flag){
+        return (new ResponseData($status,$message,$data,$extra))->getJSON($flag);
+    }
 }

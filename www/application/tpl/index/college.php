@@ -3,22 +3,15 @@
 <link rel="stylesheet" href="__PUBLIC__/css/index.css">
 {/block}
 {block name="page-body"}
-<div class="layui-container">
-    <div class="layui-row">
-        <div class="layui-col-md9">
-            你的内容 9/12
-        </div>
-        <div class="layui-col-md3">
-            你的内容 3/12
-        </div>
-    </div>
+<div class="layui-container main-div-body" data-schoolpart-id="{$schoolpart_id}">
+    <table  id="college-table"></table>
 </div>
 {/block}
 {block name="script"}
 <script type="text/javascript">
     (function () {
         var app = function () {
-            require(['index']);
+            require(['college']);
         };
         function init() {
             if(window.complete){
