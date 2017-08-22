@@ -8,9 +8,11 @@ use app\index\model\Viewuser;
 use think\Controller;
 class Index extends Controller
 {
+    //1代表成功 0 代表失败
     public  $filterSchoolpart;
     public  $filterCollege;
 
+    //校区
     public function _initialize(){
         session('user.user_id',1);
         $this->queryAuthorization();
@@ -70,7 +72,6 @@ class Index extends Controller
         else
             $this->filterCollege = null;
     }
-
     public function getAllSchoolPart(){
         $schoolpart= new Schoolpart();
         $table = $schoolpart->where($this->filterSchoolpart)->order('schoolpart_id')->select();
@@ -93,7 +94,8 @@ class Index extends Controller
      * 显示报修
      * */
     public function  faultRepair(){
-        return $this->fetch();
+
+//        return ResponseData::getInstance (1,null,array($table),array('total'=>count($table)),$this->request->isAjax());
     }
 
 

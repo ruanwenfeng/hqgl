@@ -1,0 +1,1466 @@
+---------------------------------------------------------------
+[ 2017-08-22T21:02:18+08:00 ] 127.0.0.1 127.0.0.1 GET /index/faultRepair
+[ info ] 127.0.0.1/index/faultRepair [运行时间：0.174628s][吞吐率：5.73req/s] [内存消耗：2,701.70kb] [文件加载：51]
+[ info ] [ LANG ] H:\php\127.0.0.1\hqgl\www\thinkphp_5.0.10_full\thinkphp\lang\zh-cn.php
+[ info ] [ BIND ] 'index'
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'index',
+    1 => 'index',
+    2 => 'faultRepair',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => '127.0.0.1',
+  'connection' => 'keep-alive',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.101 Safari/537.36',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+  'accept-encoding' => 'gzip, deflate, br',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'cookie' => 'PHPSESSID=kv8kljuso0d56h7etj5170c915',
+)
+[ info ] [ PARAM ] array (
+  '/index/faultRepair' => '',
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ RUN ] app\index\controller\Index->faultRepair[ H:\php\127.0.0.1\hqgl\www\application\index\controller\Index.php ]
+[ info ] [ VIEW ] ../application/tpl/index/faultRepair.php [ array (
+  0 => 'schoolpart_id',
+  1 => 'school_part',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.061725s ] mysql:dbname=hqgl_db_2;host=192.168.1.9;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `hqgl_viewuser` [ RunTime:0.009896s ]
+[ sql ] [ SQL ] SELECT * FROM `hqgl_viewuser` LIMIT 1 [ RunTime:0.006630s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `hqgl_schoolpart` [ RunTime:0.008208s ]
+[ sql ] [ SQL ] SELECT * FROM `hqgl_schoolpart` WHERE  `schoolpart_id` IN ('1','2') ORDER BY `schoolpart_id` [ RunTime:0.008144s ]
+---------------------------------------------------------------
+[ 2017-08-22T21:30:39+08:00 ] 127.0.0.1 127.0.0.1 GET /
+[ info ] 127.0.0.1/ [运行时间：0.320032s][吞吐率：3.12req/s] [内存消耗：2,701.25kb] [文件加载：51]
+[ info ] [ LANG ] H:\php\127.0.0.1\hqgl\www\thinkphp_5.0.10_full\thinkphp\lang\zh-cn.php
+[ info ] [ BIND ] 'index'
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => NULL,
+    1 => 'index',
+    2 => 'index',
+  ),
+  'convert' => false,
+)
+[ info ] [ HEADER ] array (
+  'host' => '127.0.0.1',
+  'connection' => 'keep-alive',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.101 Safari/537.36',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+  'accept-encoding' => 'gzip, deflate, br',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'cookie' => 'PHPSESSID=kv8kljuso0d56h7etj5170c915',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ RUN ] app\index\controller\Index->index[ H:\php\127.0.0.1\hqgl\www\application\index\controller\Index.php ]
+[ info ] [ VIEW ] ../application/tpl/index/index.php [ array (
+  0 => 'schoolpart_id',
+  1 => 'school_part',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.063167s ] mysql:dbname=hqgl_db_2;host=192.168.1.9;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `hqgl_viewuser` [ RunTime:0.006607s ]
+[ sql ] [ SQL ] SELECT * FROM `hqgl_viewuser` LIMIT 1 [ RunTime:0.006859s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `hqgl_schoolpart` [ RunTime:0.007254s ]
+[ sql ] [ SQL ] SELECT * FROM `hqgl_schoolpart` WHERE  `schoolpart_id` IN ('1','2') ORDER BY `schoolpart_id` [ RunTime:0.006885s ]
+---------------------------------------------------------------
+[ 2017-08-22T21:30:45+08:00 ] 127.0.0.1 127.0.0.1 GET /index/faultRepair
+[ info ] 127.0.0.1/index/faultRepair [运行时间：0.159472s][吞吐率：6.27req/s] [内存消耗：2,702.61kb] [文件加载：51]
+[ info ] [ LANG ] H:\php\127.0.0.1\hqgl\www\thinkphp_5.0.10_full\thinkphp\lang\zh-cn.php
+[ info ] [ BIND ] 'index'
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'index',
+    1 => 'index',
+    2 => 'faultRepair',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => '127.0.0.1',
+  'connection' => 'keep-alive',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.101 Safari/537.36',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+  'accept-encoding' => 'gzip, deflate, br',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'cookie' => 'PHPSESSID=kv8kljuso0d56h7etj5170c915',
+)
+[ info ] [ PARAM ] array (
+  '/index/faultRepair' => '',
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ RUN ] app\index\controller\Index->faultRepair[ H:\php\127.0.0.1\hqgl\www\application\index\controller\Index.php ]
+[ info ] [ VIEW ] ../application/tpl/index/faultRepair.php [ array (
+  0 => 'schoolpart_id',
+  1 => 'school_part',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.009430s ] mysql:dbname=hqgl_db_2;host=192.168.1.9;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `hqgl_viewuser` [ RunTime:0.024071s ]
+[ sql ] [ SQL ] SELECT * FROM `hqgl_viewuser` LIMIT 1 [ RunTime:0.007866s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `hqgl_schoolpart` [ RunTime:0.006753s ]
+[ sql ] [ SQL ] SELECT * FROM `hqgl_schoolpart` WHERE  `schoolpart_id` IN ('1','2') ORDER BY `schoolpart_id` [ RunTime:0.021094s ]
+---------------------------------------------------------------
+[ 2017-08-22T21:34:20+08:00 ] 127.0.0.1 127.0.0.1 GET /index/faultRepair
+[ info ] 127.0.0.1/index/faultRepair [运行时间：0.174115s][吞吐率：5.74req/s] [内存消耗：2,706.41kb] [文件加载：51]
+[ info ] [ LANG ] H:\php\127.0.0.1\hqgl\www\thinkphp_5.0.10_full\thinkphp\lang\zh-cn.php
+[ info ] [ BIND ] 'index'
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'index',
+    1 => 'index',
+    2 => 'faultRepair',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => '127.0.0.1',
+  'connection' => 'keep-alive',
+  'cache-control' => 'max-age=0',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.101 Safari/537.36',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+  'accept-encoding' => 'gzip, deflate, br',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'cookie' => 'PHPSESSID=kv8kljuso0d56h7etj5170c915',
+)
+[ info ] [ PARAM ] array (
+  '/index/faultRepair' => '',
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ RUN ] app\index\controller\Index->faultRepair[ H:\php\127.0.0.1\hqgl\www\application\index\controller\Index.php ]
+[ info ] [ VIEW ] ../application/tpl/index/faultRepair.php [ array (
+  0 => 'schoolpart_id',
+  1 => 'school_part',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.070693s ] mysql:dbname=hqgl_db_2;host=192.168.1.9;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `hqgl_viewuser` [ RunTime:0.006467s ]
+[ sql ] [ SQL ] SELECT * FROM `hqgl_viewuser` LIMIT 1 [ RunTime:0.006622s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `hqgl_schoolpart` [ RunTime:0.007229s ]
+[ sql ] [ SQL ] SELECT * FROM `hqgl_schoolpart` WHERE  `schoolpart_id` IN ('1','2') ORDER BY `schoolpart_id` [ RunTime:0.006921s ]
+---------------------------------------------------------------
+[ 2017-08-22T21:34:21+08:00 ] 127.0.0.1 127.0.0.1 GET /index/faultRepair
+[ info ] 127.0.0.1/index/faultRepair [运行时间：0.119403s][吞吐率：8.37req/s] [内存消耗：2,552.76kb] [文件加载：49]
+[ info ] [ LANG ] H:\php\127.0.0.1\hqgl\www\thinkphp_5.0.10_full\thinkphp\lang\zh-cn.php
+[ info ] [ BIND ] 'index'
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'index',
+    1 => 'index',
+    2 => 'faultRepair',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => '127.0.0.1',
+  'connection' => 'keep-alive',
+  'cache-control' => 'max-age=0',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.101 Safari/537.36',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+  'accept-encoding' => 'gzip, deflate, br',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'cookie' => 'PHPSESSID=kv8kljuso0d56h7etj5170c915',
+)
+[ info ] [ PARAM ] array (
+  '/index/faultRepair' => '',
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ RUN ] app\index\controller\Index->faultRepair[ H:\php\127.0.0.1\hqgl\www\application\index\controller\Index.php ]
+[ info ] [ VIEW ] ../application/tpl/index/faultRepair.php [ array (
+  0 => 'schoolpart_id',
+  1 => 'school_part',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.015874s ] mysql:dbname=hqgl_db_2;host=192.168.1.9;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `hqgl_viewuser` [ RunTime:0.006849s ]
+[ sql ] [ SQL ] SELECT * FROM `hqgl_viewuser` LIMIT 1 [ RunTime:0.009374s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `hqgl_schoolpart` [ RunTime:0.007885s ]
+[ sql ] [ SQL ] SELECT * FROM `hqgl_schoolpart` WHERE  `schoolpart_id` IN ('1','2') ORDER BY `schoolpart_id` [ RunTime:0.007410s ]
+---------------------------------------------------------------
+[ 2017-08-22T21:34:49+08:00 ] 127.0.0.1 127.0.0.1 GET /index/faultRepair
+[ info ] 127.0.0.1/index/faultRepair [运行时间：0.112852s][吞吐率：8.86req/s] [内存消耗：2,706.66kb] [文件加载：51]
+[ info ] [ LANG ] H:\php\127.0.0.1\hqgl\www\thinkphp_5.0.10_full\thinkphp\lang\zh-cn.php
+[ info ] [ BIND ] 'index'
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'index',
+    1 => 'index',
+    2 => 'faultRepair',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => '127.0.0.1',
+  'connection' => 'keep-alive',
+  'cache-control' => 'max-age=0',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.101 Safari/537.36',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+  'accept-encoding' => 'gzip, deflate, br',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'cookie' => 'PHPSESSID=kv8kljuso0d56h7etj5170c915',
+)
+[ info ] [ PARAM ] array (
+  '/index/faultRepair' => '',
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ RUN ] app\index\controller\Index->faultRepair[ H:\php\127.0.0.1\hqgl\www\application\index\controller\Index.php ]
+[ info ] [ VIEW ] ../application/tpl/index/faultRepair.php [ array (
+  0 => 'schoolpart_id',
+  1 => 'school_part',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.008644s ] mysql:dbname=hqgl_db_2;host=192.168.1.9;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `hqgl_viewuser` [ RunTime:0.008255s ]
+[ sql ] [ SQL ] SELECT * FROM `hqgl_viewuser` LIMIT 1 [ RunTime:0.006647s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `hqgl_schoolpart` [ RunTime:0.007399s ]
+[ sql ] [ SQL ] SELECT * FROM `hqgl_schoolpart` WHERE  `schoolpart_id` IN ('1','2') ORDER BY `schoolpart_id` [ RunTime:0.006584s ]
+---------------------------------------------------------------
+[ 2017-08-22T21:41:18+08:00 ] 127.0.0.1 127.0.0.1 GET /index/faultRepair
+[ info ] 127.0.0.1/index/faultRepair [运行时间：0.189331s][吞吐率：5.28req/s] [内存消耗：2,702.84kb] [文件加载：51]
+[ info ] [ LANG ] H:\php\127.0.0.1\hqgl\www\thinkphp_5.0.10_full\thinkphp\lang\zh-cn.php
+[ info ] [ BIND ] 'index'
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'index',
+    1 => 'index',
+    2 => 'faultRepair',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => '127.0.0.1',
+  'connection' => 'keep-alive',
+  'cache-control' => 'max-age=0',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.101 Safari/537.36',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+  'accept-encoding' => 'gzip, deflate, br',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'cookie' => 'PHPSESSID=kv8kljuso0d56h7etj5170c915',
+)
+[ info ] [ PARAM ] array (
+  '/index/faultRepair' => '',
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ RUN ] app\index\controller\Index->faultRepair[ H:\php\127.0.0.1\hqgl\www\application\index\controller\Index.php ]
+[ info ] [ VIEW ] ../application/tpl/index/faultRepair.php [ array (
+  0 => 'schoolpart_id',
+  1 => 'school_part',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.083092s ] mysql:dbname=hqgl_db_2;host=192.168.1.9;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `hqgl_viewuser` [ RunTime:0.006067s ]
+[ sql ] [ SQL ] SELECT * FROM `hqgl_viewuser` LIMIT 1 [ RunTime:0.006105s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `hqgl_schoolpart` [ RunTime:0.006471s ]
+[ sql ] [ SQL ] SELECT * FROM `hqgl_schoolpart` WHERE  `schoolpart_id` IN ('1','2') ORDER BY `schoolpart_id` [ RunTime:0.006611s ]
+---------------------------------------------------------------
+[ 2017-08-22T21:41:18+08:00 ] 127.0.0.1 127.0.0.1 GET /index/lay/modules/element.js
+[ info ] 127.0.0.1/index/lay/modules/element.js [运行时间：0.195154s][吞吐率：5.12req/s] [内存消耗：2,592.07kb] [文件加载：52]
+[ info ] [ LANG ] H:\php\127.0.0.1\hqgl\www\thinkphp_5.0.10_full\thinkphp\lang\zh-cn.php
+[ info ] [ BIND ] 'index'
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'index',
+    1 => 'index',
+    2 => 'lay',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => '127.0.0.1',
+  'connection' => 'keep-alive',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.101 Safari/537.36',
+  'accept' => '*/*',
+  'referer' => 'http://127.0.0.1/index/faultRepair',
+  'accept-encoding' => 'gzip, deflate, br',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'cookie' => 'PHPSESSID=kv8kljuso0d56h7etj5170c915',
+)
+[ info ] [ PARAM ] array (
+  '/index/lay/modules/element_js' => '',
+  'modules' => 'element.js',
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.011847s ] mysql:dbname=hqgl_db_2;host=192.168.1.9;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `hqgl_viewuser` [ RunTime:0.007989s ]
+[ sql ] [ SQL ] SELECT * FROM `hqgl_viewuser` LIMIT 1 [ RunTime:0.007559s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `hqgl_schoolpart` [ RunTime:0.008502s ]
+[ sql ] [ SQL ] SELECT * FROM `hqgl_schoolpart` WHERE  `schoolpart_id` IN ('1','2') ORDER BY `schoolpart_id` [ RunTime:0.007365s ]
+---------------------------------------------------------------
+[ 2017-08-22T21:41:26+08:00 ] 127.0.0.1 127.0.0.1 GET /index/lay/modules/element.js
+[ info ] 127.0.0.1/index/lay/modules/element.js [运行时间：0.120239s][吞吐率：8.32req/s] [内存消耗：2,592.32kb] [文件加载：52]
+[ info ] [ LANG ] H:\php\127.0.0.1\hqgl\www\thinkphp_5.0.10_full\thinkphp\lang\zh-cn.php
+[ info ] [ BIND ] 'index'
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'index',
+    1 => 'index',
+    2 => 'lay',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => '127.0.0.1',
+  'connection' => 'keep-alive',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.101 Safari/537.36',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+  'accept-encoding' => 'gzip, deflate, br',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'cookie' => 'PHPSESSID=kv8kljuso0d56h7etj5170c915',
+)
+[ info ] [ PARAM ] array (
+  '/index/lay/modules/element_js' => '',
+  'modules' => 'element.js',
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.015671s ] mysql:dbname=hqgl_db_2;host=192.168.1.9;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `hqgl_viewuser` [ RunTime:0.006308s ]
+[ sql ] [ SQL ] SELECT * FROM `hqgl_viewuser` LIMIT 1 [ RunTime:0.008014s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `hqgl_schoolpart` [ RunTime:0.008576s ]
+[ sql ] [ SQL ] SELECT * FROM `hqgl_schoolpart` WHERE  `schoolpart_id` IN ('1','2') ORDER BY `schoolpart_id` [ RunTime:0.007856s ]
+---------------------------------------------------------------
+[ 2017-08-22T21:43:32+08:00 ] 127.0.0.1 127.0.0.1 GET /index/faultRepair
+[ info ] 127.0.0.1/index/faultRepair [运行时间：0.153165s][吞吐率：6.53req/s] [内存消耗：2,552.78kb] [文件加载：49]
+[ info ] [ LANG ] H:\php\127.0.0.1\hqgl\www\thinkphp_5.0.10_full\thinkphp\lang\zh-cn.php
+[ info ] [ BIND ] 'index'
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'index',
+    1 => 'index',
+    2 => 'faultRepair',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => '127.0.0.1',
+  'connection' => 'keep-alive',
+  'cache-control' => 'max-age=0',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.101 Safari/537.36',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+  'accept-encoding' => 'gzip, deflate, br',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'cookie' => 'PHPSESSID=kv8kljuso0d56h7etj5170c915',
+)
+[ info ] [ PARAM ] array (
+  '/index/faultRepair' => '',
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ RUN ] app\index\controller\Index->faultRepair[ H:\php\127.0.0.1\hqgl\www\application\index\controller\Index.php ]
+[ info ] [ VIEW ] ../application/tpl/index/faultRepair.php [ array (
+  0 => 'schoolpart_id',
+  1 => 'school_part',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.064833s ] mysql:dbname=hqgl_db_2;host=192.168.1.9;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `hqgl_viewuser` [ RunTime:0.009067s ]
+[ sql ] [ SQL ] SELECT * FROM `hqgl_viewuser` LIMIT 1 [ RunTime:0.007132s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `hqgl_schoolpart` [ RunTime:0.009230s ]
+[ sql ] [ SQL ] SELECT * FROM `hqgl_schoolpart` WHERE  `schoolpart_id` IN ('1','2') ORDER BY `schoolpart_id` [ RunTime:0.007106s ]
+---------------------------------------------------------------
+[ 2017-08-22T21:43:32+08:00 ] 127.0.0.1 127.0.0.1 GET /index/lay/modules/element.js
+[ info ] 127.0.0.1/index/lay/modules/element.js [运行时间：0.112330s][吞吐率：8.90req/s] [内存消耗：2,592.07kb] [文件加载：52]
+[ info ] [ LANG ] H:\php\127.0.0.1\hqgl\www\thinkphp_5.0.10_full\thinkphp\lang\zh-cn.php
+[ info ] [ BIND ] 'index'
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'index',
+    1 => 'index',
+    2 => 'lay',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => '127.0.0.1',
+  'connection' => 'keep-alive',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.101 Safari/537.36',
+  'accept' => '*/*',
+  'referer' => 'http://127.0.0.1/index/faultRepair',
+  'accept-encoding' => 'gzip, deflate, br',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'cookie' => 'PHPSESSID=kv8kljuso0d56h7etj5170c915',
+)
+[ info ] [ PARAM ] array (
+  '/index/lay/modules/element_js' => '',
+  'modules' => 'element.js',
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.012611s ] mysql:dbname=hqgl_db_2;host=192.168.1.9;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `hqgl_viewuser` [ RunTime:0.007831s ]
+[ sql ] [ SQL ] SELECT * FROM `hqgl_viewuser` LIMIT 1 [ RunTime:0.007707s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `hqgl_schoolpart` [ RunTime:0.011197s ]
+[ sql ] [ SQL ] SELECT * FROM `hqgl_schoolpart` WHERE  `schoolpart_id` IN ('1','2') ORDER BY `schoolpart_id` [ RunTime:0.007482s ]
+---------------------------------------------------------------
+[ 2017-08-22T21:43:41+08:00 ] 127.0.0.1 127.0.0.1 GET /index/lay/modules/element.js
+[ info ] 127.0.0.1/index/lay/modules/element.js [运行时间：0.112274s][吞吐率：8.91req/s] [内存消耗：2,592.32kb] [文件加载：52]
+[ info ] [ LANG ] H:\php\127.0.0.1\hqgl\www\thinkphp_5.0.10_full\thinkphp\lang\zh-cn.php
+[ info ] [ BIND ] 'index'
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'index',
+    1 => 'index',
+    2 => 'lay',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => '127.0.0.1',
+  'connection' => 'keep-alive',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.101 Safari/537.36',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+  'accept-encoding' => 'gzip, deflate, br',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'cookie' => 'PHPSESSID=kv8kljuso0d56h7etj5170c915',
+)
+[ info ] [ PARAM ] array (
+  '/index/lay/modules/element_js' => '',
+  'modules' => 'element.js',
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.010245s ] mysql:dbname=hqgl_db_2;host=192.168.1.9;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `hqgl_viewuser` [ RunTime:0.010982s ]
+[ sql ] [ SQL ] SELECT * FROM `hqgl_viewuser` LIMIT 1 [ RunTime:0.008326s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `hqgl_schoolpart` [ RunTime:0.008657s ]
+[ sql ] [ SQL ] SELECT * FROM `hqgl_schoolpart` WHERE  `schoolpart_id` IN ('1','2') ORDER BY `schoolpart_id` [ RunTime:0.007312s ]
+---------------------------------------------------------------
+[ 2017-08-22T21:47:27+08:00 ] 127.0.0.1 127.0.0.1 GET /index/faultRepair
+[ info ] 127.0.0.1/index/faultRepair [运行时间：0.225124s][吞吐率：4.44req/s] [内存消耗：2,552.78kb] [文件加载：49]
+[ info ] [ LANG ] H:\php\127.0.0.1\hqgl\www\thinkphp_5.0.10_full\thinkphp\lang\zh-cn.php
+[ info ] [ BIND ] 'index'
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'index',
+    1 => 'index',
+    2 => 'faultRepair',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => '127.0.0.1',
+  'connection' => 'keep-alive',
+  'cache-control' => 'max-age=0',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.101 Safari/537.36',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+  'accept-encoding' => 'gzip, deflate, br',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'cookie' => 'PHPSESSID=kv8kljuso0d56h7etj5170c915',
+)
+[ info ] [ PARAM ] array (
+  '/index/faultRepair' => '',
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ RUN ] app\index\controller\Index->faultRepair[ H:\php\127.0.0.1\hqgl\www\application\index\controller\Index.php ]
+[ info ] [ VIEW ] ../application/tpl/index/faultRepair.php [ array (
+  0 => 'schoolpart_id',
+  1 => 'school_part',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.134519s ] mysql:dbname=hqgl_db_2;host=192.168.1.9;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `hqgl_viewuser` [ RunTime:0.008863s ]
+[ sql ] [ SQL ] SELECT * FROM `hqgl_viewuser` LIMIT 1 [ RunTime:0.007078s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `hqgl_schoolpart` [ RunTime:0.007162s ]
+[ sql ] [ SQL ] SELECT * FROM `hqgl_schoolpart` WHERE  `schoolpart_id` IN ('1','2') ORDER BY `schoolpart_id` [ RunTime:0.007357s ]
+---------------------------------------------------------------
+[ 2017-08-22T21:47:28+08:00 ] 127.0.0.1 127.0.0.1 GET /index/lay/modules/element.js
+[ info ] 127.0.0.1/index/lay/modules/element.js [运行时间：0.097833s][吞吐率：10.22req/s] [内存消耗：2,592.07kb] [文件加载：52]
+[ info ] [ LANG ] H:\php\127.0.0.1\hqgl\www\thinkphp_5.0.10_full\thinkphp\lang\zh-cn.php
+[ info ] [ BIND ] 'index'
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'index',
+    1 => 'index',
+    2 => 'lay',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => '127.0.0.1',
+  'connection' => 'keep-alive',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.101 Safari/537.36',
+  'accept' => '*/*',
+  'referer' => 'http://127.0.0.1/index/faultRepair',
+  'accept-encoding' => 'gzip, deflate, br',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'cookie' => 'PHPSESSID=kv8kljuso0d56h7etj5170c915',
+)
+[ info ] [ PARAM ] array (
+  '/index/lay/modules/element_js' => '',
+  'modules' => 'element.js',
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.016957s ] mysql:dbname=hqgl_db_2;host=192.168.1.9;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `hqgl_viewuser` [ RunTime:0.006170s ]
+[ sql ] [ SQL ] SELECT * FROM `hqgl_viewuser` LIMIT 1 [ RunTime:0.006486s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `hqgl_schoolpart` [ RunTime:0.008272s ]
+[ sql ] [ SQL ] SELECT * FROM `hqgl_schoolpart` WHERE  `schoolpart_id` IN ('1','2') ORDER BY `schoolpart_id` [ RunTime:0.006568s ]
+---------------------------------------------------------------
+[ 2017-08-22T21:48:00+08:00 ] 127.0.0.1 127.0.0.1 GET /index/faultRepair
+[ info ] 127.0.0.1/index/faultRepair [运行时间：0.104925s][吞吐率：9.53req/s] [内存消耗：2,552.78kb] [文件加载：49]
+[ info ] [ LANG ] H:\php\127.0.0.1\hqgl\www\thinkphp_5.0.10_full\thinkphp\lang\zh-cn.php
+[ info ] [ BIND ] 'index'
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'index',
+    1 => 'index',
+    2 => 'faultRepair',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => '127.0.0.1',
+  'connection' => 'keep-alive',
+  'cache-control' => 'max-age=0',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.101 Safari/537.36',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+  'accept-encoding' => 'gzip, deflate, br',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'cookie' => 'PHPSESSID=kv8kljuso0d56h7etj5170c915',
+)
+[ info ] [ PARAM ] array (
+  '/index/faultRepair' => '',
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ RUN ] app\index\controller\Index->faultRepair[ H:\php\127.0.0.1\hqgl\www\application\index\controller\Index.php ]
+[ info ] [ VIEW ] ../application/tpl/index/faultRepair.php [ array (
+  0 => 'schoolpart_id',
+  1 => 'school_part',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.012154s ] mysql:dbname=hqgl_db_2;host=192.168.1.9;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `hqgl_viewuser` [ RunTime:0.007305s ]
+[ sql ] [ SQL ] SELECT * FROM `hqgl_viewuser` LIMIT 1 [ RunTime:0.007069s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `hqgl_schoolpart` [ RunTime:0.008439s ]
+[ sql ] [ SQL ] SELECT * FROM `hqgl_schoolpart` WHERE  `schoolpart_id` IN ('1','2') ORDER BY `schoolpart_id` [ RunTime:0.006682s ]
+---------------------------------------------------------------
+[ 2017-08-22T21:51:56+08:00 ] 127.0.0.1 127.0.0.1 GET /index/faultRepair
+[ info ] 127.0.0.1/index/faultRepair [运行时间：0.201536s][吞吐率：4.96req/s] [内存消耗：2,702.56kb] [文件加载：51]
+[ info ] [ LANG ] H:\php\127.0.0.1\hqgl\www\thinkphp_5.0.10_full\thinkphp\lang\zh-cn.php
+[ info ] [ BIND ] 'index'
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'index',
+    1 => 'index',
+    2 => 'faultRepair',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => '127.0.0.1',
+  'connection' => 'keep-alive',
+  'cache-control' => 'max-age=0',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.101 Safari/537.36',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+  'accept-encoding' => 'gzip, deflate, br',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'cookie' => 'PHPSESSID=kv8kljuso0d56h7etj5170c915',
+)
+[ info ] [ PARAM ] array (
+  '/index/faultRepair' => '',
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ RUN ] app\index\controller\Index->faultRepair[ H:\php\127.0.0.1\hqgl\www\application\index\controller\Index.php ]
+[ info ] [ VIEW ] ../application/tpl/index/faultRepair.php [ array (
+  0 => 'schoolpart_id',
+  1 => 'school_part',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.111217s ] mysql:dbname=hqgl_db_2;host=192.168.1.9;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `hqgl_viewuser` [ RunTime:0.006763s ]
+[ sql ] [ SQL ] SELECT * FROM `hqgl_viewuser` LIMIT 1 [ RunTime:0.006969s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `hqgl_schoolpart` [ RunTime:0.008060s ]
+[ sql ] [ SQL ] SELECT * FROM `hqgl_schoolpart` WHERE  `schoolpart_id` IN ('1','2') ORDER BY `schoolpart_id` [ RunTime:0.006956s ]
+---------------------------------------------------------------
+[ 2017-08-22T21:57:05+08:00 ] 127.0.0.1 127.0.0.1 GET /index/faultRepair
+[ info ] 127.0.0.1/index/faultRepair [运行时间：0.267221s][吞吐率：3.74req/s] [内存消耗：2,702.70kb] [文件加载：51]
+[ info ] [ LANG ] H:\php\127.0.0.1\hqgl\www\thinkphp_5.0.10_full\thinkphp\lang\zh-cn.php
+[ info ] [ BIND ] 'index'
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'index',
+    1 => 'index',
+    2 => 'faultRepair',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => '127.0.0.1',
+  'connection' => 'keep-alive',
+  'cache-control' => 'max-age=0',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.101 Safari/537.36',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+  'accept-encoding' => 'gzip, deflate, br',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'cookie' => 'PHPSESSID=kv8kljuso0d56h7etj5170c915',
+)
+[ info ] [ PARAM ] array (
+  '/index/faultRepair' => '',
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ RUN ] app\index\controller\Index->faultRepair[ H:\php\127.0.0.1\hqgl\www\application\index\controller\Index.php ]
+[ info ] [ VIEW ] ../application/tpl/index/faultRepair.php [ array (
+  0 => 'schoolpart_id',
+  1 => 'school_part',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.176267s ] mysql:dbname=hqgl_db_2;host=192.168.1.9;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `hqgl_viewuser` [ RunTime:0.006152s ]
+[ sql ] [ SQL ] SELECT * FROM `hqgl_viewuser` LIMIT 1 [ RunTime:0.008367s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `hqgl_schoolpart` [ RunTime:0.006330s ]
+[ sql ] [ SQL ] SELECT * FROM `hqgl_schoolpart` WHERE  `schoolpart_id` IN ('1','2') ORDER BY `schoolpart_id` [ RunTime:0.005834s ]
+---------------------------------------------------------------
+[ 2017-08-22T21:57:09+08:00 ] 127.0.0.1 127.0.0.1 GET /index/faultRepair
+[ info ] 127.0.0.1/index/faultRepair [运行时间：0.109984s][吞吐率：9.09req/s] [内存消耗：2,552.77kb] [文件加载：49]
+[ info ] [ LANG ] H:\php\127.0.0.1\hqgl\www\thinkphp_5.0.10_full\thinkphp\lang\zh-cn.php
+[ info ] [ BIND ] 'index'
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'index',
+    1 => 'index',
+    2 => 'faultRepair',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => '127.0.0.1',
+  'connection' => 'keep-alive',
+  'cache-control' => 'max-age=0',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.101 Safari/537.36',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+  'accept-encoding' => 'gzip, deflate, br',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'cookie' => 'PHPSESSID=kv8kljuso0d56h7etj5170c915',
+)
+[ info ] [ PARAM ] array (
+  '/index/faultRepair' => '',
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ RUN ] app\index\controller\Index->faultRepair[ H:\php\127.0.0.1\hqgl\www\application\index\controller\Index.php ]
+[ info ] [ VIEW ] ../application/tpl/index/faultRepair.php [ array (
+  0 => 'schoolpart_id',
+  1 => 'school_part',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.026288s ] mysql:dbname=hqgl_db_2;host=192.168.1.9;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `hqgl_viewuser` [ RunTime:0.007926s ]
+[ sql ] [ SQL ] SELECT * FROM `hqgl_viewuser` LIMIT 1 [ RunTime:0.007347s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `hqgl_schoolpart` [ RunTime:0.008291s ]
+[ sql ] [ SQL ] SELECT * FROM `hqgl_schoolpart` WHERE  `schoolpart_id` IN ('1','2') ORDER BY `schoolpart_id` [ RunTime:0.007225s ]
+---------------------------------------------------------------
+[ 2017-08-22T21:57:11+08:00 ] 127.0.0.1 127.0.0.1 GET /index/faultRepair
+[ info ] 127.0.0.1/index/faultRepair [运行时间：0.095866s][吞吐率：10.43req/s] [内存消耗：2,552.77kb] [文件加载：49]
+[ info ] [ LANG ] H:\php\127.0.0.1\hqgl\www\thinkphp_5.0.10_full\thinkphp\lang\zh-cn.php
+[ info ] [ BIND ] 'index'
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'index',
+    1 => 'index',
+    2 => 'faultRepair',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => '127.0.0.1',
+  'connection' => 'keep-alive',
+  'cache-control' => 'max-age=0',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.101 Safari/537.36',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+  'accept-encoding' => 'gzip, deflate, br',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'cookie' => 'PHPSESSID=kv8kljuso0d56h7etj5170c915',
+)
+[ info ] [ PARAM ] array (
+  '/index/faultRepair' => '',
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ RUN ] app\index\controller\Index->faultRepair[ H:\php\127.0.0.1\hqgl\www\application\index\controller\Index.php ]
+[ info ] [ VIEW ] ../application/tpl/index/faultRepair.php [ array (
+  0 => 'schoolpart_id',
+  1 => 'school_part',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.015774s ] mysql:dbname=hqgl_db_2;host=192.168.1.9;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `hqgl_viewuser` [ RunTime:0.006705s ]
+[ sql ] [ SQL ] SELECT * FROM `hqgl_viewuser` LIMIT 1 [ RunTime:0.006742s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `hqgl_schoolpart` [ RunTime:0.007483s ]
+[ sql ] [ SQL ] SELECT * FROM `hqgl_schoolpart` WHERE  `schoolpart_id` IN ('1','2') ORDER BY `schoolpart_id` [ RunTime:0.006809s ]
+---------------------------------------------------------------
+[ 2017-08-22T21:57:20+08:00 ] 127.0.0.1 127.0.0.1 GET /index/faultRepair
+[ info ] 127.0.0.1/index/faultRepair [运行时间：0.204640s][吞吐率：4.89req/s] [内存消耗：2,702.70kb] [文件加载：51]
+[ info ] [ LANG ] H:\php\127.0.0.1\hqgl\www\thinkphp_5.0.10_full\thinkphp\lang\zh-cn.php
+[ info ] [ BIND ] 'index'
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'index',
+    1 => 'index',
+    2 => 'faultRepair',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => '127.0.0.1',
+  'connection' => 'keep-alive',
+  'cache-control' => 'max-age=0',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.101 Safari/537.36',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+  'accept-encoding' => 'gzip, deflate, br',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'cookie' => 'PHPSESSID=kv8kljuso0d56h7etj5170c915',
+)
+[ info ] [ PARAM ] array (
+  '/index/faultRepair' => '',
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ RUN ] app\index\controller\Index->faultRepair[ H:\php\127.0.0.1\hqgl\www\application\index\controller\Index.php ]
+[ info ] [ VIEW ] ../application/tpl/index/faultRepair.php [ array (
+  0 => 'schoolpart_id',
+  1 => 'school_part',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.114594s ] mysql:dbname=hqgl_db_2;host=192.168.1.9;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `hqgl_viewuser` [ RunTime:0.008217s ]
+[ sql ] [ SQL ] SELECT * FROM `hqgl_viewuser` LIMIT 1 [ RunTime:0.007057s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `hqgl_schoolpart` [ RunTime:0.006925s ]
+[ sql ] [ SQL ] SELECT * FROM `hqgl_schoolpart` WHERE  `schoolpart_id` IN ('1','2') ORDER BY `schoolpart_id` [ RunTime:0.008480s ]
+---------------------------------------------------------------
+[ 2017-08-22T21:59:26+08:00 ] 127.0.0.1 127.0.0.1 GET /index/faultRepair
+[ info ] 127.0.0.1/index/faultRepair [运行时间：0.130530s][吞吐率：7.66req/s] [内存消耗：2,702.77kb] [文件加载：51]
+[ info ] [ LANG ] H:\php\127.0.0.1\hqgl\www\thinkphp_5.0.10_full\thinkphp\lang\zh-cn.php
+[ info ] [ BIND ] 'index'
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'index',
+    1 => 'index',
+    2 => 'faultRepair',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => '127.0.0.1',
+  'connection' => 'keep-alive',
+  'cache-control' => 'max-age=0',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.101 Safari/537.36',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+  'accept-encoding' => 'gzip, deflate, br',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'cookie' => 'PHPSESSID=kv8kljuso0d56h7etj5170c915',
+)
+[ info ] [ PARAM ] array (
+  '/index/faultRepair' => '',
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ RUN ] app\index\controller\Index->faultRepair[ H:\php\127.0.0.1\hqgl\www\application\index\controller\Index.php ]
+[ info ] [ VIEW ] ../application/tpl/index/faultRepair.php [ array (
+  0 => 'schoolpart_id',
+  1 => 'school_part',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.036267s ] mysql:dbname=hqgl_db_2;host=192.168.1.9;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `hqgl_viewuser` [ RunTime:0.009668s ]
+[ sql ] [ SQL ] SELECT * FROM `hqgl_viewuser` LIMIT 1 [ RunTime:0.009623s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `hqgl_schoolpart` [ RunTime:0.006339s ]
+[ sql ] [ SQL ] SELECT * FROM `hqgl_schoolpart` WHERE  `schoolpart_id` IN ('1','2') ORDER BY `schoolpart_id` [ RunTime:0.005867s ]
+---------------------------------------------------------------
+[ 2017-08-22T22:00:19+08:00 ] 127.0.0.1 127.0.0.1 GET /index/faultRepair
+[ info ] 127.0.0.1/index/faultRepair [运行时间：0.109638s][吞吐率：9.12req/s] [内存消耗：2,702.70kb] [文件加载：51]
+[ info ] [ LANG ] H:\php\127.0.0.1\hqgl\www\thinkphp_5.0.10_full\thinkphp\lang\zh-cn.php
+[ info ] [ BIND ] 'index'
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'index',
+    1 => 'index',
+    2 => 'faultRepair',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => '127.0.0.1',
+  'connection' => 'keep-alive',
+  'cache-control' => 'max-age=0',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.101 Safari/537.36',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+  'accept-encoding' => 'gzip, deflate, br',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'cookie' => 'PHPSESSID=kv8kljuso0d56h7etj5170c915',
+)
+[ info ] [ PARAM ] array (
+  '/index/faultRepair' => '',
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ RUN ] app\index\controller\Index->faultRepair[ H:\php\127.0.0.1\hqgl\www\application\index\controller\Index.php ]
+[ info ] [ VIEW ] ../application/tpl/index/faultRepair.php [ array (
+  0 => 'schoolpart_id',
+  1 => 'school_part',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.010943s ] mysql:dbname=hqgl_db_2;host=192.168.1.9;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `hqgl_viewuser` [ RunTime:0.012761s ]
+[ sql ] [ SQL ] SELECT * FROM `hqgl_viewuser` LIMIT 1 [ RunTime:0.007005s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `hqgl_schoolpart` [ RunTime:0.010553s ]
+[ sql ] [ SQL ] SELECT * FROM `hqgl_schoolpart` WHERE  `schoolpart_id` IN ('1','2') ORDER BY `schoolpart_id` [ RunTime:0.007009s ]
+---------------------------------------------------------------
+[ 2017-08-22T22:03:08+08:00 ] 127.0.0.1 127.0.0.1 GET /index/faultRepair
+[ info ] 127.0.0.1/index/faultRepair [运行时间：0.201305s][吞吐率：4.97req/s] [内存消耗：2,552.75kb] [文件加载：49]
+[ info ] [ LANG ] H:\php\127.0.0.1\hqgl\www\thinkphp_5.0.10_full\thinkphp\lang\zh-cn.php
+[ info ] [ BIND ] 'index'
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'index',
+    1 => 'index',
+    2 => 'faultRepair',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => '127.0.0.1',
+  'connection' => 'keep-alive',
+  'cache-control' => 'max-age=0',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.101 Safari/537.36',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+  'accept-encoding' => 'gzip, deflate, br',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'cookie' => 'PHPSESSID=kv8kljuso0d56h7etj5170c915',
+)
+[ info ] [ PARAM ] array (
+  '/index/faultRepair' => '',
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ RUN ] app\index\controller\Index->faultRepair[ H:\php\127.0.0.1\hqgl\www\application\index\controller\Index.php ]
+[ info ] [ VIEW ] ../application/tpl/index/faultRepair.php [ array (
+  0 => 'schoolpart_id',
+  1 => 'school_part',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.114034s ] mysql:dbname=hqgl_db_2;host=192.168.1.9;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `hqgl_viewuser` [ RunTime:0.008249s ]
+[ sql ] [ SQL ] SELECT * FROM `hqgl_viewuser` LIMIT 1 [ RunTime:0.007108s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `hqgl_schoolpart` [ RunTime:0.008235s ]
+[ sql ] [ SQL ] SELECT * FROM `hqgl_schoolpart` WHERE  `schoolpart_id` IN ('1','2') ORDER BY `schoolpart_id` [ RunTime:0.008355s ]
+---------------------------------------------------------------
+[ 2017-08-22T22:25:01+08:00 ] 127.0.0.1 127.0.0.1 GET /index/faultRepair
+[ info ] 127.0.0.1/index/faultRepair [运行时间：0.186163s][吞吐率：5.37req/s] [内存消耗：2,702.73kb] [文件加载：51]
+[ info ] [ LANG ] H:\php\127.0.0.1\hqgl\www\thinkphp_5.0.10_full\thinkphp\lang\zh-cn.php
+[ info ] [ BIND ] 'index'
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'index',
+    1 => 'index',
+    2 => 'faultRepair',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => '127.0.0.1',
+  'connection' => 'keep-alive',
+  'cache-control' => 'max-age=0',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.101 Safari/537.36',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+  'accept-encoding' => 'gzip, deflate, br',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'cookie' => 'PHPSESSID=kv8kljuso0d56h7etj5170c915',
+)
+[ info ] [ PARAM ] array (
+  '/index/faultRepair' => '',
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ RUN ] app\index\controller\Index->faultRepair[ H:\php\127.0.0.1\hqgl\www\application\index\controller\Index.php ]
+[ info ] [ VIEW ] ../application/tpl/index/faultRepair.php [ array (
+  0 => 'schoolpart_id',
+  1 => 'school_part',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.093165s ] mysql:dbname=hqgl_db_2;host=192.168.1.9;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `hqgl_viewuser` [ RunTime:0.015059s ]
+[ sql ] [ SQL ] SELECT * FROM `hqgl_viewuser` LIMIT 1 [ RunTime:0.007022s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `hqgl_schoolpart` [ RunTime:0.006637s ]
+[ sql ] [ SQL ] SELECT * FROM `hqgl_schoolpart` WHERE  `schoolpart_id` IN ('1','2') ORDER BY `schoolpart_id` [ RunTime:0.006951s ]
+---------------------------------------------------------------
+[ 2017-08-22T22:54:36+08:00 ] 127.0.0.1 127.0.0.1 GET /index/faultRepair
+[ info ] 127.0.0.1/index/faultRepair [运行时间：0.144492s][吞吐率：6.92req/s] [内存消耗：2,702.88kb] [文件加载：51]
+[ info ] [ LANG ] H:\php\127.0.0.1\hqgl\www\thinkphp_5.0.10_full\thinkphp\lang\zh-cn.php
+[ info ] [ BIND ] 'index'
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'index',
+    1 => 'index',
+    2 => 'faultRepair',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => '127.0.0.1',
+  'connection' => 'keep-alive',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.101 Safari/537.36',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+  'referer' => 'http://127.0.0.1/index/faultRepair',
+  'accept-encoding' => 'gzip, deflate, br',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'cookie' => 'PHPSESSID=kv8kljuso0d56h7etj5170c915',
+)
+[ info ] [ PARAM ] array (
+  '/index/faultRepair' => '',
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ RUN ] app\index\controller\Index->faultRepair[ H:\php\127.0.0.1\hqgl\www\application\index\controller\Index.php ]
+[ info ] [ VIEW ] ../application/tpl/index/faultRepair.php [ array (
+  0 => 'schoolpart_id',
+  1 => 'school_part',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.030631s ] mysql:dbname=hqgl_db_2;host=192.168.1.9;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `hqgl_viewuser` [ RunTime:0.010395s ]
+[ sql ] [ SQL ] SELECT * FROM `hqgl_viewuser` LIMIT 1 [ RunTime:0.007530s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `hqgl_schoolpart` [ RunTime:0.022759s ]
+[ sql ] [ SQL ] SELECT * FROM `hqgl_schoolpart` WHERE  `schoolpart_id` IN ('1','2') ORDER BY `schoolpart_id` [ RunTime:0.008804s ]
+---------------------------------------------------------------
+[ 2017-08-22T22:54:37+08:00 ] 127.0.0.1 127.0.0.1 GET /demo/table/user/?page=1&limit=30
+[ info ] 127.0.0.1/demo/table/user/?page=1&limit=30 [运行时间：0.056437s][吞吐率：17.72req/s] [内存消耗：1,215.18kb] [文件加载：35]
+[ info ] [ LANG ] H:\php\127.0.0.1\hqgl\www\thinkphp_5.0.10_full\thinkphp\lang\zh-cn.php
+[ info ] [ BIND ] 'index'
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'index',
+    1 => 'demo',
+    2 => 'table',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => '127.0.0.1',
+  'connection' => 'keep-alive',
+  'accept' => '*/*',
+  'x-requested-with' => 'XMLHttpRequest',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.101 Safari/537.36',
+  'referer' => 'http://127.0.0.1/index/faultRepair',
+  'accept-encoding' => 'gzip, deflate, br',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'cookie' => 'PHPSESSID=kv8kljuso0d56h7etj5170c915',
+)
+[ info ] [ PARAM ] array (
+  '/demo/table/user/' => '',
+  'page' => '1',
+  'limit' => '30',
+)
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2017-08-22T23:01:11+08:00 ] 127.0.0.1 127.0.0.1 GET /index/faultRepair
+[ info ] 127.0.0.1/index/faultRepair [运行时间：0.139130s][吞吐率：7.19req/s] [内存消耗：2,706.55kb] [文件加载：51]
+[ info ] [ LANG ] H:\php\127.0.0.1\hqgl\www\thinkphp_5.0.10_full\thinkphp\lang\zh-cn.php
+[ info ] [ BIND ] 'index'
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'index',
+    1 => 'index',
+    2 => 'faultRepair',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => '127.0.0.1',
+  'connection' => 'keep-alive',
+  'cache-control' => 'max-age=0',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.101 Safari/537.36',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+  'referer' => 'http://127.0.0.1/index/faultRepair',
+  'accept-encoding' => 'gzip, deflate, br',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'cookie' => 'PHPSESSID=kv8kljuso0d56h7etj5170c915',
+)
+[ info ] [ PARAM ] array (
+  '/index/faultRepair' => '',
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ RUN ] app\index\controller\Index->faultRepair[ H:\php\127.0.0.1\hqgl\www\application\index\controller\Index.php ]
+[ info ] [ VIEW ] ../application/tpl/index/faultRepair.php [ array (
+  0 => 'schoolpart_id',
+  1 => 'school_part',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.046977s ] mysql:dbname=hqgl_db_2;host=192.168.1.9;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `hqgl_viewuser` [ RunTime:0.006977s ]
+[ sql ] [ SQL ] SELECT * FROM `hqgl_viewuser` LIMIT 1 [ RunTime:0.008752s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `hqgl_schoolpart` [ RunTime:0.007702s ]
+[ sql ] [ SQL ] SELECT * FROM `hqgl_schoolpart` WHERE  `schoolpart_id` IN ('1','2') ORDER BY `schoolpart_id` [ RunTime:0.007421s ]
+---------------------------------------------------------------
+[ 2017-08-22T23:01:23+08:00 ] 127.0.0.1 127.0.0.1 GET /index/faultRepair
+[ info ] 127.0.0.1/index/faultRepair [运行时间：0.096282s][吞吐率：10.39req/s] [内存消耗：2,553.20kb] [文件加载：49]
+[ info ] [ LANG ] H:\php\127.0.0.1\hqgl\www\thinkphp_5.0.10_full\thinkphp\lang\zh-cn.php
+[ info ] [ BIND ] 'index'
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'index',
+    1 => 'index',
+    2 => 'faultRepair',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => '127.0.0.1',
+  'connection' => 'keep-alive',
+  'cache-control' => 'max-age=0',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.101 Safari/537.36',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+  'referer' => 'http://127.0.0.1/index/faultRepair',
+  'accept-encoding' => 'gzip, deflate, br',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'cookie' => 'PHPSESSID=kv8kljuso0d56h7etj5170c915',
+)
+[ info ] [ PARAM ] array (
+  '/index/faultRepair' => '',
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ RUN ] app\index\controller\Index->faultRepair[ H:\php\127.0.0.1\hqgl\www\application\index\controller\Index.php ]
+[ info ] [ VIEW ] ../application/tpl/index/faultRepair.php [ array (
+  0 => 'schoolpart_id',
+  1 => 'school_part',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.010607s ] mysql:dbname=hqgl_db_2;host=192.168.1.9;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `hqgl_viewuser` [ RunTime:0.008051s ]
+[ sql ] [ SQL ] SELECT * FROM `hqgl_viewuser` LIMIT 1 [ RunTime:0.007289s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `hqgl_schoolpart` [ RunTime:0.009584s ]
+[ sql ] [ SQL ] SELECT * FROM `hqgl_schoolpart` WHERE  `schoolpart_id` IN ('1','2') ORDER BY `schoolpart_id` [ RunTime:0.007425s ]
+---------------------------------------------------------------
+[ 2017-08-22T23:02:17+08:00 ] 127.0.0.1 127.0.0.1 GET /index/faultRepair
+[ info ] 127.0.0.1/index/faultRepair [运行时间：0.096752s][吞吐率：10.34req/s] [内存消耗：2,706.19kb] [文件加载：51]
+[ info ] [ LANG ] H:\php\127.0.0.1\hqgl\www\thinkphp_5.0.10_full\thinkphp\lang\zh-cn.php
+[ info ] [ BIND ] 'index'
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'index',
+    1 => 'index',
+    2 => 'faultRepair',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => '127.0.0.1',
+  'connection' => 'keep-alive',
+  'cache-control' => 'max-age=0',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.101 Safari/537.36',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+  'referer' => 'http://127.0.0.1/index/faultRepair',
+  'accept-encoding' => 'gzip, deflate, br',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'cookie' => 'PHPSESSID=kv8kljuso0d56h7etj5170c915',
+)
+[ info ] [ PARAM ] array (
+  '/index/faultRepair' => '',
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ RUN ] app\index\controller\Index->faultRepair[ H:\php\127.0.0.1\hqgl\www\application\index\controller\Index.php ]
+[ info ] [ VIEW ] ../application/tpl/index/faultRepair.php [ array (
+  0 => 'schoolpart_id',
+  1 => 'school_part',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.009403s ] mysql:dbname=hqgl_db_2;host=192.168.1.9;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `hqgl_viewuser` [ RunTime:0.006069s ]
+[ sql ] [ SQL ] SELECT * FROM `hqgl_viewuser` LIMIT 1 [ RunTime:0.006543s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `hqgl_schoolpart` [ RunTime:0.007256s ]
+[ sql ] [ SQL ] SELECT * FROM `hqgl_schoolpart` WHERE  `schoolpart_id` IN ('1','2') ORDER BY `schoolpart_id` [ RunTime:0.008068s ]
+---------------------------------------------------------------
+[ 2017-08-22T23:02:47+08:00 ] 127.0.0.1 127.0.0.1 GET /index/faultRepair
+[ info ] 127.0.0.1/index/faultRepair [运行时间：0.168830s][吞吐率：5.92req/s] [内存消耗：2,553.16kb] [文件加载：49]
+[ info ] [ LANG ] H:\php\127.0.0.1\hqgl\www\thinkphp_5.0.10_full\thinkphp\lang\zh-cn.php
+[ info ] [ BIND ] 'index'
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'index',
+    1 => 'index',
+    2 => 'faultRepair',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => '127.0.0.1',
+  'connection' => 'keep-alive',
+  'cache-control' => 'max-age=0',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.101 Safari/537.36',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+  'referer' => 'http://127.0.0.1/index/faultRepair',
+  'accept-encoding' => 'gzip, deflate, br',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'cookie' => 'PHPSESSID=kv8kljuso0d56h7etj5170c915',
+)
+[ info ] [ PARAM ] array (
+  '/index/faultRepair' => '',
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ RUN ] app\index\controller\Index->faultRepair[ H:\php\127.0.0.1\hqgl\www\application\index\controller\Index.php ]
+[ info ] [ VIEW ] ../application/tpl/index/faultRepair.php [ array (
+  0 => 'schoolpart_id',
+  1 => 'school_part',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.080047s ] mysql:dbname=hqgl_db_2;host=192.168.1.9;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `hqgl_viewuser` [ RunTime:0.007432s ]
+[ sql ] [ SQL ] SELECT * FROM `hqgl_viewuser` LIMIT 1 [ RunTime:0.007346s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `hqgl_schoolpart` [ RunTime:0.011781s ]
+[ sql ] [ SQL ] SELECT * FROM `hqgl_schoolpart` WHERE  `schoolpart_id` IN ('1','2') ORDER BY `schoolpart_id` [ RunTime:0.007614s ]
+---------------------------------------------------------------
+[ 2017-08-22T23:04:09+08:00 ] 127.0.0.1 127.0.0.1 GET /index/faultRepair
+[ info ] 127.0.0.1/index/faultRepair [运行时间：0.124241s][吞吐率：8.05req/s] [内存消耗：2,706.17kb] [文件加载：51]
+[ info ] [ LANG ] H:\php\127.0.0.1\hqgl\www\thinkphp_5.0.10_full\thinkphp\lang\zh-cn.php
+[ info ] [ BIND ] 'index'
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'index',
+    1 => 'index',
+    2 => 'faultRepair',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => '127.0.0.1',
+  'connection' => 'keep-alive',
+  'cache-control' => 'max-age=0',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.101 Safari/537.36',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+  'referer' => 'http://127.0.0.1/index/faultRepair',
+  'accept-encoding' => 'gzip, deflate, br',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'cookie' => 'PHPSESSID=kv8kljuso0d56h7etj5170c915',
+)
+[ info ] [ PARAM ] array (
+  '/index/faultRepair' => '',
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ RUN ] app\index\controller\Index->faultRepair[ H:\php\127.0.0.1\hqgl\www\application\index\controller\Index.php ]
+[ info ] [ VIEW ] ../application/tpl/index/faultRepair.php [ array (
+  0 => 'schoolpart_id',
+  1 => 'school_part',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.035852s ] mysql:dbname=hqgl_db_2;host=192.168.1.9;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `hqgl_viewuser` [ RunTime:0.006491s ]
+[ sql ] [ SQL ] SELECT * FROM `hqgl_viewuser` LIMIT 1 [ RunTime:0.007291s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `hqgl_schoolpart` [ RunTime:0.009370s ]
+[ sql ] [ SQL ] SELECT * FROM `hqgl_schoolpart` WHERE  `schoolpart_id` IN ('1','2') ORDER BY `schoolpart_id` [ RunTime:0.006880s ]
+---------------------------------------------------------------
+[ 2017-08-22T23:04:28+08:00 ] 127.0.0.1 127.0.0.1 GET /index/faultRepair
+[ info ] 127.0.0.1/index/faultRepair [运行时间：0.095539s][吞吐率：10.47req/s] [内存消耗：2,706.17kb] [文件加载：51]
+[ info ] [ LANG ] H:\php\127.0.0.1\hqgl\www\thinkphp_5.0.10_full\thinkphp\lang\zh-cn.php
+[ info ] [ BIND ] 'index'
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'index',
+    1 => 'index',
+    2 => 'faultRepair',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => '127.0.0.1',
+  'connection' => 'keep-alive',
+  'cache-control' => 'max-age=0',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.101 Safari/537.36',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+  'referer' => 'http://127.0.0.1/index/faultRepair',
+  'accept-encoding' => 'gzip, deflate, br',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'cookie' => 'PHPSESSID=kv8kljuso0d56h7etj5170c915',
+)
+[ info ] [ PARAM ] array (
+  '/index/faultRepair' => '',
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ RUN ] app\index\controller\Index->faultRepair[ H:\php\127.0.0.1\hqgl\www\application\index\controller\Index.php ]
+[ info ] [ VIEW ] ../application/tpl/index/faultRepair.php [ array (
+  0 => 'schoolpart_id',
+  1 => 'school_part',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.011056s ] mysql:dbname=hqgl_db_2;host=192.168.1.9;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `hqgl_viewuser` [ RunTime:0.006136s ]
+[ sql ] [ SQL ] SELECT * FROM `hqgl_viewuser` LIMIT 1 [ RunTime:0.006603s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `hqgl_schoolpart` [ RunTime:0.007084s ]
+[ sql ] [ SQL ] SELECT * FROM `hqgl_schoolpart` WHERE  `schoolpart_id` IN ('1','2') ORDER BY `schoolpart_id` [ RunTime:0.007749s ]
