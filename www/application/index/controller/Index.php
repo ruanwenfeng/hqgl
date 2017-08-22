@@ -3,14 +3,20 @@ namespace app\index\controller;
 
 use app\extend\ResponseData;
 use app\index\model\Schoolpart;
+use app\index\model\Viewbuilding;
 use app\index\model\Viewcollege;
+use app\index\model\Viewequipment;
+use app\index\model\Viewroom;
 use app\index\model\Viewuser;
 use think\Controller;
+use think\Request;
+
 class Index extends Controller
 {
     //1代表成功 0 代表失败
     public  $filterSchoolpart;
     public  $filterCollege;
+    public  $school_part;
 
     //校区
     public function _initialize(){
@@ -19,7 +25,8 @@ class Index extends Controller
         $schoolpart= new Schoolpart();
         $table = $schoolpart->where($this->filterSchoolpart)->order('schoolpart_id')->select();
         $this->assign('schoolpart_id',-1);
-        $this->assign('school_part',$table);
+        $this->school_part = $table;
+        $this->assign('school_part' , $table);
     }
 
 
@@ -80,9 +87,85 @@ class Index extends Controller
 
     //显示学院或部门
     public function showCollege(){
-        $this->assign('schoolpart_id',$this->request->param('schoolpart_id'));
+        $schoolpart_id = $this->request->param('schoolpart_id');
+        $this->assign('schoolpart_id',$schoolpart_id);
+        $this->assign('schoolpart_text' ,
+            (new Schoolpart())->find(array('schoolpart_id'=>$schoolpart_id))['text_description']);
         return $this->fetch('college');
     }
+
+    public function showBuilding(){
+        $schoolpart_id = $this->request->param('schoolpart_id');
+        $college_id = $this->request->param('college_id');
+        $this->assign('schoolpart_id',$schoolpart_id);
+        $this->assign('college_id',$college_id);
+        $this->assign('schoolpart_text' ,
+            (new Schoolpart())->limit(1)->where(array('schoolpart_id'=>$schoolpart_id))->find()['text_description']);
+        $this->assign('college_text' ,
+            (new Viewcollege())->limit(1)->where(array('college_id'=>$college_id))->find()['text_description']);
+        return $this->fetch('build');
+    }
+
+    public function showRoom(){
+        $schoolpart_id = $this->request->param('schoolpart_id');
+        $college_id = $this->request->param('college_id');
+        $building_id = $this->request->param('building_id');
+        $this->assign('schoolpart_id',$schoolpart_id);
+        $this->assign('college_id',$college_id);
+        $this->assign('building_id',$building_id);
+        $this->assign('schoolpart_text' ,
+            (new Schoolpart())->limit(1)->where(array('schoolpart_id'=>$schoolpart_id))->find()['text_description']);
+        $this->assign('college_text' ,
+            (new Viewcollege())->limit(1)->where(array('college_id'=>$college_id))->find()['text_description']);
+        $this->assign('building_text' ,
+            (new Viewbuilding())->limit(1)->where(array('building_id'=>$building_id))->find()['text_description']);
+        return $this->fetch('room');
+    }
+
+    public function showEquipMent(){
+        $schoolpart_id = $this->request->param('schoolpart_id');
+        $college_id = $this->request->param('college_id');
+        $building_id = $this->request->param('building_id');
+        $room_id = $this->request->param('room_id');
+        $this->assign('schoolpart_id',$schoolpart_id);
+        $this->assign('college_id',$college_id);
+        $this->assign('building_id',$building_id);
+        $this->assign('room_id',$room_id);
+        $this->assign('schoolpart_text' ,
+            (new Schoolpart())->limit(1)->where(array('schoolpart_id'=>$schoolpart_id))->find()['text_description']);
+        $this->assign('college_text' ,
+            (new Viewcollege())->limit(1)->where(array('college_id'=>$college_id))->find()['text_description']);
+        $this->assign('building_text' ,
+            (new Viewbuilding())->limit(1)->where(array('building_id'=>$building_id))->find()['text_description']);
+        $this->assign('room_text' ,
+            (new Viewroom())->limit(1)->where(array('room_id'=>$room_id))->find()['room_num']);
+        return $this->fetch('equipment');
+    }
+
+    public function queryEquipMent(){
+        $table = (new Viewequipment())->where([
+            'schoolpart_id'=>$this->request->param('schoolpart_id'),
+            'college_id'=>$this->request->param('college_id'),
+            'building_id'=>$this->request->param('building_id'),
+            'room_id'=>$this->request->param('room_id')])->select();
+        return ResponseData::getInstance (1,null,array($table),array('total'=>count($table)),$this->request->isAjax());
+    }
+
+    public function queryRoom(){
+        $table = (new Viewroom())->where([
+            'schoolpart_id'=>$this->request->param('schoolpart_id'),
+            'college_id'=>$this->request->param('college_id'),
+            'building_id'=>$this->request->param('building_id')])->select();
+        return ResponseData::getInstance (1,null,array($table),array('total'=>count($table)),$this->request->isAjax());
+    }
+
+    public function queryBuilding(){
+        $table = (new Viewbuilding())->where([
+            'schoolpart_id' => $this->request->param('schoolpart_id'),
+            'college_id' => $this->request->param('college_id')])->select();
+        return ResponseData::getInstance (1,null,array($table),array('total'=>count($table)),$this->request->isAjax());
+    }
+
     public function queryCollege(){
         $where = array();
         $this->filterCollege && $where['college_id'] = $this->filterCollege['college_id'];
@@ -92,6 +175,7 @@ class Index extends Controller
     }
     /*
      * 显示报修
+     *
      * */
     public function  faultRepair(){
 
