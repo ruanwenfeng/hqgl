@@ -1,9 +1,11 @@
 <?php
 // 应用公共文件
+
+
 \think\Route::bind('index');
 
 function create_password($pw_length = 4){
-    $chars = 'abcdefghijklmnopqrstuvwxyz';
+    $chars = '123456789';
     $password = '';
     for ( $i = 0; $i < $pw_length; $i++ )
     {
@@ -12,7 +14,6 @@ function create_password($pw_length = 4){
     return $password;
 }
 function generate_username( $length = 6 ) {
-    // 密码字符集，可任意添加你需要的字符
     $chars = 'abcdefghijklmnopqrstuvwxyz';
     $password = '';
     for ( $i = 0; $i < $length; $i++ )
@@ -145,3 +146,4 @@ function request_post($url = '', $post_data = array()) {
     curl_close($ch);
     return $data;
 }
+

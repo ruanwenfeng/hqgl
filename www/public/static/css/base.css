@@ -1,108 +1,24 @@
-*{margin:0;padding:0;box-sizing: border-box;  }
+*{margin:0;padding:0; }
 body{
     font-family: "Arial","Microsoft YaHei","黑体","宋体",sans-serif;background:#eee;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-    min-width: 1200px;
-}
-a{color:#2d374b;text-decoration:none}
-a:hover{color:#cd0200;text-decoration:none}
-em{font-style:normal}
-li{list-style:none}
-img{border:0;vertical-align:middle}
-table{border-collapse:collapse;border-spacing:0}
-p{word-wrap:break-word}
-.title{
-    height: 25px;
-    line-height: 25px;
-    text-align: left;
-    font-family: "Arial","Microsoft YaHei","黑体","宋体",sans-serif;
-    font-size: 14px;
 }
 .clear{
     clear: both;
 }
-
-table
+::-webkit-scrollbar
 {
-    -webkit-user-select: text;
-    -moz-user-select: text;
-    -ms-user-select: text;
-    user-select: text;
-    width:100%;
-    border-collapse:collapse;
+    width: 10px;
+    height: 10px;
+    background-color: #F5F5F5;
 }
-
-table td, table th
+::-webkit-scrollbar-track
 {
-    font-size:14px;
-    border:1px solid #b7b7b7;
 }
-table th
+::-webkit-scrollbar-thumb
 {
-    font-size:14px;
-    text-align:center;
-    padding-top:5px;
-    padding-bottom:4px;
-    background-color:#eeeeee;
-}
-table th:nth-child(1){
-    width: 300px;
-}
-table td{
-    height: 25px;
-    text-align: center;
-}
-tr:nth-child(2n) td{
-    /*color:#000000;*/
-    /*background-color:#EAF2D3;*/
-}
-.page{
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-}
-
-.page ul>li{
-
-    list-style: none;
-    float: left!important;
-    display: block;
-    width: 25px;
-    height: 25px!important;
-    border: 1px #eeeeee solid;
-    margin-left: 2px;
-    line-height: 25px;
-    text-align: center;
-    cursor: pointer;
-    padding: 0!important;
-
-}
-.page select{
-    margin:0;
-}
-.page ul>li:first-child,.page ul>li:last-child,.page ul>li:nth-last-child(2){
-    width: 50px;
-}
-
-.page ul>li:nth-last-child(2):hover{
-
-}
-
-.page ul>li:hover,.page ul>li.active{
-    background-color: #74b8e5;
-    color: white;
-}
-
-.disabled{
-    pointer-events: none;
-}
-.jump-page{
-    display: block;
-    width: 50px;
-    height: 25px;
-    outline: none;
+    background-color: #9f9f9f;
 }

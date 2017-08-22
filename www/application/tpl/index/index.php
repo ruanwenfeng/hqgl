@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,10 +9,29 @@
 </head>
 <body>
 zheshi test1
+=======
+{extend name="base" /}
+{block name="css"}
+<link rel="stylesheet" href="__PUBLIC__/css/index.css">
+{/block}
+{block name="page-body"}
+<div class="layui-container">
+    <div class="layui-row">
+        <div class="layui-col-md9">
+            你的内容 9/12
+        </div>
+        <div class="layui-col-md3">
+            你的内容 3/12
+        </div>
+    </div>
+</div>
+{/block}
+{block name="script"}
+>>>>>>> d699253682fbc5c0ea791dc9e142dabcbb03a66c
 <script type="text/javascript">
     (function () {
         var app = function () {
-            require(['test']);
+            require(['index']);
         };
         function init() {
             if(window.complete){
@@ -23,5 +43,4 @@ zheshi test1
         init();
     })();
 </script>
-</body>
-</html>
+{/block}
