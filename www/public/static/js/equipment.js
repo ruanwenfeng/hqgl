@@ -1,18 +1,18 @@
 /**
  * Created by Administrator on 2017/8/21.
  */
-window.require(['jquery','layui'],function ($) {
+window.require(['jquery','layui','highcharts'],function ($) {
     $(function () {
         layui.config({
             dir: '/static/layui/'
         });
+        var main = $('.main-div-body');
+        var schoolpart_id = main.attr('data-schoolpart-id');
+        var college_id = main.attr('data-college-id');
+        var building_id = main.attr('data-building-id');
+        var room_id = main.attr('data-room-id');
         layui.use(['element','table'], function(){
             var element = layui.element,table = layui.table;
-            var main = $('.main-div-body');
-            var schoolpart_id = main.attr('data-schoolpart-id');
-            var college_id = main.attr('data-college-id');
-            var building_id = main.attr('data-building-id');
-            var room_id = main.attr('data-room-id');
             var college = new window.WkkyData('/index/queryEquipMent',{
                 credentials: 'include',
                 method: "POST"
@@ -70,5 +70,76 @@ window.require(['jquery','layui'],function ($) {
             });
             college.getDataFormRemote();
         });
+
+        var room = new WkkyData('/index/ViewRoomPower',{
+            credentials: 'include',
+            method: "POST"
+        },{room_id:room_id});
+        room.setOnSuccess(function (handleResponse) {
+            // 获取 CSV 数据并初始化图表
+            var data = handleResponse.getData();
+            var _num = [0,0,0,0,0,0,0,0,0,0,0,0];
+            var max = 0;
+            var title = undefined;
+            $.each(data,function (index,item) {
+                title = item['room_num'];
+                _index = parseInt(item['month'])-1;
+                if(_index>max)
+                    max=_index;
+                _num[_index] = parseInt(parseInt(item['num'])/1000);
+            });
+            var tp = _num[max++];
+            for(;max < 12;max++){
+                _num[max] = tp;
+            }
+            var chart = new Highcharts.Chart('chart', {
+                title: {
+                    text: title,
+                    x: -20
+                },
+                chart: {
+                    type: 'line'
+                },
+                plotOptions: {
+                    line: {
+                        dataLabels: {
+                            enabled: true          // 开启数据标签
+                        },
+                        enableMouseTracking: false // 关闭鼠标跟踪，对应的提示框、点击事件会失效
+                    }
+                },
+                subtitle: {
+                    text: '数据来源: WorldClimate.com',
+                    x: -20
+                },
+                xAxis: {
+                    categories: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月']
+                },
+                yAxis: {
+                    title: {
+                        text: '用电量 ( 度 )'
+                    },
+                    plotLines: [{
+                        value: 0,
+                        width: 1,
+                        color: '#808080'
+                    }]
+                },
+                tooltip: {
+                    valueSuffix: ' 度'
+                },
+                legend: {
+                    layout: 'vertical',
+                    align: 'right',
+                    verticalAlign: 'middle',
+                    borderWidth: 0
+                },
+                series: [{
+                    name: '配额',
+                    data: _num
+                }]
+            });
+        });
+        room.getDataFormRemote();
     });
 });

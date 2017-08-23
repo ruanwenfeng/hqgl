@@ -9,11 +9,13 @@
      data-college-id="{$college_id}"
      data-building-id="{$building_id}">
     <span class="layui-breadcrumb">
-      <a href="">{$schoolpart_text}</a>
-      <a href="">{$college_text}</a>
-      <a href="javascript:void(0)"><cite>{$building_text}</cite></a>
-      <a href="javascript:void(0)"><cite>房间</cite></a>
+        <a href="/index/showCollege/schoolpart_id/{$schoolpart_id}">{$schoolpart_text}</a>
+        <a href="/index/showBuilding/schoolpart_id/{$schoolpart_id}/college_id/{$college_id}">{$college_text}</a>
+        <a href="javascript:void(0)"><cite>{$building_text}</cite></a>
+        <a href="javascript:void(0)"><cite>房间</cite></a>
     </span>
+    <div class="line"></div>
+    <div id="chart" style="min-width:400px;height:300px"></div>
     <table  id="room-table"></table>
 </div>
 {/block}

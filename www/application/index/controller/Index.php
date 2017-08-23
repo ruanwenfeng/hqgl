@@ -9,6 +9,7 @@ use app\index\model\Viewequipment;
 use app\index\model\Viewroom;
 use app\index\model\Viewuser;
 use think\Controller;
+use think\Db;
 use think\Request;
 
 class Index extends Controller
@@ -181,5 +182,33 @@ class Index extends Controller
     }
 
 
+    public function ViewRoomPower(){
+        $table = Db::table(config('database.prefix').'view_room_power')
+            ->where(array('room_id'=>$this->request->param('room_id')))
+            ->select();
+        return ResponseData::getInstance (1,null,array($table),array('total'=>count($table)),$this->request->isAjax());
+    }
 
+    public function ViewBuildingPower(){
+        $table = Db::table(config('database.prefix').'view_building_power')
+            ->where(array('building_id'=>$this->request->param('building_id')))
+            ->select();
+        return ResponseData::getInstance (1,null,array($table),array('total'=>count($table)),$this->request->isAjax());
+
+    }
+
+    public function ViewCollegePower(){
+        $table = Db::table(config('database.prefix').'view_college_power')
+            ->where(array('college_id'=>$this->request->param('college_id')))
+            ->select();
+        return ResponseData::getInstance (1,null,array($table),array('total'=>count($table)),$this->request->isAjax());
+
+    }
+
+    public function ViewSchoolPartPower(){
+        $table = Db::table(config('database.prefix').'view_schoolpart_power')
+            ->where(array('schoolpart_id'=>$this->request->param('schoolpart_id')))
+            ->select();
+        return ResponseData::getInstance (1,null,array($table),array('total'=>count($table)),$this->request->isAjax());
+    }
 }
