@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:40:"../application/tpl/index/faultRepair.php";i:1503414264;s:27:"../application/tpl/base.php";i:1503403815;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:40:"../application/tpl/index/faultRepair.php";i:1503504408;s:27:"../application/tpl/base.php";i:1503403815;}*/ ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,6 +7,17 @@
     <link rel="stylesheet" href="__PUBLIC__/css/base.css">
     <link rel="stylesheet" href="__PUBLIC__/layui/css/layui.css">
     
+<style>
+    /*#lucasRepairMain{*/
+        /*display: block;*/
+    /*}*/
+    /*#lucasRepairMain table{*/
+        /*text-align: center;*/
+    /*}*/
+    /*#lucasRepairMain .confirmRepair{*/
+        /*display: none;*/
+    /*}*/
+</style>
 
 </head>
 <body>
@@ -71,38 +82,34 @@
     <div class="layui-body">
         <div style="padding-top: 15px;">
             
-<form class="layui-form" action="">
-<div class="layui-form-item">
-    <label class="layui-form-label">请选择</label>
-    <div class="layui-input-inline">
-        <select name="quiz1">
-            <option value="">请选择省</option>
-            <option value="浙江" selected="">浙江省</option>
-            <option value="你的工号">江西省</option>
-            <option value="你最喜欢的老师">福建省</option>
-        </select>
-    </div>
-    <div class="layui-input-inline">
-        <select name="quiz2">
-            <option value="">请选择市</option>
-            <option value="杭州">杭州</option>
-            <option value="宁波" disabled="">宁波</option>
-            <option value="温州">温州</option>
-            <option value="温州">台州</option>
-            <option value="温州">绍兴</option>
-        </select>
-    </div>
-    <div class="layui-input-inline">
-        <select name="quiz3">
-            <option value="">请选择县/区</option>
-            <option value="西湖区">西湖区</option>
-            <option value="余杭区">余杭区</option>
-            <option value="拱墅区">临安市</option>
-        </select>
-    </div>
-</div>
-</form>
+<div id="lucasRepairMain">
+    <form class="layui-form" action="">
+        <div class="layui-form-item">
+            <label class="layui-form-label">请选择</label>
+            <div class="layui-input-inline">
+                <select name="quiz1" class="layui-form" id="schoolSelect" lay-filter="schoolSelectFilter">
+                </select>
+            </div>
+            <div class="layui-input-inline">
+                <select name="quiz2" class="layui-form" id="collegeSelect" lay-filter="collegeSelectFilter">
+                </select>
+            </div>
+            <div class="layui-input-inline">
+                <select name="quiz3" class="layui-form" id="buildingSelect" lay-filter="buildingSelectFilter">
+                </select>
+            </div>
+            <div class="layui-input-inline">
+                <select name="quiz3" class="layui-form" id="roomSelect" lay-filter="roomSelectFilter">
+                </select>
+            </div>
+        </div>
 
+    </form>
+</div>
+<table  id="equipmentTable"></table>
+<div id="extraDiv">
+    <button class="layui-btn layui-btn-normal" id="confirmRepair">确定</button>
+</div>
 
 
         </div>

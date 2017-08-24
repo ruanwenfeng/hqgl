@@ -2,6 +2,7 @@
 namespace app\index\controller;
 
 use app\extend\ResponseData;
+use app\index\model\Equipment;
 use app\index\model\Schoolpart;
 use app\index\model\Viewbuilding;
 use app\index\model\Viewcollege;
@@ -64,7 +65,6 @@ class Index extends Controller
         $result->data[] = array();
         return $result->getJSON($this->request->isAjax());
     }
-
     public function queryAuthorization(){
         $user = Viewuser::get(session('user.user_id'));
         $authorization = $user['user_authorization'];
@@ -173,15 +173,24 @@ class Index extends Controller
         $table = (new Viewcollege())->where($where)->select();
         return ResponseData::getInstance (1,null,array($table),array('total'=>count($table)),$this->request->isAjax());
     }
-    /*
-     * 显示报修
-     *
-     * */
+
+    //lucas 查询校区
     public function  faultRepair(){
-
-//        return ResponseData::getInstance (1,null,array($table),array('total'=>count($table)),$this->request->isAjax());
+        return $this->fetch();
     }
+    public function faultRepairSchool(){
+        $schoolTable=$this->school_part;
+        return ResponseData::getInstance (1,null,array($schoolTable),array('total'=>count($schoolTable)),$this->request->isAjax());
+    }
+    public function lucasQueryEquipment(){
+        $where["room_id"]=$this->request->param("room_id");
+        $table=(new Equipment())->where($where)->select();
+        return ResponseData::getInstance (1,null,array($table),array('total'=>count($table)),$this->request->isAjax());
 
-
+    }
+    //完成报修请求
+    public function repairEquipment(){
+        return ResponseData::getInstance (1,null,array(),array(),$this->request->isAjax());
+    }
 
 }

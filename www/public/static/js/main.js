@@ -33,7 +33,7 @@ window.HandleResponse.prototype = {
         else
             return undefined;
     },
-    getExtra:function (key) {
+    _getExtra:function (key) {
         if(this.json['extra'].has(key))
             return this.json['extra'][key];
         return this.json['extra'];
