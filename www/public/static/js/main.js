@@ -5,7 +5,8 @@ require.config({
     paths : {
         "jquery" : ['http://libs.baidu.com/jquery/2.0.3/jquery'],
         'layui':'../layui/layui',
-        'test':'test'
+        'test':'test',
+        'highcharts':['https://cdn.hcharts.cn/highcharts/highcharts']
     }
 });
 window.complete = true;
@@ -33,8 +34,8 @@ window.HandleResponse.prototype = {
         else
             return undefined;
     },
-    _getExtra:function (key) {
-        if(this.json['extra'].has(key))
+    getExtra:function (key) {
+        if(this.json['extra'].hasOwnProperty (key))
             return this.json['extra'][key];
         return this.json['extra'];
     },
@@ -118,6 +119,7 @@ window.WkkyData.prototype = {
         });
     },
     error:function (e) {
+        console.error(e);
         $.each(this._error,function (index,item) {
             return item(e);
         });
