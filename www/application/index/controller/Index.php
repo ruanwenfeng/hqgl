@@ -31,7 +31,6 @@ class Index extends Controller
         session('user.user_id',1);
         session('user.usergroup_id',3);
         session('user.user_name','wkky');
-
         $this->queryAuthorization();
         $schoolpart= new Schoolpart();
         $table = $schoolpart->where($this->filterSchoolpart)->order('schoolpart_id')->select();
@@ -82,12 +81,14 @@ class Index extends Controller
      */
     public function queryAuthorization(){
         $user = Viewuser::get(session('user.user_id'));
-        $authorization = $user['user_authorization'];
+        $authorization = $user['group_authorization'];
         $authorization = json_decode($authorization,true);
-        if(!$authorization){
-            $authorization = $user['group_authorization'];
-            $authorization = json_decode($authorization,true);
-        }
+//        $authorization = $user['user_authorization'];
+//        $authorization = json_decode($authorization,true);
+//        if(!$authorization){
+//            $authorization = $user['group_authorization'];
+//            $authorization = json_decode($authorization,true);
+//        }
         $this->filterSchoolpart = array('schoolpart_id'=>['in',$authorization['schoolpart']['id']]);
         if(!$authorization['schoolpart']['full'])
             $this->filterCollege = array('college_id'=>['in',$authorization['college']['id']]);
