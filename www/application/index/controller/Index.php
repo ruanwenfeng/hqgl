@@ -222,8 +222,6 @@ class Index extends Controller
         $where["room_id"]=$this->request->param("room_id");
         $table=(new Equipment())->where($where)->select();
         return ResponseData::getInstance (1,null,array($table),array('total'=>count($table)),$this->request->isAjax());
-
-
     }
 
     //完成报修请求
