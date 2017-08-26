@@ -3,34 +3,35 @@
  */
 window.require(['jquery','layui','highcharts'],function ($) {
     $(function () {
+        window.load = null;
+        window.flag = 0;
         layui.config({
             dir: '/static/layui/'
         });
+        $('.schoolpart_active').closest('.layui-nav-item').addClass('layui-nav-itemed');
         var main = $('.main-div-body');
         var schoolpart_id = main.attr('data-schoolpart-id');
         var college_id = main.attr('data-college-id');
         var building_id = main.attr('data-building-id');
         var room_id = main.attr('data-room-id');
         layui.use(['element','table'], function(){
-            var element = layui.element,table = layui.table;
-            var college = new window.WkkyData('/index/queryEquipMent',{
+            var element = layui.element,table = layui.table,layer = layui.layer;
+            loading();
+            var equipment = new window.WkkyData('/index/queryEquipMent',{
                 credentials: 'include',
                 method: "POST"
             },{schoolpart_id:schoolpart_id,college_id:college_id,building_id:building_id,room_id:room_id});
-            college.setOnSuccess(function (handleResponse) {
+            equipment.setOnSuccess(function (handleResponse) {
                 table.render({
+                    id:'test',
                     elem: '#equipment-table'
                     ,cols:  [[ //标题栏
-                         {checkbox: true,width:200}
-                        ,{field: 'index', title: '编号', align: 'center',width: 80}
+                         // {checkbox: true,width:200}
+                        {field: 'index', title: '编号', align: 'center',width: 80}
                         ,{field: 'text_description', title: '用电设备', width: 150}
                         ,{field: 'number', title: '数量', width: 80}
                         ,{field: 'power', title: '功率 (W)', width: 100}
-                        // ,{field: '学院名称', title: '学院（部门）名称', width: 200}
-                        // ,{field: '楼宇名称', title: '楼宇名称', width: 100}
-                        // ,{field: 'room_num', title: '房间号', width: 100}
-                        // ,{field: 'use_type', title: '房间用途', width: 100}
-                        ,{title:'操作',width: 160,align: 'center',toolbar:'#actionBar',fixed:'right'}
+                        // ,{title:'操作',width: 160,align: 'center',templet:'#my-bar-1'}
 
                     ]], //设置表头
                     done:function (res, curr, count) {
@@ -41,17 +42,12 @@ window.require(['jquery','layui','highcharts'],function ($) {
                         }),
                     even:true
                 });
+
                 table.on('tool', function(obj){ //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
                     var data = obj.data; //获得当前行数据
                     var layEvent = obj.event; //获得 lay-event 对应的值
                     var tr = obj.tr; //获得当前行 tr 的DOM对象
                     if(layEvent === 'detail'){ //查看
-                        console.log(obj.data);
-                        window.location.href =
-                            '/index/showRoom/schoolpart_id/'+obj['data']['schoolpart_id']+
-                            '/college_id/'+obj['data']['college_id']+
-                            '/building_id/'+obj['data']['building_id']+
-                            '/room_id/'+obj['data']['room_id'];
                     } else if(layEvent === 'del'){ //删除
                         layer.confirm('真的删除行么', function(index){
                             obj.del(); //删除对应行（tr）的DOM结构
@@ -68,7 +64,11 @@ window.require(['jquery','layui','highcharts'],function ($) {
                     }
                 });
             });
-            college.getDataFormRemote();
+            equipment.setOnAfter(function () {
+                closeLoad(2);
+            });
+
+            equipment.getDataFormRemote();
         });
 
         var room = new WkkyData('/index/ViewRoomPower',{
@@ -139,6 +139,9 @@ window.require(['jquery','layui','highcharts'],function ($) {
                     data: _num
                 }]
             });
+        });
+        room.setOnAfter(function () {
+            closeLoad(2);
         });
         room.getDataFormRemote();
     });

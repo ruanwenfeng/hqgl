@@ -3,22 +3,16 @@
 <link rel="stylesheet" href="__PUBLIC__/css/index.css">
 {/block}
 {block name="page-body"}
-
-<div class="main-div-body" data-schoolpart-id="{$schoolpart_id}">
-    <span class="layui-breadcrumb">
-        <a href="javascript:void(0)"><cite>{$schoolpart_text}</cite></a>
-        <a href="javascript:void(0)"><cite>学院</cite></a>
-    </span>
+<div class="main-div-body" >
     <div class="line"></div>
-    <div id="chart" style="min-width:400px;height:300px"></div>
-    <table  id="college-table"></table>
+    <table  id="child-user-table"></table>
 </div>
 {/block}
 {block name="script"}
 <script type="text/javascript">
     (function () {
         var app = function () {
-            require(['college']);
+            require(['permission']);
         };
         function init() {
             if(window.complete){
@@ -30,4 +24,9 @@
         init();
     })();
 </script>
+<script type="text/html" id="authorization">
+    <a class="layui-btn layui-btn-mini" lay-event="view-author">详情</a>
+</script>
+<div style="opacity: 0;" class="qqlayui-hide">
+</div>
 {/block}

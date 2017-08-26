@@ -3,8 +3,7 @@
 <link rel="stylesheet" href="__PUBLIC__/css/index.css">
 {/block}
 {block name="page-body"}
-
-<div class="layui-container main-div-body" data-schoolpart-id="{$schoolpart_id}" data-college-id="{$college_id}">
+<div class="main-div-body" data-schoolpart-id="{$schoolpart_id}" data-college-id="{$college_id}">
     <span class="layui-breadcrumb">
       <a href="/index/showCollege/schoolpart_id/{$schoolpart_id}">{$schoolpart_text}</a>
       <a href="javascript:void(0)"><cite>{$college_text}</cite></a>

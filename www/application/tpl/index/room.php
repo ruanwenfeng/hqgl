@@ -3,8 +3,7 @@
 <link rel="stylesheet" href="__PUBLIC__/css/index.css">
 {/block}
 {block name="page-body"}
-
-<div class="layui-container main-div-body"
+<div class=" main-div-body"
      data-schoolpart-id="{$schoolpart_id}"
      data-college-id="{$college_id}"
      data-building-id="{$building_id}">

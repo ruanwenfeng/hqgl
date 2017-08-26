@@ -3,28 +3,32 @@
  */
 window.require(['jquery','layui','highcharts'],function ($) {
     $(function () {
+        window.load = null;
+        window.flag = 0;
         layui.config({
             dir: '/static/layui/'
         });
+        $('.schoolpart_active').closest('.layui-nav-item').addClass('layui-nav-itemed');
         var main = $('.main-div-body');
         var schoolpart_id = main.attr('data-schoolpart-id');
         var college_id = main.attr('data-college-id');
-        layui.use(['element','table'], function(){
-            var element = layui.element,table = layui.table;
-            var college = new window.WkkyData('/index/queryBuilding',{
+        layui.use(['element','table','layer'], function(){
+            var element = layui.element,table = layui.table,layer = layui.layer;
+            loading();
+            var building = new window.WkkyData('/index/queryBuilding',{
                 credentials: 'include',
                 method: "POST"
             },{schoolpart_id:schoolpart_id,college_id:college_id});
-            college.setOnSuccess(function (handleResponse) {
+            building.setOnSuccess(function (handleResponse) {
                 table.render({
                     elem: '#building-table'
                     ,cols:  [[ //标题栏
-                         {checkbox: true,width:200}
-                        ,{field: 'index', title: '编号', align: 'center',width: 80}
+                         // {checkbox: true,width:200}
+                        {field: 'index', title: '编号', align: 'center',width: 80}
                         ,{field: '校区名称', title: '校区名称', width: 150}
                         ,{field: '学院名称', title: '学院（部门）名称', width: 200}
                         ,{field: 'text_description', title: '楼宇名称', width: 150}
-                        ,{title:'操作',width: 160,align: 'center',toolbar:'#actionBar',fixed:'right'}
+                        ,{title:'操作',width: 160,align: 'center',templet:'#my-bar-1'}
 
                     ]], //设置表头
                     done:function (res, curr, count) {
@@ -61,7 +65,10 @@ window.require(['jquery','layui','highcharts'],function ($) {
                     }
                 });
             });
-            college.getDataFormRemote();
+            building.setOnAfter(function () {
+                closeLoad(2);
+            });
+            building.getDataFormRemote();
         });
         var college = new WkkyData('/index/ViewCollegePower',{
             credentials: 'include',
@@ -132,7 +139,12 @@ window.require(['jquery','layui','highcharts'],function ($) {
                     data: _num
                 }]
             });
+            closeLoad();
+        });
+        college.setOnAfter(function () {
+            closeLoad(2);
         });
         college.getDataFormRemote();
     });
+
 });
