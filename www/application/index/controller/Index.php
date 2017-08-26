@@ -2,6 +2,7 @@
 namespace app\index\controller;
 
 use app\extend\ResponseData;
+use app\index\model\Equipment;
 use app\index\model\Schoolpart;
 use app\index\model\User;
 use app\index\model\Usergroup;
@@ -16,10 +17,13 @@ use think\exception\PDOException;
 
 class Index extends Controller
 {
+    //1代表成功 0 代表失败
     public  $filterSchoolpart;
     public  $filterCollege;
     public  $school_part;
     public $prefix ;
+
+    //校区
     public function _initialize(){
         session('user.user_id',1);
         session('user.usergroup_id',3);
@@ -205,14 +209,28 @@ class Index extends Controller
         $table = (new Viewcollege())->where($where)->select();
         return ResponseData::getInstance (1,null,array($table),array('total'=>count($table)),$this->request->isAjax());
     }
-    /*
-     * 显示报修
-     *
-     * */
+
+    //lucas 查询校区
     public function  faultRepair(){
         return $this->fetch();
     }
+    public function faultRepairSchool(){
+        $schoolTable=$this->school_part;
+        return ResponseData::getInstance (1,null,array($schoolTable),array('total'=>count($schoolTable)),$this->request->isAjax());
+    }
+    public function lucasQueryEquipment(){
+        $where["room_id"]=$this->request->param("room_id");
+        $table=(new Equipment())->where($where)->select();
+        return ResponseData::getInstance (1,null,array($table),array('total'=>count($table)),$this->request->isAjax());
 
+
+    }
+
+    //完成报修请求
+    public function repairEquipment()
+    {
+        return ResponseData::getInstance(1, null, array(), array(), $this->request->isAjax());
+    }
     /**
      *  获取房间用电信息
      */

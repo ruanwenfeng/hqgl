@@ -1,7 +1,7 @@
 .idea
 composer.lock
 *.log
-thinkphp
-runtime
-layui
+thinkphp_5.0.10_full
+runtime/*
+public/static/layui/*
 
