@@ -166,3 +166,21 @@ window.WkkyData.prototype = {
         this.init['body'] = formData;
     }
 };
+
+window.loading = function (icon,shade) {
+    if(typeof icon == typeof undefined){
+        icon = 1;
+    }
+    if(typeof shade == typeof undefined){
+        shade = 0.2
+    }
+    load = layer.load(icon,{
+        shade: shade //不显示遮罩
+    });
+};
+window.closeLoad = function (max) {
+    if(++flag >= max){
+        flag = 0;
+        layer.close(load);
+    }
+};

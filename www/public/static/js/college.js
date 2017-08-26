@@ -3,12 +3,16 @@
  */
 window.require(['jquery','layui','highcharts'],function ($) {
     $(function () {
+        window.load = null;
+        window.flag = 0;
         layui.config({
             dir: '/static/layui/'
         });
+        $('.schoolpart_active').closest('.layui-nav-item').addClass('layui-nav-itemed');
         var schoolpart_id = $('.main-div-body').attr('data-schoolpart-id');
         layui.use(['element','table'], function(){
-            var element = layui.element,table = layui.table;
+            var element = layui.element,table = layui.table,layer = layui.layer;
+            loading();
             var college = new window.WkkyData('/index/queryCollege',{
                 credentials: 'include',
                 method: "POST"
@@ -17,11 +21,11 @@ window.require(['jquery','layui','highcharts'],function ($) {
                 table.render({
                     elem: '#college-table'
                     ,cols:  [[ //标题栏
-                         {checkbox: true,width:200}
-                        ,{field: 'index', title: '编号', align: 'center',width: 80}
+                         // {checkbox: true,width:200}
+                        {field: 'index', title: '编号', align: 'center',width: 80}
                         ,{field: '校区名称', title: '校区名称', width: 150}
                         ,{field: 'text_description', title: '学院（部门）名称', width: 200}
-                        ,{title:'操作',width: 160,align: 'center',toolbar:'#actionBar',fixed:'right'}
+                        ,{title:'操作',width: 160,align: 'center',templet:'#my-bar-1'}
 
                     ]], //设置表头
                     done:function (res, curr, count) {
@@ -54,6 +58,9 @@ window.require(['jquery','layui','highcharts'],function ($) {
                         });
                     }
                 });
+            });
+            college.setOnAfter(function () {
+                closeLoad(2);
             });
             college.getDataFormRemote();
         });
@@ -125,6 +132,9 @@ window.require(['jquery','layui','highcharts'],function ($) {
                     data: _num
                 }]
             });
+        });
+        schoolPart.setOnAfter(function () {
+            closeLoad(2);
         });
         schoolPart.getDataFormRemote();
     });

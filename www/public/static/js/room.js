@@ -3,40 +3,53 @@
  */
 window.require(['jquery','layui','highcharts'],function ($) {
     $(function () {
+        window.load = null;
+        window.flag = 0;
         layui.config({
             dir: '/static/layui/'
         });
+        $('.schoolpart_active').closest('.layui-nav-item').addClass('layui-nav-itemed');
         var main = $('.main-div-body');
         var schoolpart_id = main.attr('data-schoolpart-id');
         var college_id = main.attr('data-college-id');
         var building_id = main.attr('data-building-id');
-        layui.use(['element','table'], function(){
-            var element = layui.element,table = layui.table;
-            var college = new window.WkkyData('/index/queryRoom',{
+        layui.use(['element','table','layer'], function(){
+            var element = layui.element,table = layui.table,layer = layui.layer;
+            loading();
+            var room = new window.WkkyData('/index/queryRoom',{
                 credentials: 'include',
                 method: "POST"
             },{schoolpart_id:schoolpart_id,college_id:college_id,building_id:building_id});
-            college.setOnSuccess(function (handleResponse) {
-                table.render({
+            room.setOnSuccess(function (handleResponse) {
+                var t = table.render({
+                    id:'test',
                     elem: '#room-table'
                     ,cols:  [[ //标题栏
-                         {checkbox: true,width:200}
-                        ,{field: 'index', title: '编号', align: 'center',width: 80}
+                         // {checkbox: true,width:200}
+                        {field: 'index', title: '编号', align: 'center',width: 80}
                         ,{field: '校区名称', title: '校区名称', width: 150}
                         ,{field: '学院名称', title: '学院（部门）名称', width: 200}
                         ,{field: '楼宇名称', title: '楼宇名称', width: 100}
                         ,{field: 'room_num', title: '房间号', width: 100}
                         ,{field: 'use_type', title: '房间用途', width: 150}
-                        ,{title:'操作',width: 160,align: 'center',toolbar:'#actionBar',fixed:'right'}
+                        ,{title:'操作',width: 160,align: 'center',templet:'#my-bar-1'}
                     ]] //设置表头
                     ,page: true
                     ,done:function (res, curr, count) {
-
+                        // console.log(res);
                     },
                     data:$.each(handleResponse.getData(),function (index, item) {
                             item['index'] = index+1;
                         }),
                     even:true
+                });
+                table.on('checkbox',function (e) {
+                    // console.log(e);
+                    var checkStatus = table.checkStatus(t.config['data']);
+                    console.log(checkStatus);
+                    console.log(checkStatus.data); //获取选中行的数据
+                    console.log(checkStatus.data.length); //获取选中行数量，可作为是否有选中行的条件
+                    console.log(checkStatus.isAll ); //表格是否全选
                 });
                 table.on('tool', function(obj){ //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
                     var data = obj.data; //获得当前行数据
@@ -65,7 +78,11 @@ window.require(['jquery','layui','highcharts'],function ($) {
                     }
                 });
             });
-            college.getDataFormRemote();
+            room.setOnAfter(function () {
+                closeLoad(2);
+            });
+
+            room.getDataFormRemote();
         });
 
         var building = new WkkyData('/index/ViewBuildingPower',{
@@ -136,6 +153,9 @@ window.require(['jquery','layui','highcharts'],function ($) {
                     data: _num
                 }]
             });
+        });
+        building.setOnAfter(function () {
+            closeLoad(2);
         });
         building.getDataFormRemote();
     });

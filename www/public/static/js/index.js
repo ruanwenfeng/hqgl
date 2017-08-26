@@ -8,5 +8,9 @@ window.require(['jquery','layui'],function ($) {
     });
     layui.use('element', function(){
         var element = layui.element;
+        element.on('nav', function(elem){
+            console.log($(elem).find('a').attr('data-href')); //得到当前点击的DOM对象
+            $('iframe').attr('src',$(elem).find('a').attr('data-href'));
+        });
     });
 });

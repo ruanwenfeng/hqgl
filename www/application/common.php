@@ -147,3 +147,31 @@ function request_post($url = '', $post_data = array()) {
     return $data;
 }
 
+function get_schoolpart($id){
+
+}
+
+function get_college($id){
+
+}
+function group_array($key,$arr,$fn,$fn2){
+
+    $_arr = [];
+    foreach ($arr as $_key => $_value){
+
+    }
+    foreach ($arr as $_value){
+        if(!array_key_exists($_value[$key],$_arr)){
+            $_arr[$_value[$key]] = array();
+            $fn($_arr,$_value,$key);
+        }
+        $fn2($_arr,$_value,$key);
+    }
+    return $_arr;
+}
+function getError($code,&$error){
+    switch ($code){
+        case 10501:
+            $error = '用户名组称重复';
+    }
+}
