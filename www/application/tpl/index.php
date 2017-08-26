@@ -62,6 +62,14 @@
                         <dd><a href="javascript:void(0)">电商平台</a></dd>
                     </dl>
                 </li>
+                <li class="layui-nav-item">
+                    <a href="javascript:void(0);">报修系统</a>
+                    <dl class="layui-nav-child">
+                        <dd class=""><a  href="javascript:void(0);" data-href="/index/showPersonRepair">显示</a></dd>
+                        <dd class=""><a  href="javascript:void(0);" data-href="/index/faultRepair">报修</a></dd>
+                        <dd><a href="javascript:void(0)">电商平台</a></dd>
+                    </dl>
+                </li>
                 <li class="layui-nav-item"><a href="javascript:void(0);">产品</a></li>
                 <li class="layui-nav-item"><a href="javascript:void(0);">大数据</a></li>
             </ul>
