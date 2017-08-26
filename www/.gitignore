@@ -3,5 +3,4 @@ composer.lock
 *.log
 thinkphp_5.0.10_full
 runtime/*
-public/static/layui/*
 
