@@ -1,16 +1,5 @@
 {extend name="base" /}
 {block name="css"}
-<style>
-    /*#lucasRepairMain{*/
-        /*display: block;*/
-    /*}*/
-    /*#lucasRepairMain table{*/
-        /*text-align: center;*/
-    /*}*/
-    /*#lucasRepairMain .confirmRepair{*/
-        /*display: none;*/
-    /*}*/
-</style>
 {/block}
 {block name="page-body"}
 <div id="lucasRepairMain">

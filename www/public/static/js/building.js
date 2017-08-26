@@ -75,8 +75,8 @@ window.require(['jquery','layui','highcharts'],function ($) {
             var max = 0;
             var title = undefined;
             $.each(data,function (index,item) {
-                title = item['text_description'];
                 _index = parseInt(item['month'])-1;
+                title = item['text_description'];
                 if(_index>max)
                     max=_index;
                 _num[_index] = parseInt(parseInt(item['num'])/1000);

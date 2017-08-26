@@ -2,15 +2,16 @@
  * Created by lx on 2017/8/22.
  */
 require(["jquery","layui"],function($){
-    layui.config({
-        dir: '/static/layui/'
-    });
-    window.equipmentStatus={
-        "1":"正常使用",
-        "2":"损坏"
-    }
-    $("#extraDiv #confirmRepair").hide();
-    layui.use(['form','element','table','layer'],function () {
+    $(function () {
+        layui.config({
+            dir: '/static/layui/'
+        });
+        window.equipmentStatus={
+            "1":"正常使用",
+            "2":"损坏"
+        }
+        $("#extraDiv #confirmRepair").hide();
+        layui.use(['form','element','table','layer'],function () {
         var form = layui.form
         var ele =layui.element;
         var table = layui.table;
@@ -99,13 +100,15 @@ require(["jquery","layui"],function($){
                     form.render('select');
                     form.on('select(roomSelectFilter)', function(data){
                         var roomIndex=data.othis.find("dl > dd.layui-this").index();
-                        updateEquipments(roomArray[roomIndex]['schoolpart_id'],roomArray[roomIndex]['college_id'],roomArray[roomIndex]['building_id'],roomArray[roomIndex]['room_id']);
+                        // updateEquipments(roomArray[roomIndex]['schoolpart_id'],roomArray[roomIndex]['college_id'],roomArray[roomIndex]['building_id'],roomArray[roomIndex]['room_id']);
+                        updateEquipments(roomArray[roomIndex]['room_id'],roomArray[roomIndex]['schoolpart_id'],roomArray[roomIndex]['college_id'],roomArray[roomIndex]['building_id']);
+
                     });
                 });
                 rooms.getDataFormRemote();
         }
-        //显示设备信息
-        function updateEquipments(scholId,collegeId,buildingId,roomId) {
+        //显示设备信息  function updateEquipments(scholId,collegeId,buildingId,roomId)
+        function updateEquipments(roomId,scholId,collegeId,buildingId) {
             var equipments = new window.WkkyData('/index/lucasQueryEquipment', {
                 credentials: 'include',
                 method: "POST"
@@ -125,10 +128,11 @@ require(["jquery","layui"],function($){
                         item['status'] = window.equipmentStatus[item['status']];
                     }),
                    page: true,
+                   even: true,
                 });
                 var lucasSelected;
                 $("#extraDiv #confirmRepair").click(function () {
-                    showFaultRepairInfo(lucasSelected);
+                    showFaultRepairInfo(lucasSelected,roomId,scholId,collegeId,buildingId);
                 });
                 table.on('checkbox', function(e){
                     var checkStatus = table.checkStatus(t.config['data']);
@@ -145,7 +149,7 @@ require(["jquery","layui"],function($){
             equipments.getDataFormRemote();
         }
         //确认报修设备信息
-        function showFaultRepairInfo(data) {
+        function showFaultRepairInfo(data,roomId,scholId,collegeId,buildingId) {
             var finalSelect=[];
             var showData;
             if(typeof  data == "undefined"){
@@ -167,12 +171,15 @@ require(["jquery","layui"],function($){
                         var tempObj={
                             "amount":1,
                             "text_description": temp2,
+                            "roomId" :roomId,
+                            "scholId":scholId,
+                            "collegeId":collegeId,
+                            "buildingId":buildingId
                         }
                         finalSelect.push(tempObj);
                     }
                 })
                 $.each(finalSelect,function (index, dataObj) {
-
                     var tempStr=("<br/><b>"+dataObj.amount+"　个"+dataObj.text_description+"</b><br/>");
                     showData += tempStr;
                 });
@@ -194,7 +201,8 @@ require(["jquery","layui"],function($){
                 ,yes: function(index, layero){
                     if(finalSelect.length > 0){
                         layer.close(index);
-                        sendFaultRepairRequest(data.data);
+
+                        sendFaultRepairRequest(finalSelect);
                     }
 
 
@@ -202,7 +210,6 @@ require(["jquery","layui"],function($){
                 }
                 ,btn2: function(index, layero){
                 //按钮【按钮二】的回调
-                    alert("取消按钮");
                 //return false 开启该代码可禁止点击该按钮关闭
                 }
             });
@@ -210,18 +217,18 @@ require(["jquery","layui"],function($){
 
         //发送报修请求
         function sendFaultRepairRequest(faultEquipmentInfo) {
-
-            var faultRepairRequest = new window.WkkyData('/index/repairEquipment',{
-                credentials: 'include',
-                method: "POST"
-            },{equipment_id:faultEquipmentInfo});
-            faultRepairRequest.setOnSuccess(function (handleResponse) {
-            })
-            faultRepairRequest.getDataFormRemote();
+            var reqparam=JSON.stringify(faultEquipmentInfo);
+            window.open("/index/showReason/flag/1/request/"+reqparam);
+            // var faultRepairRequest = new window.WkkyData('/index/showReason',{
+            //     credentials: 'include',
+            //     method: "POST"
+            // },{equipment_id:faultEquipmentInfo});
+            // faultRepairRequest.setOnSuccess(function (handleResponse) {
+            // })
+            // faultRepairRequest.getDataFormRemote();
         }
-
         updateSchool();
     });
-
+    })
 
 })

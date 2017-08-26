@@ -235,5 +235,5 @@ return [
         404 =>  APP_PATH.'tpl'.DS.'404.html',
     ],
     'page' => 20,
-    'LuyaPage' =>4,
+    'lucasPage' => 10,
 ];
