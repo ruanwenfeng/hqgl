@@ -2,10 +2,7 @@
 namespace app\index\controller;
 
 use app\extend\ResponseData;
-use app\index\model\Building;
-use app\index\model\College;
 use app\index\model\Equipment;
-use app\index\model\Room;
 use app\index\model\Schoolpart;
 use app\index\model\User;
 use app\index\model\Usergroup;
@@ -16,7 +13,6 @@ use app\index\model\Viewroom;
 use app\index\model\Viewuser;
 use think\Controller;
 use think\Db;
-use think\exception\ErrorException;
 use think\exception\PDOException;
 
 class Index extends Controller
@@ -26,11 +22,17 @@ class Index extends Controller
     public  $filterCollege;
     public  $school_part;
     public $prefix ;
+    public $admin;
+
+    public $beforeActionList = ['check'];
+
+    public function check(){
+        if(!session('user'))
+            $this->redirect('/base/login');
+    }
 
     public function _initialize(){
-        session('user.user_id',1);
-        session('user.usergroup_id',3);
-        session('user.user_name','wkky');
+
         $this->queryAuthorization();
         $schoolpart= new Schoolpart();
         $table = $schoolpart->where($this->filterSchoolpart)->order('schoolpart_id')->select();
@@ -38,6 +40,7 @@ class Index extends Controller
         $this->school_part = $table;
         $this->prefix = config('database.prefix');
         $this->assign('school_part' , $table);
+        $this->assign('user' , session('user'));
     }
     //校区
 //    public function _initialize(){
@@ -59,6 +62,8 @@ class Index extends Controller
     public function index(){
         return $this->fetch();
     }
+
+
     public function data(){
         $result = new ResponseData();
         $table = array();
@@ -95,7 +100,7 @@ class Index extends Controller
      *  权限过滤
      */
     public function queryAuthorization(){
-        $user = Viewuser::get(session('user.user_id'));
+        $user = Viewuser::get(array('user_id'=>session('user.user_id')));
         $authorization = $user['group_authorization'];
         $authorization = json_decode($authorization,true);
 //        $authorization = $user['user_authorization'];
@@ -105,10 +110,14 @@ class Index extends Controller
 //            $authorization = json_decode($authorization,true);
 //        }
         $this->filterSchoolpart = array('schoolpart_id'=>['in',$authorization['schoolpart']['id']]);
-        if(!$authorization['schoolpart']['full'])
+        $this->admin = true;
+        if(false == $authorization['schoolpart']['full']){
+            $this->admin = false;
             $this->filterCollege = array('college_id'=>['in',$authorization['college']['id']]);
+        }
         else
             $this->filterCollege = null;
+        $this->assign('admin', $this->admin);
     }
 
     /**
@@ -428,6 +437,9 @@ class Index extends Controller
      * 显示 一级账号下面的二级账号
      */
     public function ShowChildUser(){
+        $usergroup = new  Usergroup();
+        $table = $usergroup->where(array('user_id'=>session('user.user_id')))->select();
+        $this->assign('usergroup',$table);
         return $this->fetch('permission');
     }
 
@@ -542,7 +554,7 @@ class Index extends Controller
                     'text_description'=>$this->request->param('text_description'),
                     'usergroup_id'=>create_guid(),
                     'user_id'=>session('user.user_id'),
-                    'authorization'=>'{"schoolpart":{"action":[],"id":[]},"college":{"action":[],"id":[]}}'
+                    'authorization'=>'{"schoolpart":{"action":[],"id":[],"full":"false"},"college":{"action":[],"id":[]}}'
                 ));
             if($res>=1){
                 return ResponseData::getInstance (1,null,array(),array(),$this->request->isAjax());
@@ -596,7 +608,7 @@ class Index extends Controller
                 return ResponseData::getInstance (0,'保存失败',array(),array(),$this->request->isAjax());
             }
         }catch (PDOException $e){
-            $error = '添加失败';
+            $error = '保存失败';
             getError($e->getCode(),$error);
             return ResponseData::getInstance (0,$error,array(),array(),$this->request->isAjax());
         }
@@ -781,5 +793,44 @@ class Index extends Controller
         $tempTable= Db::table(config('database.prefix').'viewrequestcord') ->where($whereNew)
             ->select();
         return ResponseData::getInstance (1,null,array($table),array('total'=>count($tempTable)),$this->request->isAjax());
+    }
+
+    public function createUser(){
+        sleep(1);
+        try{
+            $user = new User();
+            $data = $this->request->param(true);
+            $res = $user->where(array('user_name'=>$data['user_name']))->select();
+            if($res){
+                return ResponseData::getInstance (0,'该用户名已经被使用',array(),array(),$this->request->isAjax());
+            }else{
+                $data['user_id'] = create_guid();
+                unset($data['/index/createUser']);
+                $n = $user->insert($data);
+                if($n){
+                    return ResponseData::getInstance (1,null,array(),array(),$this->request->isAjax());
+                }else{
+                    return ResponseData::getInstance (0,'创建失败',array(),array(),$this->request->isAjax());
+                }
+            }
+
+        }catch (\Exception $e){
+            return ResponseData::getInstance (0,$e->getMessage(),array(),array(),$this->request->isAjax());
+        }
+    }
+
+    public function deleteUser(){
+        sleep(1);
+        try{
+            $user = new User();
+            $n = $user->where(array('user_id'=>$this->request->param('user_id')))->delete();
+            if($n){
+                return ResponseData::getInstance (1,null,array(),array(),$this->request->isAjax());
+            }else{
+                return ResponseData::getInstance (0,'删除失败',array(),array(),$this->request->isAjax());
+            }
+        }catch (\Exception $e){
+            return ResponseData::getInstance (0,$e->getMessage(),array(),array(),$this->request->isAjax());
+        }
     }
 }

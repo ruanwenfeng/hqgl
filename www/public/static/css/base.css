@@ -31,3 +31,39 @@ body{
 .iframe-body{
     border:none;margin: 0;padding: 0;box-sizing: border-box;width: 100%;height: 100%
 }
+
+
+
+
+
+
+
+
+
+
+
+/*公共样式*/
+.trans_3{transition: all 0.3s;
+    -moz-transition: all 0.3s; /* Firefox 4 */
+    -webkit-transition: all 0.3s; /* Safari 和 Chrome */
+    -o-transition: all 0.3s; /* Opera */}
+.layui-main{width:auto;margin:15px;}
+.hide{display: none;}
+.fill_5{clear:both;height: 5px;}
+.fill_10{clear:both;height: 10px;}
+.fill_20{clear:both;height: 20px;}
+.fill_50{clear:both;height: 50px;}
+.fill_100{clear:both;height: 100px;}
+.clear{clear:both;}
+
+/* 弹出框 */
+/* 登陆页面 */
+.login_page{font-family: "open sans","Helvetica Neue",Helvetica,Arial,sans-serif;height:100%;text-align: center;padding-top: 40px}
+.login_page .logo-login{display: inline-block;width:250px;margin:0 auto;}
+.login_page h1{font-weight: 600;font-size: 16px;color: #676a6c;margin-bottom:20px;}
+.login_page .layui-form{width:300px;display: inline-block;margin:0 auto;}
+.layui-form-item .captcha{position: absolute;right:1px;top:1px;border-left: 1px solid #e6e6e6 }
+.layui-form-item .captcha img{height: 36px;cursor:pointer;}
+/*表单*/
+.layui-form-item .input-custom-width,.layui-form-item .input-custom-width input,.layui-form-item .input-custom-width button{width:300px;!important; }
+/*首页面板*/

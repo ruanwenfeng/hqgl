@@ -1,9 +1,6 @@
 <?php
 // 应用公共文件
-
-
 \think\Route::bind('index');
-
 function create_password($pw_length = 4){
     $chars = '123456789';
     $password = '';

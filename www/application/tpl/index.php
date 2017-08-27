@@ -1,4 +1,3 @@
-{}
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,10 +15,10 @@
             <li class="layui-nav-item">
                 <a href="javascript:void(0);">
                     <img src="__PUBLIC__/head.jpg" class="layui-nav-img">
-                    贤心
+                    {$user.user_name}
                 </a>
             </li>
-            <li class="layui-nav-item"><a href="">退了</a></li>
+            <li class="layui-nav-item"><a href="/base/logout">退了</a></li>
         </ul>
     </div>
 
@@ -38,20 +37,20 @@
                         {/volist}
                     </dl>
                 </li>
-                <li class="layui-nav-item">
-                    <a href="javascript:void(0);">权限系统</a>
-                    <dl class="layui-nav-child">
-                        <dd class="ShowChildUser"><a  href="javascript:void(0);" data-href="/index/ShowChildUser">授权管理</a></dd>
-                        <dd class="ShowUserGroup"><a  href="javascript:void(0);" data-href="/index/ShowUserGroup">用户分组</a></dd>
-                        <dd><a href="javascript:void(0)">电商平台</a></dd>
-                    </dl>
-                </li>
+                {if condition="$admin eq true"}
+                    <li class="layui-nav-item">
+                        <a href="javascript:void(0);">权限系统</a>
+                        <dl class="layui-nav-child">
+                            <dd class="ShowChildUser"><a  href="javascript:void(0);" data-href="/index/ShowChildUser">授权管理</a></dd>
+                            <dd class="ShowUserGroup"><a  href="javascript:void(0);" data-href="/index/ShowUserGroup">用户分组</a></dd>
+                        </dl>
+                    </li>
+                {/if}
                 <li class="layui-nav-item">
                     <a href="javascript:void(0);">报修系统</a>
                     <dl class="layui-nav-child">
                         <dd class=""><a  href="javascript:void(0);" data-href="/index/showPersonRepair">显示</a></dd>
                         <dd class=""><a  href="javascript:void(0);" data-href="/index/faultRepair">报修</a></dd>
-                        <dd><a href="javascript:void(0)">电商平台</a></dd>
                     </dl>
                 </li>
                 <li class="compute layui-nav-item"><a href="javascript:void(0);">计算电量</a></li>

@@ -11,7 +11,7 @@ window.require(['jquery','layui'],function ($) {
         window.flag = 0;
         $('.ShowChildUser').addClass('layui-this').closest('.layui-nav-item').addClass('layui-nav-itemed');
 
-        layui.use(['element','table','layer','laytpl'], function(){
+        layui.use(['element','table','layer','laytpl','form'], function(){
             var element = layui.element,
                 table = layui.table,
                 layer = layui.layer,
@@ -25,7 +25,8 @@ window.require(['jquery','layui'],function ($) {
 
             });
             child.setOnSuccess(function (handleResponse) {
-                console.log(handleResponse);
+
+
                 table.render({
                     elem: '#child-user-table'
                     ,cols:  [[ //标题栏
@@ -46,8 +47,36 @@ window.require(['jquery','layui'],function ($) {
                     }),
                     even:true
                 });
+
+
+
+                var deleteUser = new WkkyData();
+                deleteUser.setOnBefor(function (response) {
+                    loading(undefined,0);
+                });
+                deleteUser.setOnSuccess(function (response) {
+                    child.setRequest(new Request('/index/queryChildUser',{
+                        credentials: 'include',
+                        method: "POST"
+                    }));
+                    child.getDataFormRemote();
+                    layer.msg('删除成功');
+                });
+                deleteUser.setOnFail(function (response) {
+                    layer.msg(response.getMessage(),function () {
+
+                    });
+                });
+                deleteUser.setOnError(function (response) {
+                    layer.msg('系统错误，请稍后再试！',function () {
+
+                    });
+                });
+                deleteUser.setOnAfter(function (response) {
+                    closeLoad(1);
+                });
+
                 table.on('tool', function(obj){
-                    console.log(obj.data);
                     //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
                     var data = obj.data; //获得当前行数据
                     var layEvent = obj.event; //获得 lay-event 对应的值
@@ -75,15 +104,88 @@ window.require(['jquery','layui'],function ($) {
                             }
                         });
                     }
+                    else if(layEvent === 'del'){
+                        layer.confirm('真的删除行么', function(){
+                            var formData = new FormData();
+                            formData.append('user_id',data['user_id']);
+                            deleteUser.setRequest(new Request('/index/deleteUser',{
+                                credentials: 'include',
+                                method: "POST",
+                                body:formData
+                            }));
+                            deleteUser.getDataFormRemote();
+                        });
+                    }
                 });
             });
             child.setOnAfter(function () {
                 closeLoad(1);
             });
             child.getDataFormRemote();
+
+            var username_input = $('input[name=user_name]');
+            var pass_input = $('input[name=pass]');
+            var wkky = new WkkyData();
+            wkky.setOnBefor(function () {
+                loading();
+            });
+            wkky.setOnSuccess(function () {
+                child.setRequest(new Request('/index/queryChildUser',{
+                    credentials: 'include',
+                    method: "POST"
+                }));
+                username_input.val(null);
+                pass_input.val(null);
+                child.getDataFormRemote();
+                layer.msg('创建用户成功');
+            });
+            wkky.setOnFail(function (e) {
+                layer.msg(e.getMessage(),function () {
+
+                });
+            });
+            wkky.setOnError(function () {
+                layer.msg('系统错误，请稍后再试！');
+            });
+            wkky.setOnAfter(function () {
+                closeLoad(1);
+            });
+            form.on('submit',function (data) {
+                console.log(data.field);
+                var user_name = data.field['user_name'];
+                var pass = data.field['pass'];
+                var usergroup = data.field['usergroup_id'];
+                if($.trim(user_name) == ''){
+                    layer.msg('用户名不能为空',function () {
+
+                    });
+                    return false;
+                }
+                if($.trim(pass)==''){
+                    layer.msg('用户组密码不能为空',function () {
+
+                    });
+                    return false;
+                }
+                if($.trim(usergroup)==''){
+                    layer.msg('请选择一个用户组',function () {
+
+                    });
+                    return false;
+                }
+                var formData = new window.FormData();
+                formData.append('user_name',user_name);
+                formData.append('pass',pass);
+                formData.append('usergroup_id',usergroup);
+                var request = new Request('/index/createUser',{
+                    credentials: 'include',
+                    method: "POST",
+                    body:formData
+                });
+                wkky.setRequest(request);
+                wkky.getDataFormRemote();
+                return false;
+            });
         });
-
-
-
     });
 });

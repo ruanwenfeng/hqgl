@@ -75,7 +75,6 @@ window.require(['jquery','layui','highcharts'],function ($) {
             var max = 0;
             var title = undefined;
             $.each(data,function (index,item) {
-                title = item['text_description'];
                 _index = parseInt(item['month'])-1;
                 if(_index>max)
                     max=_index;
