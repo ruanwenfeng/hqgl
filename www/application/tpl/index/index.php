@@ -4,7 +4,6 @@
 {/block}
 {block name="page-body"}
 <iframe class="iframe-body">
-
 </iframe>
 {/block}
 {block name="script"}

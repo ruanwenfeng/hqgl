@@ -26,7 +26,14 @@
                     <div  id="lucas-paging"></div>
                 </div>
             </div>
-            <div class="layui-tab-item">内容2</div>
+            <div class="layui-tab-item">
+                <div class="layui-row">
+                    <table  id="historyTable"></table>
+                </div>
+                <div class="layui-row">
+                    <div  id="lucas-history"></div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -49,6 +56,6 @@
         {{#  } }}
 </script>
 <script>
-    require(['showPersonRepair']);
+    require(['showPersonRepair','historyRecord']);
 </script>
 {/block}

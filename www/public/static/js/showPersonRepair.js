@@ -7,7 +7,7 @@ require(["jquery","layui"],function($){
         layui.config({
             dir: '/static/layui/'
         });
-        window.lucasShowPersonRepairStatus={
+        lucasShowPersonRepairStatus={
             "1":"申请中",
             "2":"申请通过",
             "3":"修好了,可以再次使用",
@@ -25,7 +25,7 @@ require(["jquery","layui"],function($){
                 method: "POST"
             }, {page:'1'});
             initObj.setOnSuccess(function (handleResponse) {
-                console.log(handleResponse.getData());
+                // console.log(handleResponse.getData());
                 var tableIns =table.render({
                     id:'newRecord',
                     elem: '#auditingTable' //指定原始表格元素选择器（推荐id选择器）
@@ -68,6 +68,30 @@ require(["jquery","layui"],function($){
                                     item['applyContent']=item['dataRepair'];
                                 }),
                             });
+                            table.on('tool(newRecord)', function(obj){ //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
+                                var data = obj.data; //获得当前行数据
+                                var layEvent = obj.event; //获得 lay-event 对应的值
+                                var tr = obj.tr; //获得当前行 tr 的DOM对象
+                                if(layEvent === 'detail'){ //查看
+                                    window.location='/index/showLookInfo/dd/张三';
+                                } else if(layEvent === 'pass'){ //删除
+                                    layer.confirm('确定审核通过吗', function(index){
+                                        data['status']='2';
+                                        layer.close(index);
+                                        responseSimpleData(data,1);
+                                        $('.layui-table-body tr').eq(data['index'] -1).last("td").find("a").eq(1).addClass('lucasDis');
+
+                                    });
+                                } else if(layEvent === 'noPass'){ //编辑
+                                    layer.confirm('确定拒绝申请吗', function(index){
+                                        data['status']='4';
+                                        layer.close(index);
+                                        responseSimpleData(data,2);
+                                        $('.layui-table-body tr').eq(data['index'] -1).last("td").find("a").eq(2).addClass('lucasDis');
+
+                                    });
+                                }
+                            });
                         })
                         initObj.getDataFormRemote();
                     //首次不执行
@@ -84,30 +108,33 @@ require(["jquery","layui"],function($){
 
                     if(layEvent === 'detail'){ //查看
                         window.location='/index/showLookInfo/dd/张三';
-                        //do somehing
                     } else if(layEvent === 'pass'){ //删除
-                        // console.log("对当前"+data);
                         layer.confirm('确定审核通过吗', function(index){
                             data['status']='2';
-                            console.log("");
-                            console.log("查询", data)
-                            var results=responseSimpleData(data,1);
-                            if(results == "ok"){
-                                $('.layui-table-body tr').eq(data['index'] -1).last("td").find("a").eq(1).addClass('lucasDis');
-                            }
+                            responseSimpleData(data,1);
+                            layer.close(index);
+                            $('.layui-table-body tr').eq(data['index'] -1).last("td").find("a").eq(1).addClass('lucasDis');
                         });
                     } else if(layEvent === 'noPass'){ //编辑
                         //do something
                         layer.confirm('确定拒绝申请吗', function(index){
-                            // obj.del(); //删除对应行（tr）的DOM结构
-                            layer.close(index);
+                            data['status']='4';
+                            var results=responseSimpleData(data,2);
+                            if(results == "ok"){
+                                layer.close(index);
+                                $('.layui-table-body tr').eq(data['index'] -1).last("td").find("a").eq(2).addClass('lucasDis');
+                            }else{
+                                layer.close(index);
+                                alert("系统发生异常，请联系管理员");
+                            }
+
                             //向服务端发送删除指令
                         });
-                        //同步更新缓存对应的值
-                        obj.update({
-                            username: '123'
-                            ,title: 'xxx'
-                        });
+                        // //同步更新缓存对应的值
+                        // obj.update({
+                        //     username: '123'
+                        //     ,title: 'xxx'
+                        // });
                     }
                 });
 
@@ -115,13 +142,13 @@ require(["jquery","layui"],function($){
             initObj.getDataFormRemote();
 
             element.on('tab(docDemoTabBrief)', function(data){
-                console.log(this); //当前Tab标题所在的原始DOM元素
-                console.log(data.index); //得到当前Tab的所在下标
-                console.log(data.elem); //得到当前的Tab大容器
+                // console.log(this); //当前Tab标题所在的原始DOM元素
+                // console.log(data.index); //得到当前Tab的所在下标
+                // console.log(data.elem); //得到当前的Tab大容器
             });
             //传送数据到后台
             function responseSimpleData(tempData,flag) {
-                console.log(tempData);
+                // console.log(tempData);
                 if(flag == 1){
                     var applyPassObj = new window.WkkyData('/index/applyPass', {
                         credentials: 'include',
@@ -129,18 +156,44 @@ require(["jquery","layui"],function($){
                     }, {data:JSON.stringify(tempData),kind:tempData["kind"]});
                     applyPassObj.setOnSuccess(function (handleResponse) {
                         if(handleResponse.getExtra("status") == "ok"){
-                            return "ok";
+                            layer.msg('审核通过', {
+                                icon: 1,
+                                time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                            }, function(){
+                                //do something
+                            });
                         }else{
-                            alert("系统发生错误，请联系管理员");
-                            return "error";
+                            layer.alert('系统发生异常，请联系管理员');
+
                         }
                     });
                     applyPassObj.getDataFormRemote();
 
 
+                }else if(flag == 2){
+                    var applyPassObj = new window.WkkyData('/index/applyNoPass', {
+                        credentials: 'include',
+                        method: "POST"
+                    }, {data:JSON.stringify(tempData),kind:tempData["kind"]});
+                    applyPassObj.setOnSuccess(function (handleResponse) {
+                        if(handleResponse.getExtra("status") == "ok"){
+                            layer.msg('驳回通过', {
+                                icon: 1,
+                                time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                            }, function(){
+                                //do something
+                            });
+                        }else{
+                            layer.alert('系统发生异常，请联系管理员');
+                        }
+                    });
+                    applyPassObj.getDataFormRemote();
+
                 }
 
             }
+            /******************************************************以上是新消息***************/
+
 
         });
 
