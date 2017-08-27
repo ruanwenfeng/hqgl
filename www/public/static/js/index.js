@@ -6,11 +6,37 @@ window.require(['jquery','layui'],function ($) {
     layui.config({
         dir: '/static/layui/'
     });
-    layui.use('element', function(){
-        var element = layui.element;
+    window.load = null;
+    window.flag = 0;
+    layui.use(['element','layer'], function(){
+        var element = layui.element,
+            layer = layui.layer;
+
         element.on('nav', function(elem){
-            console.log($(elem).find('a').attr('data-href')); //得到当前点击的DOM对象
-            $('iframe').attr('src',$(elem).find('a').attr('data-href'));
+            if($(elem).hasClass('compute')){
+                var power = new window.WkkyData('/index/savePower',{
+                    credentials: 'include',
+                    method: "POST"
+                });
+                power.setOnBefor(function () {
+                    loading();
+                });
+                power.setOnSuccess(function (response) {
+                    layer.msg('计算成功');
+                });
+                power.setOnFail(function (response) {
+                    layer.msg(response.getMessage());
+                });
+                power.setOnError(function () {
+                    layer.msg('计算成功');
+                });
+                power.setOnAfter(function () {
+                   closeLoad(1);
+                });
+                power.getDataFormRemote();
+            }else {
+                $('iframe').attr('src',$(elem).find('a').attr('data-href'));
+            }
         });
     });
 });

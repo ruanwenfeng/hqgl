@@ -16,6 +16,7 @@ use app\index\model\Viewroom;
 use app\index\model\Viewuser;
 use think\Controller;
 use think\Db;
+use think\exception\ErrorException;
 use think\exception\PDOException;
 
 class Index extends Controller
@@ -284,8 +285,6 @@ class Index extends Controller
                 Db::rollback();
                 return ResponseData::getInstance(1, null, array(), array("result" => "error"), $this->request->isAjax());
             }
-
-
             return ResponseData::getInstance(1, null, array(), array("result" => "ok"), $this->request->isAjax());
         }
     }
@@ -293,7 +292,8 @@ class Index extends Controller
      *  获取房间用电信息
      */
     public function ViewRoomPower(){
-        $table = Db::table(config('database.prefix').'view_room_power')
+        $year = $this->request->param('year')?$this->request->param('year'):date('Y');
+        $table = Db::table(config('database.prefix').'room_power_'.$year)
             ->where(array('room_id'=>$this->request->param('room_id')))
             ->select();
         return ResponseData::getInstance (1,null,array($table),array('total'=>count($table)),$this->request->isAjax());
@@ -303,7 +303,8 @@ class Index extends Controller
      * 获取楼栋用电信息
      */
     public function ViewBuildingPower(){
-        $table = Db::table(config('database.prefix').'view_building_power')
+        $year = $this->request->param('year')?$this->request->param('year'):date('Y');
+        $table = Db::table(config('database.prefix').'building_power_'.$year)
             ->where(array('building_id'=>$this->request->param('building_id')))
             ->select();
         return ResponseData::getInstance (1,null,array($table),array('total'=>count($table)),$this->request->isAjax());
@@ -314,7 +315,8 @@ class Index extends Controller
      * 获取学院用电信息
      */
     public function ViewCollegePower(){
-        $table = Db::table(config('database.prefix').'view_college_power')
+        $year = $this->request->param('year')?$this->request->param('year'):date('Y');
+        $table = Db::table(config('database.prefix').'college_power_'.$year)
             ->where(array('college_id'=>$this->request->param('college_id')))
             ->select();
         return ResponseData::getInstance (1,null,array($table),array('total'=>count($table)),$this->request->isAjax());
@@ -324,7 +326,8 @@ class Index extends Controller
      *  获取校区用电信息
      */
     public function ViewSchoolPartPower(){
-        $table = Db::table(config('database.prefix').'view_schoolpart_power')
+        $year = $this->request->param('year')?$this->request->param('year'):date('Y');
+        $table = Db::table(config('database.prefix').'schoolpart_power_'.$year)
             ->where(array('schoolpart_id'=>$this->request->param('schoolpart_id')))
             ->select();
         return ResponseData::getInstance (1,null,array($table),array('total'=>count($table)),$this->request->isAjax());
@@ -592,6 +595,48 @@ class Index extends Controller
     }
 
 
+    //计算用电量，并保存到表里面
+    public function savePower(){
+        Db::startTrans();
+        $year = Db::table($this->prefix.'main')->field('year')->group('year')->select();
+        $date = Db::table($this->prefix.'main')->field('date')->group('date')->select();
+        try{
+            $data_table = $this->prefix.'main';
+            $var = ['room','building','college','schoolpart'];
+            foreach ($year as $value){
+                foreach ($var as $_var){
+                    $table_name = $this->prefix.$_var.'_power_'.$value['year'];
+                    $tpl_name = $this->prefix.$_var.'_power_tpl';
+                    Db::query('create  table if not exists `'.$table_name.'` like `'.$tpl_name.'`');
+                    Db::query('insert into `'.$table_name.'` '.
+                        'select main_id, '.$_var.'_id,year,month,date, SUM(num) AS num  from '.$data_table.' '.
+                        'where  year = '.$value['year'].' '.
+                        'group by '.$_var.'_id,date');
+                }
+            }
+            $now = date('Y-n');
+            foreach ($date as $value){
+                if($value['date']!=$now){
+                    //从data_table 中删除已经插入的
+                    Db::table($data_table)->where(array('date'=>$value['date']))->delete();
+                    echo  $data_table.'--'.$value['date'].' | ';
+                }else{
+                    foreach ($year as $_value) {
+                        foreach ($var as $_var) {
+                            $table_name = $this->prefix.$_var.'_power_'.$_value['year'];
+                            Db::table($table_name)->where(array('date'=>$value['date']))->delete();
+                        }
+                    }
+                    //从tabel_name 中删除已经插入的
+                }
+            }
+        }catch (\Exception $e){
+            Db::rollback();
+            return ResponseData::getInstance (0,$e->getMessage(),array(),array(),$this->request->isAjax());
+        }
+        Db::commit();
+        return ResponseData::getInstance (1,null,array(),array(),$this->request->isAjax());
+    }
 
     //更改用户所属组
     public function updateUserPermissView(){
