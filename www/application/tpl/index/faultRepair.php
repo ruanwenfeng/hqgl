@@ -4,9 +4,12 @@
 {block name="page-body"}
 
 <div id="lucasRepairMain">
+    <div class="layui-row" style="margin-top: 30px">
     <form class="layui-form" action="">
         <div class="layui-form-item">
-            <label class="layui-form-label">请选择</label>
+            <div>
+            <span style="float: left;line-height: 38px;margin-left: 10px;margin-right: 20px;">请选择您所在的地址</span>
+            </div>
             <div class="layui-input-inline">
                 <select name="quiz1" class="layui-form" id="schoolSelect" lay-filter="schoolSelectFilter">
                 </select>
@@ -25,6 +28,7 @@
             </div>
         </div>
     </form>
+    </div>
 </div>
 <table  id="equipmentTable"></table>
 <div id="extraDiv">
