@@ -97,6 +97,8 @@ class Index extends Controller
         $user = Viewuser::get(session('user.user_id'));
         $authorization = $user['group_authorization'];
         $authorization = json_decode($authorization,true);
+//        $authorization = $user['user_authorization'];
+//        $authorization = json_decode($authorization,true);
 //        if(!$authorization){
 //            $authorization = $user['group_authorization'];
 //            $authorization = json_decode($authorization,true);
