@@ -2,7 +2,7 @@
 {block name="css"}
 {/block}
 {block name="page-body"}
-<div>
+<div class="" style="overflow: auto">
     {if condition="($flag == 1)"}
         {volist name="data" id="vo"}
             <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">

@@ -2,6 +2,7 @@
 {block name="css"}
 {/block}
 {block name="page-body"}
+
 <div id="lucasRepairMain">
     <form class="layui-form" action="">
         <div class="layui-form-item">
@@ -23,7 +24,6 @@
                 </select>
             </div>
         </div>
-
     </form>
 </div>
 <table  id="equipmentTable"></table>

@@ -28,3 +28,6 @@ body{
 .disabled-form .layui-form-checkbox{
     margin-top: 5px;
 }
+.iframe-body{
+    border:none;margin: 0;padding: 0;box-sizing: border-box;width: 100%;height: 100%
+}
