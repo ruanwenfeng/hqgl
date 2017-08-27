@@ -3,7 +3,9 @@
 <link rel="stylesheet" href="__PUBLIC__/css/index.css">
 {/block}
 {block name="page-body"}
-<iframe style="border:none;margin: 0;padding: 0;box-sizing: border-box;width: 100%;height: 100%"></iframe>
+<iframe class="iframe-body">
+
+</iframe>
 {/block}
 {block name="script"}
 <script type="text/javascript">

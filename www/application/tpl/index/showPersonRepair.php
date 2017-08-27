@@ -1,5 +1,12 @@
 {extend name="base" /}
 {block name="css"}
+<style>
+    .lucasDis{
+    pointer-events: none;
+    background-color: red;
+    }
+
+</style>
 
 {/block}
 {block name="page-body"}
@@ -26,10 +33,10 @@
 {/block}
 {block name="script"}
 
-<script type="text/html" id="barDemo">
+<script type="text/html" id="barNewRecord" lay-filter="newRecord">
         <a class="layui-btn layui-btn-mini" lay-event="detail">查看</a>
-        <a class="layui-btn layui-btn-mini" lay-event="edit">审核通过</a>
-        <a class="layui-btn layui-btn-danger layui-btn-mini" lay-event="del">拒绝申请</a>
+        <a  class="layui-btn layui-btn-mini" lay-event="pass">审核通过</a>
+        <a class="layui-btn layui-btn-danger layui-btn-mini" lay-event="noPass">拒绝申请</a>
 </script>
 
 <script id="applyContent" type="text/html">

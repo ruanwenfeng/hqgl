@@ -281,7 +281,7 @@ class Index extends Controller
             } catch (\Exception $e) {
                 // 回滚事务
                 Db::rollback();
-                return ResponseData::getInstance(1, null, array(), array("result" => "error"), $this->request->isAjax());
+                return ResponseData::getInstance(1, null, array(), array("result" => "error","oo"=>$e), $this->request->isAjax());
             }
 
 
@@ -339,11 +339,11 @@ class Index extends Controller
 //
 //    }
     //审核信息初始化  即个人记录
+    // ->where("UNIX_TIMESTAMP(timer)",">=", strtotime(date("Y-m-d h:i:s",strtotime("-5 day"))))
     public function initAuditingInfo(){
         $uerId=session('user.user_id');
         $whereNew = array("request_user"=>$uerId,"status" =>1);
         $table = Db::table(config('database.prefix').'viewrequestcord') ->where($whereNew)->whereOr(array("response_user"=>$uerId))
-            ->where("UNIX_TIMESTAMP(timer)",">=", strtotime(date("Y-m-d h:i:s",strtotime("-5 day"))))
             ->distinct(true)
             ->page($this->request->param("page"),config("lucasPage"))
             ->select();
@@ -362,7 +362,6 @@ class Index extends Controller
             }
         }
         $tempTable= Db::table(config('database.prefix').'viewrequestcord') ->where($whereNew)->whereOr(array("response_user"=>$uerId))
-            ->where("UNIX_TIMESTAMP(timer)",">=", strtotime(date("Y-m-d h:i:s",strtotime("-5 day"))))->distinct(true)
             ->select();
         return ResponseData::getInstance (1,null,array($table),array('total'=>count($tempTable)),$this->request->isAjax());
     }
@@ -631,6 +630,50 @@ class Index extends Controller
             }
         }catch (PDOException $e){
             return ResponseData::getInstance (0,$e->getMessage(),array(),array(),$this->request->isAjax());
+        }
+    }
+
+
+    //确定审核通过
+    public function  applyPass(){
+
+        $kind=$this->request->param("kind");
+        if($kind == 1){
+            $flag = true;
+            Db::startTrans();
+            try{
+                $dataObj=json_decode($this->request->param("data"),true);
+                $realData=json_decode($dataObj['action'],true);
+                $realData=$realData['data'];
+                for ($i = 0 ;$i < count($realData) ;$i ++){
+                    $realDataTemp=$realData[$i]['data'];
+                    for ($j = 0 ;$j < count($realDataTemp) ; $j ++){
+                        $realData=$realDataTemp[$j];
+                        $table = Db::query('call compute_one(?)',[$realData]);
+                        $table = $table[0];
+                        foreach ($table as $key=>$value){
+                            $result=$table[$key]['message'] ;
+                            if($result == 0){
+                                $flag =false;
+                            }
+                        }
+                    }
+
+                }
+                $where=array("status"=>$dataObj['status'],"requestrecord_id" =>$dataObj['requestrecord_id']);
+                $tempTable= Db::table(config('database.prefix').'requestrecord') ->where($where)
+                    ->update(array("status" =>$dataObj['status'],"timer"=>date("Y-m-d h:i:s")));
+                Db::commit();
+            } catch (\Exception $e) {
+                // 回滚事务
+                Db::rollback();
+                return ResponseData::getInstance (0,null,array(),array("status"=>"error"),$this->request->isAjax());
+            }
+            if(!$flag){
+                Db::rollback();
+                return ResponseData::getInstance (0,null,array(),array("status"=>"error"),$this->request->isAjax());
+            }
+            return ResponseData::getInstance (1,null,array(),array("status"=>"ok"),$this->request->isAjax());
         }
     }
 }

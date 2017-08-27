@@ -218,7 +218,9 @@ require(["jquery","layui"],function($){
         //发送报修请求
         function sendFaultRepairRequest(faultEquipmentInfo) {
             var reqparam=JSON.stringify(faultEquipmentInfo);
-            window.open("/index/showReason/flag/1/request/"+reqparam);
+            // var win = $('iframe')[0].contentWindow;
+            window.location = "/index/showReason/flag/1/request/"+reqparam;
+            // window.href=
             // var faultRepairRequest = new window.WkkyData('/index/showReason',{
             //     credentials: 'include',
             //     method: "POST"
