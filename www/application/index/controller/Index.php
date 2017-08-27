@@ -256,6 +256,11 @@ class Index extends Controller
     public function lucasQueryEquipment(){
         $where["room_id"]=$this->request->param("room_id");
         $table=(new Equipment())->where($where)->select();
+        for ($i = 0 ; $i < count($table) ; $i ++){
+            if($table[$i]["status"] == 2){
+                unset($table[$i]);
+            }
+        }
         return ResponseData::getInstance (1,null,array($table),array('total'=>count($table)),$this->request->isAjax());
     }
 
@@ -731,6 +736,7 @@ class Index extends Controller
 
                 }
 
+
                 $where=array("requestrecord_id" =>$dataObj['requestrecord_id']);
                 Db::table(config('database.prefix').'requestrecord') ->where($where)
                     ->update(["status" =>$dataObj['status'],"timer"=>date("Y-m-d h:i:s")]);
@@ -747,6 +753,7 @@ class Index extends Controller
             return ResponseData::getInstance (1,null,array(),array("status"=>"ok"),$this->request->isAjax());
         }
     }
+    //审核没有通过
     public function  applyNoPass(){
 
         $kind=$this->request->param("kind");
@@ -767,11 +774,12 @@ class Index extends Controller
             return ResponseData::getInstance (1,null,array(),array("status"=>"ok"),$this->request->isAjax());
         }
     }
-    //加载历史纪录
+    //加载待处理的数据
     public function historyRecord(){
         $uerId=session('user.user_id');
-//        $whereNew = array("request_user"=>$uerId ,'status'=>'!= 1');
-        $whereNew = "(status != 1 and request_user = '".$uerId."') or (status != 1 and request_user ='".$uerId."')" ;
+
+        $whereNew = "(status = 2 and request_user = '".$uerId."') or (status = 2 and request_user ='".$uerId."')" ;
+
         $table = Db::table(config('database.prefix').'viewrequestcord') ->where($whereNew)
             ->distinct(true)
             ->page($this->request->param("page"),config("lucasPage"))
@@ -832,5 +840,65 @@ class Index extends Controller
         }catch (\Exception $e){
             return ResponseData::getInstance (0,$e->getMessage(),array(),array(),$this->request->isAjax());
         }
+    }
+    //修好了重新计算电费
+    public function  rePairCulateE(){
+        $kind=$this->request->param("kind");
+        if($kind == 1){
+            Db::startTrans();
+            try{
+                $dataObj=json_decode($this->request->param("data"),true);
+
+                $realData=json_decode($dataObj['action'],true);
+                $realData=$realData['data'];
+                for ($i = 0 ;$i < count($realData) ;$i ++){
+                    $realDataTemp=$realData[$i]['data'];
+
+                    for ($j = 0 ;$j < count($realDataTemp) ; $j ++){
+                        $realData=$realDataTemp[$j];
+
+                        Db::table(config('database.prefix').'equipment') ->where(array("equipment_id"=>$realData))
+                            ->update(["status" =>1,"last_change_date"=>date("Y-m-d h:i:s")]);
+                    }
+
+                }
+
+                $where=array("requestrecord_id" =>$dataObj['requestrecord_id']);
+                Db::table(config('database.prefix').'requestrecord') ->where($where)
+                    ->update(["status" =>$dataObj['status'],"timer"=>date("Y-m-d h:i:s")]);
+                Db::commit();
+            } catch (\Exception $e) {
+                // 回滚事务
+                Db::rollback();
+                return ResponseData::getInstance (0,null,array(),array("status"=>"error"),$this->request->isAjax());
+            }
+            return ResponseData::getInstance (1,null,array(),array("status"=>"ok"),$this->request->isAjax());
+        }
+    }
+    //加载历史记录
+    public function  realHistory(){
+            $uerId=session('user.user_id');
+            $whereNew = "((status = 4 or status = 3) and request_user = '".$uerId."') or ((status = 4 or status = 3) and request_user ='".$uerId."')" ;
+            $table = Db::table(config('database.prefix').'viewrequestcord') ->where($whereNew)
+                ->distinct(true)
+                ->page($this->request->param("page"),config("lucasPage"))
+                ->select();
+            for ($i = 0;$i < count($table) ;$i ++){
+                $dataActionJsonArray = json_decode($table[$i]['action'] ,true);
+                $dataTextDescriptionJsonObj=json_decode($table[$i]['text_description'],true);
+                if($table[$i]['kind'] == 1){
+                    $table[$i]['shoolName'] = $dataTextDescriptionJsonObj['schoolpart_id'];
+                    $table[$i]['collegeName'] = $dataTextDescriptionJsonObj['college_id'];
+                    $table[$i]['buildName'] = $dataTextDescriptionJsonObj['building_id'];
+                    $table[$i]['roomName'] = $dataTextDescriptionJsonObj['room_id'];
+                    for ($j = 0 ;$j < count($dataActionJsonArray); $j ++){
+                        $dataArray = $dataActionJsonArray['data'];
+                        $table[$i]['dataRepair'] = $dataArray;
+                    }
+                }
+            }
+            $tempTable= Db::table(config('database.prefix').'viewrequestcord') ->where($whereNew)
+                ->select();
+            return ResponseData::getInstance (1,null,array($table),array('total'=>count($tempTable)),$this->request->isAjax());
     }
 }

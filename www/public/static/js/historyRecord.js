@@ -24,9 +24,10 @@ require(["jquery","layui"],function($) {
                 method: "POST"
             }, {page: '1'});
             historyObj.setOnSuccess(function (handleResponse) {
-                // console.log(handleResponse.getData());
+                console.log("ddd",handleResponse);
                 var tableIns = table.render({
-                    elem: '#historyTable' //指定原始表格元素选择器（推荐id选择器）
+                    id:'hhdeal',
+                    elem: '#dealTable' //指定原始表格元素选择器（推荐id选择器）
                     , cols: [[{field: 'index', title: '编号', align: 'center', width: 80, sort: true}
                         , {field: 'request_username', title: '申请人', width: 80}
                         , {field: 'response_username', title: '审核人', width: 80}
@@ -34,6 +35,7 @@ require(["jquery","layui"],function($) {
                         , {field: 'applayAdress', title: '申请人地址', width: 100}
                         , {field: 'applyContent', title: '申请内容', width: 80, templet: '#applyContent'}
                         , {field: 'status', title: '申请状态', width: 177}
+                        ,{fixed:'right',title: '操作', width:150, align:'center', toolbar: '#barDeal'}
                     ]],
                     data: $.each(handleResponse.getData(), function (index, item) {
                         item['index'] = index + 1;
@@ -65,6 +67,21 @@ require(["jquery","layui"],function($) {
                                     item['applyContent'] = item['dataRepair'];
                                 }),
                             });
+                            table.on('tool(deal)', function(obj){ //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
+                                var data = obj.data; //获得当前行数据
+                                var layEvent = obj.event; //获得 lay-event 对应的值
+                                var tr = obj.tr; //获得当前行 tr 的DOM对象
+                                if(layEvent === 'continueUse'){ //删除
+                                    layer.confirm('确定继续使用', function(index){
+                                        data['status']='3';
+                                        responseSimpleData(data,1);
+                                        layer.close(index);
+                                        $('.layui-table-body tr').eq(data['index'] -1).last("td").find("a").eq(0).addClass('lucasDis');
+                                    });
+                                }
+                            });
+
+
                         })
                         historyObj.getDataFormRemote();
                         //首次不执行
@@ -72,8 +89,52 @@ require(["jquery","layui"],function($) {
                         }
                     }
                 });
+
+
+                table.on('tool(hhdeal)', function(obj){ //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
+                    var data = obj.data; //获得当前行数据
+                    var layEvent = obj.event; //获得 lay-event 对应的值
+                    var tr = obj.tr; //获得当前行 tr 的DOM对象
+                   if(layEvent === 'continueUse'){ //删除
+                        layer.confirm('确定继续使用', function(index){
+                            data['status']='3';
+                            console.log(data);
+                            responseSimpleData(data);
+
+                            layer.close(index);
+                            $('.layui-table-body tr').eq(data['index'] -1).last("td").find("a").eq(0).addClass('lucasDis');
+                        });
+                    }
+                });
+
             })
             historyObj.getDataFormRemote();
+
+            function responseSimpleData(tempData) {
+                    var repairObj = new window.WkkyData('/index/rePairCulateE', {
+                        credentials: 'include',
+                        method: "POST"
+                    }, {data:JSON.stringify(tempData),kind:tempData["kind"]});
+                    repairObj.setOnSuccess(function (handleResponse) {
+                        if(handleResponse.getExtra("status") == "ok"){
+                            layer.msg('已经重新开始计算电费', {
+                                icon: 1,
+                                time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                            }, function(){
+                                //do something
+                            });
+                        }else{
+                            layer.alert('系统发生异常，请联系管理员');
+                        }
+                    });
+                    repairObj.getDataFormRemote();
+
+
+            }
+
+
+
+
         })
     })
 })

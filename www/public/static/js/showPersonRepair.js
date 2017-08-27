@@ -36,7 +36,7 @@ require(["jquery","layui"],function($){
                         , {field: 'applayAdress', title: '申请人地址', width: 100}
                         , {field: 'applyContent', title: '申请内容', width: 80,templet:'#applyContent'}
                         , {field: 'status', title: '申请状态', width: 177}
-                        ,{fixed: 'right',title: '操作', width:150, align:'center', toolbar: '#barNewRecord'}
+                        ,{fixed: 'right',title: '操作', width:215, align:'center', toolbar: '#barNewRecord'}
                     ]],
                     data: $.each(handleResponse.getData(), function (index, item) {
                         item['index'] = index + 1;
@@ -119,22 +119,12 @@ require(["jquery","layui"],function($){
                         //do something
                         layer.confirm('确定拒绝申请吗', function(index){
                             data['status']='4';
-                            var results=responseSimpleData(data,2);
-                            if(results == "ok"){
-                                layer.close(index);
-                                $('.layui-table-body tr').eq(data['index'] -1).last("td").find("a").eq(2).addClass('lucasDis');
-                            }else{
-                                layer.close(index);
-                                alert("系统发生异常，请联系管理员");
-                            }
+                            responseSimpleData(data,2);
+                            layer.close(index);
+                            $('.layui-table-body tr').eq(data['index'] -1).last("td").find("a").eq(2).addClass('lucasDis');
 
                             //向服务端发送删除指令
                         });
-                        // //同步更新缓存对应的值
-                        // obj.update({
-                        //     username: '123'
-                        //     ,title: 'xxx'
-                        // });
                     }
                 });
 
@@ -189,10 +179,28 @@ require(["jquery","layui"],function($){
                     });
                     applyPassObj.getDataFormRemote();
 
+                }else if(flag == 3){
+                    var repairObj = new window.WkkyData('/index/rePairCulateE', {
+                        credentials: 'include',
+                        method: "POST"
+                    }, {data:JSON.stringify(tempData),kind:tempData["kind"]});
+                    repairObj.setOnSuccess(function (handleResponse) {
+                        if(handleResponse.getExtra("status") == "ok"){
+                            layer.msg('已经重新开始计算电费', {
+                                icon: 1,
+                                time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                            }, function(){
+                                //do something
+                            });
+                        }else{
+                            layer.alert('系统发生异常，请联系管理员');
+                        }
+                    });
+                    repairObj.getDataFormRemote();
                 }
 
             }
-            /******************************************************以上是新消息***************/
+
 
 
         });

@@ -14,10 +14,10 @@
     <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
         <ul class="layui-tab-title">
             <li class="layui-this">新消息</li>
+            <li>待处理</li>
             <li>历史记录</li>
         </ul>
         <div class="layui-tab-content">
-
             <div class="layui-tab-item layui-show">
                 <div class="layui-row">
                     <table  id="auditingTable"></table>
@@ -28,10 +28,18 @@
             </div>
             <div class="layui-tab-item">
                 <div class="layui-row">
-                    <table  id="historyTable"></table>
+                    <table  id="dealTable"></table>
                 </div>
                 <div class="layui-row">
                     <div  id="lucas-history"></div>
+                </div>
+            </div>
+            <div class="layui-tab-item">
+                <div class="layui-row">
+                    <table  id="realHistoryTable"></table>
+                </div>
+                <div class="layui-row">
+                    <div  id="realHistory"></div>
                 </div>
             </div>
         </div>
@@ -46,6 +54,12 @@
         <a class="layui-btn layui-btn-danger layui-btn-mini" lay-event="noPass">拒绝申请</a>
 </script>
 
+
+
+<script type="text/html" id="barDeal" lay-filter="deal">
+    <a class="layui-btn layui-btn-mini" lay-event="continueUse">继续使用</a>
+</script>
+
 <script id="applyContent" type="text/html">
         {{#  layui.each(d['dataRepair'], function(index, item){ }}
             <h4>报修的物品：{{item['text_description']}}</h4><br/>
@@ -56,6 +70,6 @@
         {{#  } }}
 </script>
 <script>
-    require(['showPersonRepair','historyRecord']);
+    require(['showPersonRepair','historyRecord','realHistory']);
 </script>
 {/block}
