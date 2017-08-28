@@ -152,7 +152,7 @@ require(["jquery","layui"],function($){
         function showFaultRepairInfo(data,roomId,scholId,collegeId,buildingId) {
             var finalSelect=[];
             var showData;
-            if(typeof  data == "undefined"){
+            if(typeof  data == typeof undefined){
                 showData="请选择你要报修的设备";
 
             }else{

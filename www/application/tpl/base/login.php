@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>LzCMS-后台管理中心</title>
+    <title>登录</title>
     <link rel="stylesheet" href="__PUBLIC__/css/base.css">
     <link rel="stylesheet" href="__PUBLIC__/layui/css/layui.css">
     <script type="text/javascript" src="__PUBLIC__/layui/layui.js"></script>
