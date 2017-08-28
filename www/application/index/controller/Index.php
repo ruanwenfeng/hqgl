@@ -41,6 +41,7 @@ class Index extends Controller
         $this->school_part = $table;
         $this->prefix = config('database.prefix');
         $this->assign('school_part' , $table);
+        $this->assign('admin' , $this->admin);
         $this->assign('user' , session('user'));
         $option  = Db::table($this->prefix.'options')->where(array('key'=>'year'))->field('value')->select()[0];
         $option = json_decode($option['value'],true);
@@ -838,7 +839,7 @@ class Index extends Controller
             ->select();
         return ResponseData::getInstance (1,null,array($table),array('total'=>count($tempTable)),$this->request->isAjax());
     }
-
+    //创建用户
     public function createUser(){
         $this->checkAdmin();
         sleep(1);
@@ -863,7 +864,7 @@ class Index extends Controller
             return ResponseData::getInstance (0,$e->getMessage(),array(),array(),$this->request->isAjax());
         }
     }
-
+    //删除用户
     public function deleteUser(){
         $this->checkAdmin();
         sleep(1);
@@ -938,5 +939,23 @@ class Index extends Controller
             $tempTable= Db::table(config('database.prefix').'viewrequestcord') ->where($whereNew)
                 ->select();
             return ResponseData::getInstance (1,null,array($table),array('total'=>count($tempTable)),$this->request->isAjax());
+    }
+
+    //修改密码
+    public function editPassView(){
+        return $this->fetch('editpass');
+    }
+    public function editPass(){
+        $user = new User();
+        $user = $user->where(array('user_id'=>session('user.user_id')))->find();
+        if($user){
+            if($user['pass'] == $this->request->param('pass')){
+                $user['pass'] = $this->request->param('new_pass');
+                if($user->save()>=1){
+                    return ResponseData::getInstance (1,null,array(),array(),$this->request->isAjax());
+                }
+            }
+        }
+        return ResponseData::getInstance (0,'修改密码失败',array(),array(),$this->request->isAjax());
     }
 }

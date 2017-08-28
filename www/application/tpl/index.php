@@ -50,10 +50,13 @@
                     <a href="javascript:void(0);">报修系统</a>
                     <dl class="layui-nav-child">
                         <dd class=""><a  href="javascript:void(0);" data-href="/index/showPersonRepair">显示</a></dd>
-                        <dd class=""><a  href="javascript:void(0);" data-href="/index/faultRepair">报修</a></dd>
+                        {if condition="$admin eq false"}
+                            <dd class=""><a  href="javascript:void(0);" data-href="/index/faultRepair">报修</a></dd>
+                        {/if}
                     </dl>
                 </li>
                 <li class="compute layui-nav-item"><a href="javascript:void(0);">计算电量</a></li>
+                <li  class="layui-nav-item"><a data-href="/index/editPassView" href="javascript:void(0);">修改密码</a></li>
             </ul>
         </div>
     </div>

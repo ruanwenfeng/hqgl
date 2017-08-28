@@ -10,7 +10,7 @@
 <body>
 <div class="login_page">
     <img class="logo-login" src="__PUBLIC__/logo-login.png" alt="logo">
-    <h1>欢迎使用 Lz</h1>
+    <h1>欢迎使用 用电设备管理系统</h1>
     <form class="layui-form">
         <div class="layui-form-item">
             <div class="layui-input-inline input-custom-width">
@@ -54,6 +54,7 @@
                     });
                 }else{
                     layer.close(loading);
+                    jq('input[name=captcha]').val(null);
                     layer.msg(data.message,function () {
                     });
                     jq('.captcha img').attr('src','/base/captcha?id='+Math.random());
