@@ -386,6 +386,11 @@ class Index extends Controller
     }
     //显示个人设备报修，及审核信息
     public function  showPersonRepair(){
+        if($this->admin == true){
+            $this->assign("isAdmin","shi");
+        }else{
+            $this->assign("isAdmin","bushi");
+        }
         return $this->fetch();
     }
     //审核信息初始化  即个人记录
