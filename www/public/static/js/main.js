@@ -5,7 +5,7 @@ require.config({
     paths : {
         "jquery" : ['http://libs.baidu.com/jquery/2.0.3/jquery'],
         'layui':'../layui/layui',
-        'test':'test',
+        'cookie':'../js/jquery.cookie',
         'highcharts':['https://cdn.hcharts.cn/highcharts/highcharts']
     }
 });

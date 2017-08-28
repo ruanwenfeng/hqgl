@@ -9,10 +9,15 @@
         <a href="javascript:void(0)"><cite>{$schoolpart_text}</cite></a>
         <a href="javascript:void(0)"><cite>学院</cite></a>
     </span>
+
     <span>
         <select title="year" name="year">
             {volist name="power_year" id="item"}
-                <option value="{$item}">{$item} 年</option>
+                {eq name="item" value="$curr_year"}
+                    <option selected  value="{$item}">{$item} 年</option>
+                {else/}
+                    <option  value="{$item}">{$item} 年</option>
+                {/eq}
             {/volist}
         </select>
     </span>

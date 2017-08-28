@@ -152,6 +152,7 @@ class Index extends Controller
     public function showCollege(){
         $schoolpart_id = $this->request->param('schoolpart_id');
         $this->assign('schoolpart_id',$schoolpart_id);
+        $this->assign('curr_year',cookie('curr_year'));
         $this->assign('schoolpart_text' ,
             (new Schoolpart())->find(array('schoolpart_id'=>$schoolpart_id))['text_description']);
         return $this->fetch('college');
@@ -165,6 +166,7 @@ class Index extends Controller
         $college_id = $this->request->param('college_id');
         $this->assign('schoolpart_id',$schoolpart_id);
         $this->assign('college_id',$college_id);
+        $this->assign('curr_year',cookie('curr_year'));
         $this->assign('schoolpart_text' ,
             (new Schoolpart())->limit(1)->where(array('schoolpart_id'=>$schoolpart_id))->find()['text_description']);
         $this->assign('college_text' ,
@@ -182,6 +184,7 @@ class Index extends Controller
         $this->assign('schoolpart_id',$schoolpart_id);
         $this->assign('college_id',$college_id);
         $this->assign('building_id',$building_id);
+        $this->assign('curr_year',cookie('curr_year'));
         $this->assign('schoolpart_text' ,
             (new Schoolpart())->limit(1)->where(array('schoolpart_id'=>$schoolpart_id))->find()['text_description']);
         $this->assign('college_text' ,
@@ -203,6 +206,7 @@ class Index extends Controller
         $this->assign('college_id',$college_id);
         $this->assign('building_id',$building_id);
         $this->assign('room_id',$room_id);
+        $this->assign('curr_year',cookie('curr_year'));
         $this->assign('schoolpart_text' ,
             (new Schoolpart())->limit(1)->where(array('schoolpart_id'=>$schoolpart_id))->find()['text_description']);
         $this->assign('college_text' ,
@@ -611,7 +615,7 @@ class Index extends Controller
         unset($input['usergroup_id']);
         unset($input['/index/saveAuthorization']);
         $authorization = ['schoolpart'=>[
-            'action'=>[],'id'=>[]
+            'action'=>[],'id'=>[],'full'=>false
         ],'college'=>[
             'action'=>[],'id'=>[]
         ]];
