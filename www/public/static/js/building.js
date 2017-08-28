@@ -1,8 +1,9 @@
 /**
  * Created by Administrator on 2017/8/21.
  */
-window.require(['jquery','layui','highcharts'],function ($) {
+window.require(['jquery','layui','highcharts','cookie'],function ($) {
     $(function () {
+        window.curr_year = $.cookie('curr_year');
         window.load = null;
         window.flag = 0;
         layui.config({
@@ -15,10 +16,11 @@ window.require(['jquery','layui','highcharts'],function ($) {
         layui.use(['element','table','layer'], function(){
             var element = layui.element,table = layui.table,layer = layui.layer;
             loading();
+
             var building = new window.WkkyData('/index/queryBuilding',{
                 credentials: 'include',
                 method: "POST"
-            },{schoolpart_id:schoolpart_id,college_id:college_id});
+            },{schoolpart_id:schoolpart_id,college_id:college_id,year:curr_year});
             building.setOnSuccess(function (handleResponse) {
                 table.render({
                     elem: '#building-table'
@@ -67,8 +69,10 @@ window.require(['jquery','layui','highcharts'],function ($) {
             });
             building.setOnAfter(function () {
                 closeLoad(2);
+
             });
             building.getDataFormRemote();
+
         });
         var college = new WkkyData('/index/ViewCollegePower',{
             credentials: 'include',
@@ -84,8 +88,10 @@ window.require(['jquery','layui','highcharts'],function ($) {
             $.each(data,function (index,item) {
                 _index = parseInt(item['month'])-1;
                 title = item['text_description'];
-                if(_index>max)
+                if(_index>max){
+                    title = '截止日期 '+item['date'];
                     max=_index;
+                }
                 _num[_index] = parseInt(parseInt(item['num'])/1000);
             });
             var tp = _num[max++];
@@ -94,7 +100,7 @@ window.require(['jquery','layui','highcharts'],function ($) {
             }
             var chart = new Highcharts.Chart('chart', {
                 title: {
-                    text: title,
+                    text: $('cite').eq(0).text(),
                     x: -20
                 },
                 chart: {
@@ -109,7 +115,7 @@ window.require(['jquery','layui','highcharts'],function ($) {
                     }
                 },
                 subtitle: {
-                    text: '数据来源: WorldClimate.com',
+                    text: title,
                     x: -20
                 },
                 xAxis: {
@@ -141,8 +147,22 @@ window.require(['jquery','layui','highcharts'],function ($) {
             });
             closeLoad();
         });
+        function getDataAgain(e) {
+            window.curr_year = e.target.value;
+            $.cookie('curr_year',window.curr_year,{ path: '/' });
+            var formData = new FormData();
+            formData.append('college_id',college_id);
+            formData.append('year',curr_year);
+            college.setRequest(new Request('/index/ViewCollegePower',{
+                credentials: 'include',
+                method: "POST",
+                body:formData
+            }));
+            college.getDataFormRemote();
+        }
         college.setOnAfter(function () {
             closeLoad(2);
+            $('select[name=year]')[0].addEventListener('change',getDataAgain);
         });
         college.getDataFormRemote();
     });

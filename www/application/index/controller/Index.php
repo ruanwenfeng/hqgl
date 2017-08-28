@@ -11,6 +11,7 @@ use app\index\model\Viewcollege;
 use app\index\model\Viewequipment;
 use app\index\model\Viewroom;
 use app\index\model\Viewuser;
+use think\console\input\Option;
 use think\Controller;
 use think\Db;
 use think\exception\PDOException;
@@ -41,7 +42,24 @@ class Index extends Controller
         $this->prefix = config('database.prefix');
         $this->assign('school_part' , $table);
         $this->assign('user' , session('user'));
+        $option  = Db::table($this->prefix.'options')->where(array('key'=>'year'))->field('value')->select()[0];
+        $option = json_decode($option['value'],true);
+        $this->assign('power_year' , $option);
     }
+
+    public function checkAdmin(){
+        if(!$this->admin){
+            session(null);
+            if($this->request->isAjax()){
+                return ResponseData::getInstance (0,'非法操作',array(),array(),$this->request->isAjax());
+            }else{
+                $this->redirect('/base/login');
+                exit();
+            }
+        }
+        return null;
+    }
+
     //校区
 //    public function _initialize(){
 //        session('user.user_id',1);
@@ -134,6 +152,7 @@ class Index extends Controller
     public function showCollege(){
         $schoolpart_id = $this->request->param('schoolpart_id');
         $this->assign('schoolpart_id',$schoolpart_id);
+        $this->assign('curr_year',cookie('curr_year'));
         $this->assign('schoolpart_text' ,
             (new Schoolpart())->find(array('schoolpart_id'=>$schoolpart_id))['text_description']);
         return $this->fetch('college');
@@ -147,6 +166,7 @@ class Index extends Controller
         $college_id = $this->request->param('college_id');
         $this->assign('schoolpart_id',$schoolpart_id);
         $this->assign('college_id',$college_id);
+        $this->assign('curr_year',cookie('curr_year'));
         $this->assign('schoolpart_text' ,
             (new Schoolpart())->limit(1)->where(array('schoolpart_id'=>$schoolpart_id))->find()['text_description']);
         $this->assign('college_text' ,
@@ -164,6 +184,7 @@ class Index extends Controller
         $this->assign('schoolpart_id',$schoolpart_id);
         $this->assign('college_id',$college_id);
         $this->assign('building_id',$building_id);
+        $this->assign('curr_year',cookie('curr_year'));
         $this->assign('schoolpart_text' ,
             (new Schoolpart())->limit(1)->where(array('schoolpart_id'=>$schoolpart_id))->find()['text_description']);
         $this->assign('college_text' ,
@@ -185,6 +206,7 @@ class Index extends Controller
         $this->assign('college_id',$college_id);
         $this->assign('building_id',$building_id);
         $this->assign('room_id',$room_id);
+        $this->assign('curr_year',cookie('curr_year'));
         $this->assign('schoolpart_text' ,
             (new Schoolpart())->limit(1)->where(array('schoolpart_id'=>$schoolpart_id))->find()['text_description']);
         $this->assign('college_text' ,
@@ -447,6 +469,7 @@ class Index extends Controller
      * 显示 一级账号下面的二级账号
      */
     public function ShowChildUser(){
+        $this->checkAdmin();
         $usergroup = new  Usergroup();
         $table = $usergroup->where(array('user_id'=>session('user.user_id')))->select();
         $this->assign('usergroup',$table);
@@ -454,10 +477,12 @@ class Index extends Controller
     }
 
     public function ShowUserGroup(){
+        $this->checkAdmin();
         return $this->fetch('usergroup');
     }
 
     public function queryUserGroup(){
+        $this->checkAdmin();
         $table = Db::table(config('database.prefix').'usergroup')->where(array('user_id'=>session('user.user_id')))->select();
         return ResponseData::getInstance (1,null,array($table),array('total'=>count($table)),$this->request->isAjax());
     }
@@ -466,6 +491,7 @@ class Index extends Controller
      * 获取二级账号信息
      */
     public function queryChildUser(){
+        $this->checkAdmin();
         $table = Db::query('call queryChildUser(?)',[session('user.user_id')]);
         if($table){
             $table = $table[0];
@@ -491,6 +517,7 @@ class Index extends Controller
         });
     }
     public function authorizationView(){
+        $this->checkAdmin();
         $this->assign('usergroup_id',$this->request->param('usergroup_id'));
         $curr_usergroup = Db::table(config('database.prefix').'usergroup usergroup')
             ->where(array('usergroup.usergroup_id'=>$this->request->param('usergroup_id')))
@@ -534,6 +561,7 @@ class Index extends Controller
 
 
     public function deleteUserGroup(){
+        $this->checkAdmin();
         sleep(1);
         try{
             $user = new Viewuser();
@@ -557,6 +585,7 @@ class Index extends Controller
 
     //创建用户组
     public function createUserGroup(){
+        $this->checkAdmin();
         sleep(1);
         try{
             $res = Db::table(config('database.prefix').'usergroup')
@@ -581,6 +610,7 @@ class Index extends Controller
 
     //保存 用户组权限
     public function saveAuthorization(){
+        $this->checkAdmin();
         sleep(1);
         $input = $this->request->param();
         $usergroup_id = $input['usergroup_id'];
@@ -590,7 +620,7 @@ class Index extends Controller
         unset($input['usergroup_id']);
         unset($input['/index/saveAuthorization']);
         $authorization = ['schoolpart'=>[
-            'action'=>[],'id'=>[]
+            'action'=>[],'id'=>[],'full'=>false
         ],'college'=>[
             'action'=>[],'id'=>[]
         ]];
@@ -630,10 +660,15 @@ class Index extends Controller
         Db::startTrans();
         $year = Db::table($this->prefix.'main')->field('year')->group('year')->select();
         $date = Db::table($this->prefix.'main')->field('date')->group('date')->select();
+        $option  = Db::table($this->prefix.'options')->where(array('key'=>'year'))->field('value')->select()[0];
+        $option = json_decode($option['value'],true);
         try{
             $data_table = $this->prefix.'main';
             $var = ['room','building','college','schoolpart'];
             foreach ($year as $value){
+                if(!in_array((int)intval($value['year']),$option)){
+                    $option[] =(int)intval($value['year']);
+                }
                 foreach ($var as $_var){
                     $table_name = $this->prefix.$_var.'_power_'.$value['year'];
                     $tpl_name = $this->prefix.$_var.'_power_tpl';
@@ -660,6 +695,7 @@ class Index extends Controller
                     //从tabel_name 中删除已经插入的
                 }
             }
+            Db::table($this->prefix.'options')->where(array('key'=>'year'))->update(array('value'=>json_encode($option)));
         }catch (\Exception $e){
             Db::rollback();
             return ResponseData::getInstance (0,$e->getMessage(),array(),array(),$this->request->isAjax());
@@ -670,6 +706,7 @@ class Index extends Controller
 
     //更改用户所属组
     public function updateUserPermissView(){
+        $this->checkAdmin();
         $user_id = $this->request->param('user_id');
         $usergroup_id = $this->request->param('usergroup_id');
         $usergroup = new  Usergroup();
@@ -681,6 +718,7 @@ class Index extends Controller
     }
 
     public function updateUserPermiss(){
+        $this->checkAdmin();
         sleep(1);
         $user_id = $this->request->param('user_id');
         $usergroup_id = $this->request->param('usergroup_id');
@@ -738,12 +776,11 @@ class Index extends Controller
                         }
                     }
                 }
-
                 $where=array("requestrecord_id" =>$dataObj['requestrecord_id']);
                 Db::table(config('database.prefix').'requestrecord') ->where($where)
                     ->update(["status" =>$dataObj['status'],"timer"=>date("Y-m-d h:i:s")]);
+//                Db::commit();
                 if(!$flag){
-
                     Db::rollback();
                     return ResponseData::getInstance (0,null,array(),array("status"=>"error"),$this->request->isAjax());
                 }else{
@@ -754,7 +791,6 @@ class Index extends Controller
                 Db::rollback();
                 return ResponseData::getInstance (0,null,array(),array("status"=>"error"),$this->request->isAjax());
             }
-
             return ResponseData::getInstance (1,null,array(),array("status"=>"ok"),$this->request->isAjax());
         }
     }
@@ -809,6 +845,7 @@ class Index extends Controller
     }
 
     public function createUser(){
+        $this->checkAdmin();
         sleep(1);
         try{
             $user = new User();
@@ -833,6 +870,7 @@ class Index extends Controller
     }
 
     public function deleteUser(){
+        $this->checkAdmin();
         sleep(1);
         try{
             $user = new User();

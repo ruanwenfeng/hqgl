@@ -1,8 +1,14 @@
 /**
  * Created by Administrator on 2017/8/21.
  */
-window.require(['jquery','layui','highcharts'],function ($) {
+window.require(['jquery','layui','highcharts','cookie'],function ($) {
     $(function () {
+        window.curr_year = $.cookie('curr_year');
+        if(typeof window.curr_year == typeof  undefined){
+            var date=new Date;
+            window.curr_year = date.getFullYear();
+            $.cookie('curr_year',window.curr_year,{ path: '/' });
+        }
         window.load = null;
         window.flag = 0;
         layui.config({
@@ -10,9 +16,11 @@ window.require(['jquery','layui','highcharts'],function ($) {
         });
         $('.schoolpart_active').closest('.layui-nav-item').addClass('layui-nav-itemed');
         var schoolpart_id = $('.main-div-body').attr('data-schoolpart-id');
+
         layui.use(['element','table'], function(){
             var element = layui.element,table = layui.table,layer = layui.layer;
             loading();
+
             var college = new window.WkkyData('/index/queryCollege',{
                 credentials: 'include',
                 method: "POST"
@@ -63,11 +71,25 @@ window.require(['jquery','layui','highcharts'],function ($) {
                 closeLoad(2);
             });
             college.getDataFormRemote();
+
         });
         var schoolPart = new WkkyData('/index/ViewSchoolPartPower',{
             credentials: 'include',
             method: "POST"
-        },{schoolpart_id:schoolpart_id});
+        },{schoolpart_id:schoolpart_id,year:curr_year});
+        function getDataAgain(e) {
+            window.curr_year = e.target.value;
+            $.cookie('curr_year',window.curr_year,{ path: '/' });
+            var formData = new FormData();
+            formData.append('schoolpart_id',schoolpart_id);
+            formData.append('year',curr_year);
+            schoolPart.setRequest(new Request('/index/ViewSchoolPartPower',{
+                credentials: 'include',
+                method: "POST",
+                body:formData
+            }));
+            schoolPart.getDataFormRemote();
+        }
         schoolPart.setOnSuccess(function (handleResponse) {
             // 获取 CSV 数据并初始化图表
             var data = handleResponse.getData();
@@ -76,8 +98,10 @@ window.require(['jquery','layui','highcharts'],function ($) {
             var title = undefined;
             $.each(data,function (index,item) {
                 _index = parseInt(item['month'])-1;
-                if(_index>max)
+                if(_index>max){
+                    title = '截止日期 '+item['date'];
                     max=_index;
+                }
                 _num[_index] = parseInt(parseInt(item['num'])/1000);
             });
             var tp = _num[max++];
@@ -86,7 +110,7 @@ window.require(['jquery','layui','highcharts'],function ($) {
             }
             var chart = new Highcharts.Chart('chart', {
                 title: {
-                    text: title,
+                    text: $('cite').eq(0).text(),
                     x: -20
                 },
                 chart: {
@@ -101,7 +125,7 @@ window.require(['jquery','layui','highcharts'],function ($) {
                     }
                 },
                 subtitle: {
-                    text: '数据来源: WorldClimate.com',
+                    text: title,
                     x: -20
                 },
                 xAxis: {
@@ -134,6 +158,7 @@ window.require(['jquery','layui','highcharts'],function ($) {
         });
         schoolPart.setOnAfter(function () {
             closeLoad(2);
+            $('select[name=year]')[0].addEventListener('change',getDataAgain);
         });
         schoolPart.getDataFormRemote();
     });

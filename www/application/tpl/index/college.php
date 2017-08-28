@@ -9,6 +9,18 @@
         <a href="javascript:void(0)"><cite>{$schoolpart_text}</cite></a>
         <a href="javascript:void(0)"><cite>学院</cite></a>
     </span>
+
+    <span>
+        <select title="year" name="year">
+            {volist name="power_year" id="item"}
+                {eq name="item" value="$curr_year"}
+                    <option selected  value="{$item}">{$item} 年</option>
+                {else/}
+                    <option  value="{$item}">{$item} 年</option>
+                {/eq}
+            {/volist}
+        </select>
+    </span>
     <div class="line"></div>
     <div id="chart" style="min-width:400px;height:300px"></div>
     <table  id="college-table"></table>

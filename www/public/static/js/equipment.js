@@ -1,8 +1,9 @@
 /**
  * Created by Administrator on 2017/8/21.
  */
-window.require(['jquery','layui','highcharts'],function ($) {
+window.require(['jquery','layui','highcharts','cookie'],function ($) {
     $(function () {
+        window.curr_year = $.cookie('curr_year');
         window.load = null;
         window.flag = 0;
         layui.config({
@@ -20,7 +21,7 @@ window.require(['jquery','layui','highcharts'],function ($) {
             var equipment = new window.WkkyData('/index/queryEquipMent',{
                 credentials: 'include',
                 method: "POST"
-            },{schoolpart_id:schoolpart_id,college_id:college_id,building_id:building_id,room_id:room_id});
+            },{schoolpart_id:schoolpart_id,college_id:college_id,building_id:building_id,room_id:room_id,year:curr_year});
             equipment.setOnSuccess(function (handleResponse) {
                 table.render({
                     id:'test',
@@ -84,8 +85,10 @@ window.require(['jquery','layui','highcharts'],function ($) {
             $.each(data,function (index,item) {
                 title = item['room_num'];
                 _index = parseInt(item['month'])-1;
-                if(_index>max)
+                if(_index>max){
+                    title = '截止日期 '+item['date'];
                     max=_index;
+                }
                 _num[_index] = parseInt(parseInt(item['num'])/1000);
             });
             var tp = _num[max++];
@@ -94,7 +97,7 @@ window.require(['jquery','layui','highcharts'],function ($) {
             }
             var chart = new Highcharts.Chart('chart', {
                 title: {
-                    text: title,
+                    text: $('cite').eq(0).text(),
                     x: -20
                 },
                 chart: {
@@ -109,7 +112,7 @@ window.require(['jquery','layui','highcharts'],function ($) {
                     }
                 },
                 subtitle: {
-                    text: '数据来源: WorldClimate.com',
+                    text: title,
                     x: -20
                 },
                 xAxis: {
@@ -140,8 +143,22 @@ window.require(['jquery','layui','highcharts'],function ($) {
                 }]
             });
         });
+        function getDataAgain(e) {
+            window.curr_year = e.target.value;
+            $.cookie('curr_year',window.curr_year,{ path: '/' });
+            var formData = new FormData();
+            formData.append('room_id',room_id);
+            formData.append('year',curr_year);
+            room.setRequest(new Request('/index/ViewRoomPower',{
+                credentials: 'include',
+                method: "POST",
+                body:formData
+            }));
+            room.getDataFormRemote();
+        }
         room.setOnAfter(function () {
             closeLoad(2);
+            $('select[name=year]')[0].addEventListener('change',getDataAgain);
         });
         room.getDataFormRemote();
     });
