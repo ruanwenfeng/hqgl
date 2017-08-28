@@ -387,8 +387,8 @@ class Index extends Controller
     // ->where("UNIX_TIMESTAMP(timer)",">=", strtotime(date("Y-m-d h:i:s",strtotime("-5 day"))))
     public function initAuditingInfo(){
         $uerId=session('user.user_id');
-        $whereNew = array("request_user"=>$uerId,"status" =>1);
-        $table = Db::table(config('database.prefix').'viewrequestcord') ->where($whereNew)->whereOr(array("response_user"=>$uerId))
+        $whereNew = "(status = 1 and request_user = '".$uerId."') or (status = 1 and response_user ='".$uerId."')" ;
+        $table = Db::table(config('database.prefix').'viewrequestcord') ->where($whereNew)
             ->distinct(true)
             ->page($this->request->param("page"),config("lucasPage"))
             ->select();
@@ -406,7 +406,7 @@ class Index extends Controller
                 }
             }
         }
-        $tempTable= Db::table(config('database.prefix').'viewrequestcord') ->where($whereNew)->whereOr(array("response_user"=>$uerId))
+        $tempTable= Db::table(config('database.prefix').'viewrequestcord') ->where($whereNew)
             ->select();
         return ResponseData::getInstance (1,null,array($table),array('total'=>count($tempTable)),$this->request->isAjax());
     }
@@ -742,47 +742,45 @@ class Index extends Controller
 
     //确定审核通过
     public function  applyPass(){
-
         $kind=$this->request->param("kind");
-
-        if($kind == 1){
+        if(($kind == 1) && ($this->admin == true)){
             $flag = true;
             Db::startTrans();
             try{
                 $dataObj=json_decode($this->request->param("data"),true);
-                $realData=json_decode($dataObj['action'],true);
-                $realData=$realData['data'];
+                $realDa=json_decode($dataObj['action'],true);
+                $realData=$realDa['data'];
+
                 for ($i = 0 ;$i < count($realData) ;$i ++){
                     $realDataTemp=$realData[$i]['data'];
-
                     for ($j = 0 ;$j < count($realDataTemp) ; $j ++){
-                        $realData=$realDataTemp[$j];
-                        $table = Db::query('call compute_one(?)',[$realData]);
-                        $table = $table[0];
-                        foreach ($table as $key=>$value){
-                            $result=$table[$key]['message'] ;
-                            if($result == 0){
-                                $flag =false;
+                        $realDataconfirm=$realDataTemp[$j];
+                        $table = Db::query('call compute_one(?)',[$realDataconfirm]);
+                        $table1 = $table[0];
+                        foreach ($table1 as $key=>$value){
 
+                            $result=$table1[$key]['message'] ;
+                            if($result == 0){
+                                var_dump("ddd");
+                                $flag =false;
                             }
                         }
                     }
-
                 }
                 $where=array("requestrecord_id" =>$dataObj['requestrecord_id']);
                 Db::table(config('database.prefix').'requestrecord') ->where($where)
                     ->update(["status" =>$dataObj['status'],"timer"=>date("Y-m-d h:i:s")]);
 //                Db::commit();
+                if(!$flag){
+                    Db::rollback();
+                    return ResponseData::getInstance (0,null,array(),array("status"=>"error"),$this->request->isAjax());
+                }else{
+                    Db::commit();
+                }
             } catch (\Exception $e) {
                 // 回滚事务
                 Db::rollback();
                 return ResponseData::getInstance (0,null,array(),array("status"=>"error"),$this->request->isAjax());
-            }
-            if(!$flag){
-                Db::rollback();
-                return ResponseData::getInstance (0,null,array(),array("status"=>"error"),$this->request->isAjax());
-            }else{
-                Db::commit();
             }
             return ResponseData::getInstance (1,null,array(),array("status"=>"ok"),$this->request->isAjax());
         }
@@ -792,7 +790,7 @@ class Index extends Controller
 
         $kind=$this->request->param("kind");
 
-        if($kind == 1){
+        if(($kind == 1) && ($this->admin == true)){
             Db::startTrans();
             try{
                 $dataObj=json_decode($this->request->param("data"),true);
@@ -812,7 +810,7 @@ class Index extends Controller
     public function historyRecord(){
         $uerId=session('user.user_id');
 
-        $whereNew = "(status = 2 and request_user = '".$uerId."') or (status = 2 and request_user ='".$uerId."')" ;
+        $whereNew = "(status = 2 and request_user = '".$uerId."') or (status = 2 and response_user ='".$uerId."')" ;
 
         $table = Db::table(config('database.prefix').'viewrequestcord') ->where($whereNew)
             ->distinct(true)
@@ -880,7 +878,7 @@ class Index extends Controller
     //修好了重新计算电费
     public function  rePairCulateE(){
         $kind=$this->request->param("kind");
-        if($kind == 1){
+        if(($kind == 1) && ($this->admin == true)){
             Db::startTrans();
             try{
                 $dataObj=json_decode($this->request->param("data"),true);
@@ -891,9 +889,9 @@ class Index extends Controller
                     $realDataTemp=$realData[$i]['data'];
 
                     for ($j = 0 ;$j < count($realDataTemp) ; $j ++){
-                        $realData=$realDataTemp[$j];
+                        $realDataString=$realDataTemp[$j];
 
-                        Db::table(config('database.prefix').'equipment') ->where(array("equipment_id"=>$realData))
+                        Db::table(config('database.prefix').'equipment') ->where(array("equipment_id"=>$realDataString))
                             ->update(["status" =>1,"last_change_date"=>date("Y-m-d h:i:s")]);
                     }
 
@@ -914,7 +912,7 @@ class Index extends Controller
     //加载历史记录
     public function  realHistory(){
             $uerId=session('user.user_id');
-            $whereNew = "((status = 4 or status = 3) and request_user = '".$uerId."') or ((status = 4 or status = 3) and request_user ='".$uerId."')" ;
+            $whereNew = "((status = 4 or status = 3) and request_user = '".$uerId."') or ((status = 4 or status = 3) and response_user ='".$uerId."')" ;
             $table = Db::table(config('database.prefix').'viewrequestcord') ->where($whereNew)
                 ->distinct(true)
                 ->page($this->request->param("page"),config("lucasPage"))

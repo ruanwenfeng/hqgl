@@ -74,9 +74,9 @@ require(["jquery","layui"],function($) {
                                 if(layEvent === 'continueUse'){ //删除
                                     layer.confirm('确定继续使用', function(index){
                                         data['status']='3';
+                                        $('.layui-table-body tr').eq(data['index'] -1).last("td").find("a").eq(0).addClass('lucasDis');
                                         responseSimpleData(data,1);
                                         layer.close(index);
-                                        $('.layui-table-body tr').eq(data['index'] -1).last("td").find("a").eq(0).addClass('lucasDis');
                                     });
                                 }
                             });
@@ -99,10 +99,9 @@ require(["jquery","layui"],function($) {
                         layer.confirm('确定继续使用', function(index){
                             data['status']='3';
                             console.log(data);
-                            responseSimpleData(data);
-
-                            layer.close(index);
                             $('.layui-table-body tr').eq(data['index'] -1).last("td").find("a").eq(0).addClass('lucasDis');
+                            responseSimpleData(data);
+                            layer.close(index);
                         });
                     }
                 });
