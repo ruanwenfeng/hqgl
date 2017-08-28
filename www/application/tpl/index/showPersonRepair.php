@@ -48,17 +48,27 @@
 {/block}
 {block name="script"}
 
+{if condition="$isAdmin eq 'shi'"}
 <script type="text/html" id="barNewRecord" lay-filter="newRecord">
         <a class="layui-btn layui-btn-mini" lay-event="detail">查看</a>
         <a  class="layui-btn layui-btn-mini" lay-event="pass">审核通过</a>
         <a class="layui-btn layui-btn-danger layui-btn-mini" lay-event="noPass">拒绝申请</a>
 </script>
+{else /}
+<script type="text/html" id="barNewRecord" lay-filter="newRecord">
+    <a class="layui-btn layui-btn-mini" lay-event="detail">查看</a>
+</script>
+{/if}
 
-
-
+{if condition="$isAdmin eq 'shi'"}
 <script type="text/html" id="barDeal" lay-filter="deal">
     <a class="layui-btn layui-btn-mini" lay-event="continueUse">继续使用</a>
 </script>
+{else /}
+<script type="text/html" id="barDeal" lay-filter="deal">
+    <a style="pointer-events:none;" class="layui-btn layui-btn-mini" lay-event="continueUse">等待结果</a>
+</script>
+{/if}
 
 <script id="applyContent" type="text/html">
         {{#  layui.each(d['dataRepair'], function(index, item){ }}
