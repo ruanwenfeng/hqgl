@@ -469,6 +469,7 @@ class Index extends Controller
         $this->assign("data", $requestObj);
         return $this->fetch();
     }
+
     /*
      * 显示 一级账号下面的二级账号
      */
