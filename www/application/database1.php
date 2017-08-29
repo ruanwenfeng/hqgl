@@ -1,21 +1,15 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: Administrator
- * Date: 2017/8/29
- * Time: 11:46
- */
+﻿<?php
 return [
     // 数据库类型
     'type'            => 'mysql',
     // 服务器地址
-    'hostname'        => '118.89.64.82',
+    'hostname'        => '127.0.0.1',
     // 数据库名
     'database'        => 'hqgl_db_2',
     // 用户名
     'username'        => 'root',
     // 密码
-    'password'        => 'mynameis888',
+    'password'        => 'wozai123',
     // 端口
     'hostport'        => '',
     // 连接dsn

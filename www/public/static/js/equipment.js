@@ -84,7 +84,7 @@ window.require(['jquery','layui','highcharts','cookie'],function ($) {
             var title = undefined;
             $.each(data,function (index,item) {
                 title = item['room_num'];
-                _index = parseInt(item['month'])-1;
+                _index = parseInt(item['date'].split("-")[1])-1;
                 if(_index>max){
                     title = '截止日期 '+item['date'];
                     max=_index;

@@ -14,6 +14,10 @@ window.require(['jquery','layui','highcharts','cookie'],function ($) {
         var schoolpart_id = main.attr('data-schoolpart-id');
         var college_id = main.attr('data-college-id');
         var building_id = main.attr('data-building-id');
+        var text = $('span.layui-breadcrumb a');
+        var schoolpart_text =text.eq(0).text();
+        var college_text =text.eq(1).text();
+        var building_text =text.eq(2).text();
         layui.use(['element','table','layer'], function(){
             var element = layui.element,table = layui.table,layer = layui.layer;
             loading();
@@ -41,6 +45,9 @@ window.require(['jquery','layui','highcharts','cookie'],function ($) {
                     },
                     data:$.each(handleResponse.getData(),function (index, item) {
                             item['index'] = index+1;
+                            item['校区名称'] = schoolpart_text;
+                            item['学院名称'] = college_text;
+                            item['楼宇名称'] = building_text;
                         }),
                     even:true
                 });
@@ -98,7 +105,7 @@ window.require(['jquery','layui','highcharts','cookie'],function ($) {
             var title = undefined;
             $.each(data,function (index,item) {
                 title = item['text_description'];
-                _index = parseInt(item['month'])-1;
+                _index = parseInt(item['date'].split("-")[1])-1;
                 if(_index>max){
                     title = '截止日期 '+item['date'];
                     max=_index;

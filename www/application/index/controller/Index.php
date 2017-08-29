@@ -223,11 +223,12 @@ class Index extends Controller
      * 查询用电设备信息
      */
     public function queryEquipMent(){
-        $table = (new Viewequipment())->where([
-            'schoolpart_id'=>$this->request->param('schoolpart_id'),
-            'college_id'=>$this->request->param('college_id'),
-            'building_id'=>$this->request->param('building_id'),
-            'room_id'=>$this->request->param('room_id')])->select();
+//        $table = (new Viewequipment())->where([
+//            'schoolpart_id'=>$this->request->param('schoolpart_id'),
+//            'college_id'=>$this->request->param('college_id'),
+//            'building_id'=>$this->request->param('building_id'),
+//            'room_id'=>$this->request->param('room_id')])->select();
+        $table = Db::query('call viewequipment(?)',[$this->request->param('room_id')])[0];
         return ResponseData::getInstance (1,null,array($table),array('total'=>count($table)),$this->request->isAjax());
     }
 
@@ -235,10 +236,12 @@ class Index extends Controller
      * 查询房间信息
      */
     public function queryRoom(){
-        $table = (new Viewroom())->where([
-            'schoolpart_id'=>$this->request->param('schoolpart_id'),
-            'college_id'=>$this->request->param('college_id'),
-            'building_id'=>$this->request->param('building_id')])->select();
+//        $table = (new Viewroom())->where([
+//            'schoolpart_id'=>$this->request->param('schoolpart_id'),
+//            'college_id'=>$this->request->param('college_id'),
+//            'building_id'=>$this->request->param('building_id')])->select();
+        $table = Db::query('call viewroom(?,?,?)',[$this->request->param('schoolpart_id'),
+            $this->request->param('college_id'),$this->request->param('building_id')])[0];
         return ResponseData::getInstance (1,null,array($table),array('total'=>count($table)),$this->request->isAjax());
     }
 
@@ -674,18 +677,18 @@ class Index extends Controller
                     $table_name = $this->prefix.$_var.'_power_'.$value['year'];
                     $tpl_name = $this->prefix.$_var.'_power_tpl';
                     Db::query('create  table if not exists `'.$table_name.'` like `'.$tpl_name.'`');
-                    Db::query('insert into `'.$table_name.'` '.
-                        'select main_id, '.$_var.'_id,year,month,date, SUM(num) AS num  from '.$data_table.' '.
-                        'where  year = '.$value['year'].' '.
-                        'group by '.$_var.'_id,date');
+//                    Db::query('insert into `'.$table_name.'`('.$_var.'_id,date,num)  '.
+//                        'select  '.$_var.'_id,date, SUM(num) AS num  from '.$data_table.' '.
+//                        'where  year = '.$value['year'].' '.
+//                        'group by '.$_var.'_id,date');
                 }
             }
             $now = date('Y-n');
             foreach ($date as $value){
                 if($value['date']!=$now){
                     //从data_table 中删除已经插入的
-                    Db::table($data_table)->where(array('date'=>$value['date']))->delete();
-                    echo  $data_table.'--'.$value['date'].' | ';
+                  //  Db::table($data_table)->where(array('date'=>$value['date']))->delete();
+                   // echo  $data_table.'--'.$value['date'].' | ';
                 }else{
                     foreach ($year as $_value) {
                         foreach ($var as $_var) {
