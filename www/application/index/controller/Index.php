@@ -662,6 +662,7 @@ class Index extends Controller
 
     //计算用电量，并保存到表里面
     public function savePower(){
+        set_time_limit(0);
         Db::startTrans();
         $year = Db::table($this->prefix.'main')->field('year')->group('year')->select();
         $date = Db::table($this->prefix.'main')->field('date')->group('date')->select();
@@ -678,33 +679,27 @@ class Index extends Controller
                     $table_name = $this->prefix.$_var.'_power_'.$value['year'];
                     $tpl_name = $this->prefix.$_var.'_power_tpl';
                     Db::query('create  table if not exists `'.$table_name.'` like `'.$tpl_name.'`');
-//                    Db::query('insert into `'.$table_name.'`('.$_var.'_id,date,num)  '.
-//                        'select  '.$_var.'_id,date, SUM(num) AS num  from '.$data_table.' '.
-//                        'where  year = '.$value['year'].' '.
-//                        'group by '.$_var.'_id,date');
+                    Db::query('insert into `'.$table_name.'`('.$_var.'_id,date,num)  '.
+                        'select  '.$_var.'_id,date, SUM(num) AS num  from '.$data_table.' '.
+                        'where  year = '.$value['year'].' '.
+                        'group by '.$_var.'_id,date');
                 }
             }
             $now = date('Y-n');
-            foreach ($date as $value){
-                if($value['date']!=$now){
-                    //从data_table 中删除已经插入的
-                  //  Db::table($data_table)->where(array('date'=>$value['date']))->delete();
-                   // echo  $data_table.'--'.$value['date'].' | ';
-                }else{
-                    foreach ($year as $_value) {
-                        foreach ($var as $_var) {
-                            $table_name = $this->prefix.$_var.'_power_'.$_value['year'];
-                            Db::table($table_name)->where(array('date'=>$value['date']))->delete();
-                        }
-                    }
-                    //从tabel_name 中删除已经插入的
+            Db::query('call deletemain(?)',[$now]);
+            foreach ($year as $_value) {
+                foreach ($var as $_var) {
+                    $table_name = $this->prefix.$_var.'_power_'.$_value['year'];
+                    Db::table($table_name)->where(array('date'=>$now))->delete();
                 }
             }
             Db::table($this->prefix.'options')->where(array('key'=>'year'))->update(array('value'=>json_encode($option)));
         }catch (\Exception $e){
+            set_time_limit(30);
             Db::rollback();
             return ResponseData::getInstance (0,$e->getMessage(),array(),array(),$this->request->isAjax());
         }
+        set_time_limit(30);
         Db::commit();
         return ResponseData::getInstance (1,null,array(),array(),$this->request->isAjax());
     }
