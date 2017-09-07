@@ -40,6 +40,7 @@ window.require(['jquery','layui'],function ($) {
                     data:$.each(handleResponse.getData(),function (index, item) {
                         item['index'] = index+1;
                     }),
+                    page: true,
                     even:true
                 });
                 table.on('tool', function(obj){

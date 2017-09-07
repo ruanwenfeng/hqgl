@@ -154,8 +154,12 @@ window.WkkyData.prototype = {
     },
 
     createRequest:function () {
+        this.init['headers'] = {
+            'xhr-type':'fetch'
+        };
         this.request = new Request(this.url,this.init);
     },
+
     createFormData:function () {
         var formData = new FormData();
         for (var i in this.requestData){

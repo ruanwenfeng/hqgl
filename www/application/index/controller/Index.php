@@ -53,12 +53,15 @@ class Index extends Controller
             session(null);
             if($this->request->isAjax()){
                 return ResponseData::getInstance (0,'非法操作',array(),array(),$this->request->isAjax());
-            }else{
+            }else if($this->request->header('xhr-type') == 'fetch'){
+                return ResponseData::getInstance (0,'非法操作',array(),array(),false);
+            }
+            else{
                 $this->redirect('/base/login');
                 exit();
             }
         }
-        return null;
+        return ResponseData::getInstance (1,null,array(),array(),false);
     }
 
     //校区
@@ -154,8 +157,10 @@ class Index extends Controller
         $schoolpart_id = $this->request->param('schoolpart_id');
         $this->assign('schoolpart_id',$schoolpart_id);
         $this->assign('curr_year',cookie('curr_year'));
+//        $this->assign('schoolpart_text' ,
+//            (new Schoolpart())->find(array('schoolpart_id'=>$schoolpart_id))['text_description']);
         $this->assign('schoolpart_text' ,
-            (new Schoolpart())->find(array('schoolpart_id'=>$schoolpart_id))['text_description']);
+            (new Schoolpart())->limit(1)->where(array('schoolpart_id'=>$schoolpart_id))->find()['text_description']);
         return $this->fetch('college');
     }
 
@@ -347,6 +352,10 @@ class Index extends Controller
      *  获取房间用电信息
      */
     public function ViewRoomPower(){
+        $response = $this->checkAdmin();
+        if(json_decode($response,true)['status'] == 0){
+            return $response;
+        }
         $year = $this->request->param('year')?$this->request->param('year'):date('Y');
         $table = Db::table(config('database.prefix').'room_power_'.$year)
             ->where(array('room_id'=>$this->request->param('room_id')))
@@ -358,6 +367,10 @@ class Index extends Controller
      * 获取楼栋用电信息
      */
     public function ViewBuildingPower(){
+        $response = $this->checkAdmin();
+        if(json_decode($response,true)['status'] == 0){
+            return $response;
+        }
         $year = $this->request->param('year')?$this->request->param('year'):date('Y');
         $table = Db::table(config('database.prefix').'building_power_'.$year)
             ->where(array('building_id'=>$this->request->param('building_id')))
@@ -370,6 +383,10 @@ class Index extends Controller
      * 获取学院用电信息
      */
     public function ViewCollegePower(){
+        $response = $this->checkAdmin();
+        if(json_decode($response,true)['status'] == 0){
+            return $response;
+        }
         $year = $this->request->param('year')?$this->request->param('year'):date('Y');
         $table = Db::table(config('database.prefix').'college_power_'.$year)
             ->where(array('college_id'=>$this->request->param('college_id')))
@@ -381,6 +398,10 @@ class Index extends Controller
      *  获取校区用电信息
      */
     public function ViewSchoolPartPower(){
+        $response = $this->checkAdmin();
+        if(json_decode($response,true)['status'] == 0){
+            return $response;
+        }
         $year = $this->request->param('year')?$this->request->param('year'):date('Y');
         $table = Db::table(config('database.prefix').'schoolpart_power_'.$year)
             ->where(array('schoolpart_id'=>$this->request->param('schoolpart_id')))
@@ -474,7 +495,10 @@ class Index extends Controller
      * 显示 一级账号下面的二级账号
      */
     public function ShowChildUser(){
-        $this->checkAdmin();
+        $response = $this->checkAdmin();
+        if(json_decode($response,true)['status'] == 0){
+            return $response;
+        }
         $usergroup = new  Usergroup();
         $table = $usergroup->where(array('user_id'=>session('user.user_id')))->select();
         $this->assign('usergroup',$table);
@@ -482,12 +506,18 @@ class Index extends Controller
     }
 
     public function ShowUserGroup(){
-        $this->checkAdmin();
+        $response = $this->checkAdmin();
+        if(json_decode($response,true)['status'] == 0){
+            return $response;
+        }
         return $this->fetch('usergroup');
     }
 
     public function queryUserGroup(){
-        $this->checkAdmin();
+        $response = $this->checkAdmin();
+        if(json_decode($response,true)['status'] == 0){
+            return $response;
+        }
         $table = Db::table(config('database.prefix').'usergroup')->where(array('user_id'=>session('user.user_id')))->select();
         return ResponseData::getInstance (1,null,array($table),array('total'=>count($table)),$this->request->isAjax());
     }
@@ -496,7 +526,10 @@ class Index extends Controller
      * 获取二级账号信息
      */
     public function queryChildUser(){
-        $this->checkAdmin();
+        $response = $this->checkAdmin();
+        if(json_decode($response,true)['status'] == 0){
+            return $response;
+        }
         $table = Db::query('call queryChildUser(?)',[session('user.user_id')]);
         if($table){
             $table = $table[0];
@@ -522,7 +555,10 @@ class Index extends Controller
         });
     }
     public function authorizationView(){
-        $this->checkAdmin();
+        $response = $this->checkAdmin();
+        if(json_decode($response,true)['status'] == 0){
+            return $response;
+        }
         $this->assign('usergroup_id',$this->request->param('usergroup_id'));
         $curr_usergroup = Db::table(config('database.prefix').'usergroup usergroup')
             ->where(array('usergroup.usergroup_id'=>$this->request->param('usergroup_id')))
@@ -566,7 +602,10 @@ class Index extends Controller
 
 
     public function deleteUserGroup(){
-        $this->checkAdmin();
+        $response = $this->checkAdmin();
+        if(json_decode($response,true)['status'] == 0){
+            return $response;
+        }
         sleep(1);
         try{
             $user = new Viewuser();
@@ -590,7 +629,10 @@ class Index extends Controller
 
     //创建用户组
     public function createUserGroup(){
-        $this->checkAdmin();
+        $response = $this->checkAdmin();
+        if(json_decode($response,true)['status'] == 0){
+            return $response;
+        }
         sleep(1);
         try{
             $res = Db::table(config('database.prefix').'usergroup')
@@ -615,7 +657,10 @@ class Index extends Controller
 
     //保存 用户组权限
     public function saveAuthorization(){
-        $this->checkAdmin();
+        $response = $this->checkAdmin();
+        if(json_decode($response,true)['status'] == 0){
+            return $response;
+        }
         sleep(1);
         $input = $this->request->param();
         $usergroup_id = $input['usergroup_id'];
@@ -706,7 +751,10 @@ class Index extends Controller
 
     //更改用户所属组
     public function updateUserPermissView(){
-        $this->checkAdmin();
+        $response = $this->checkAdmin();
+        if(json_decode($response,true)['status'] == 0){
+            return $response;
+        }
         $user_id = $this->request->param('user_id');
         $usergroup_id = $this->request->param('usergroup_id');
         $usergroup = new  Usergroup();
@@ -718,7 +766,10 @@ class Index extends Controller
     }
 
     public function updateUserPermiss(){
-        $this->checkAdmin();
+        $response = $this->checkAdmin();
+        if(json_decode($response,true)['status'] == 0){
+            return $response;
+        }
         sleep(1);
         $user_id = $this->request->param('user_id');
         $usergroup_id = $this->request->param('usergroup_id');
@@ -845,7 +896,10 @@ class Index extends Controller
     }
     //创建用户
     public function createUser(){
-        $this->checkAdmin();
+        $response = $this->checkAdmin();
+        if(json_decode($response,true)['status'] == 0){
+            return $response;
+        }
         sleep(1);
         try{
             $user = new User();
@@ -870,7 +924,10 @@ class Index extends Controller
     }
     //删除用户
     public function deleteUser(){
-        $this->checkAdmin();
+        $response = $this->checkAdmin();
+        if(json_decode($response,true)['status'] == 0){
+            return $response;
+        }
         sleep(1);
         try{
             $user = new User();

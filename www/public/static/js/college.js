@@ -68,99 +68,103 @@ window.require(['jquery','layui','highcharts','cookie'],function ($) {
                 });
             });
             college.setOnAfter(function () {
-                closeLoad(2);
+                $('#chart').length>0? closeLoad(2):closeLoad(1);
+
             });
             college.getDataFormRemote();
 
         });
-        var schoolPart = new WkkyData('/index/ViewSchoolPartPower',{
-            credentials: 'include',
-            method: "POST"
-        },{schoolpart_id:schoolpart_id,year:curr_year});
-        function getDataAgain(e) {
-            window.curr_year = e.target.value;
-            $.cookie('curr_year',window.curr_year,{ path: '/' });
-            var formData = new FormData();
-            formData.append('schoolpart_id',schoolpart_id);
-            formData.append('year',curr_year);
-            schoolPart.setRequest(new Request('/index/ViewSchoolPartPower',{
+        if($('#chart').length>0) {
+            var schoolPart = new WkkyData('/index/ViewSchoolPartPower',{
                 credentials: 'include',
-                method: "POST",
-                body:formData
-            }));
+                method: "POST"
+            },{schoolpart_id:schoolpart_id,year:curr_year});
+            function getDataAgain(e) {
+                window.curr_year = e.target.value;
+                $.cookie('curr_year',window.curr_year,{ path: '/' });
+                var formData = new FormData();
+                formData.append('schoolpart_id',schoolpart_id);
+                formData.append('year',curr_year);
+                schoolPart.setRequest(new Request('/index/ViewSchoolPartPower',{
+                    credentials: 'include',
+                    method: "POST",
+                    body:formData
+                }));
+                schoolPart.getDataFormRemote();
+            }
+            schoolPart.setOnSuccess(function (handleResponse) {
+                // 获取 CSV 数据并初始化图表
+                var data = handleResponse.getData();
+                var _num = [0,0,0,0,0,0,0,0,0,0,0,0];
+                var max = 0;
+                var title = undefined;
+                $.each(data,function (index,item) {
+                    _index = parseInt(item['date'].split("-")[1])-1;
+                    if(_index>max){
+                        title = '截止日期 '+item['date'];
+                        max=_index;
+                    }
+                    _num[_index] = parseInt(parseInt(item['num'])/1000);
+                });
+                var tp = _num[max++];
+                for(;max < 12;max++){
+                    _num[max] = tp;
+                }
+                var chart = new Highcharts.Chart('chart', {
+                    title: {
+                        text: $('cite').eq(0).text(),
+                        x: -20
+                    },
+                    chart: {
+                        type: 'line'
+                    },
+                    plotOptions: {
+                        line: {
+                            dataLabels: {
+                                enabled: true          // 开启数据标签
+                            },
+                            enableMouseTracking: false // 关闭鼠标跟踪，对应的提示框、点击事件会失效
+                        }
+                    },
+                    subtitle: {
+                        text: title,
+                        x: -20
+                    },
+                    xAxis: {
+                        categories: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月']
+                    },
+                    yAxis: {
+                        title: {
+                            text: '用电量 ( 度 )'
+                        },
+                        plotLines: [{
+                            value: 0,
+                            width: 1,
+                            color: '#808080'
+                        }]
+                    },
+                    tooltip: {
+                        valueSuffix: ' 度'
+                    },
+                    legend: {
+                        layout: 'vertical',
+                        align: 'right',
+                        verticalAlign: 'middle',
+                        borderWidth: 0
+                    },
+                    series: [{
+                        name: '配额',
+                        data: _num
+                    }]
+                });
+            });
+            schoolPart.setOnAfter(function () {
+                closeLoad(2);
+                $('select[name=year]')[0].addEventListener('change',getDataAgain);
+            });
             schoolPart.getDataFormRemote();
         }
-        schoolPart.setOnSuccess(function (handleResponse) {
-            // 获取 CSV 数据并初始化图表
-            var data = handleResponse.getData();
-            var _num = [0,0,0,0,0,0,0,0,0,0,0,0];
-            var max = 0;
-            var title = undefined;
-            $.each(data,function (index,item) {
-                _index = parseInt(item['date'].split("-")[1])-1;
-                if(_index>max){
-                    title = '截止日期 '+item['date'];
-                    max=_index;
-                }
-                _num[_index] = parseInt(parseInt(item['num'])/1000);
-            });
-            var tp = _num[max++];
-            for(;max < 12;max++){
-                _num[max] = tp;
-            }
-            var chart = new Highcharts.Chart('chart', {
-                title: {
-                    text: $('cite').eq(0).text(),
-                    x: -20
-                },
-                chart: {
-                    type: 'line'
-                },
-                plotOptions: {
-                    line: {
-                        dataLabels: {
-                            enabled: true          // 开启数据标签
-                        },
-                        enableMouseTracking: false // 关闭鼠标跟踪，对应的提示框、点击事件会失效
-                    }
-                },
-                subtitle: {
-                    text: title,
-                    x: -20
-                },
-                xAxis: {
-                    categories: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月']
-                },
-                yAxis: {
-                    title: {
-                        text: '用电量 ( 度 )'
-                    },
-                    plotLines: [{
-                        value: 0,
-                        width: 1,
-                        color: '#808080'
-                    }]
-                },
-                tooltip: {
-                    valueSuffix: ' 度'
-                },
-                legend: {
-                    layout: 'vertical',
-                    align: 'right',
-                    verticalAlign: 'middle',
-                    borderWidth: 0
-                },
-                series: [{
-                    name: '配额',
-                    data: _num
-                }]
-            });
-        });
-        schoolPart.setOnAfter(function () {
-            closeLoad(2);
-            $('select[name=year]')[0].addEventListener('change',getDataAgain);
-        });
-        schoolPart.getDataFormRemote();
+
     });
 });
 

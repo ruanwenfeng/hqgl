@@ -9,13 +9,13 @@ return [
     // 数据库类型
     'type'            => 'mysql',
     // 服务器地址
-    'hostname'        => '127.0.0.1',
+    'hostname'        => '118.89.64.82',
     // 数据库名
     'database'        => 'hqgl_db_2',
     // 用户名
     'username'        => 'root',
     // 密码
-    'password'        => 'wozai123',
+    'password'        => 'mynameis888',
     // 端口
     'hostport'        => '',
     // 连接dsn
