@@ -4,4 +4,4 @@ composer.lock
 thinkphp_5.0.10_full
 runtime
 public/static/layui
-
+application/database.php
