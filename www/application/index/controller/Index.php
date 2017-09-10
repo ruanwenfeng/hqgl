@@ -1126,7 +1126,7 @@ class Index extends Controller
                 $count = count($equipType);
             }else{
                 $equipType = $equipment->field('text_description,day_time')->group('text_description')->limit($offset,$size)->select();
-                $count =$equipment->group('text_description')->count();
+                $count =$equipment->group('text_description')->count('text_description');
             }
             $data = new ResponseData(1,null,$equipType,array('total'=>count($equipType)),$this->request->isAjax());
             $data->code = 0;
