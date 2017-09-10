@@ -1126,7 +1126,8 @@ class Index extends Controller
                 $count = count($equipType);
             }else{
                 $equipType = $equipment->field('text_description,day_time')->group('text_description')->limit($offset,$size)->select();
-                $count =$equipment->group('text_description')->count('text_description');
+                $count = Db::query('SELECT COUNT(`_group_count_`.text_description) AS tp_count FROM (SELECT '.
+                    '`text_description` FROM `hqgl_equipment` GROUP BY text_description ) `_group_count_` LIMIT 1')[0]['tp_count'];
             }
             $data = new ResponseData(1,null,$equipType,array('total'=>count($equipType)),$this->request->isAjax());
             $data->code = 0;
