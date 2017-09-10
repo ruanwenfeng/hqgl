@@ -2,16 +2,15 @@
 namespace app\index\controller;
 
 use app\extend\ResponseData;
+use app\index\model\Building;
+use app\index\model\College;
 use app\index\model\Equipment;
+use app\index\model\Room;
 use app\index\model\Schoolpart;
 use app\index\model\User;
 use app\index\model\Usergroup;
-use app\index\model\Viewbuilding;
 use app\index\model\Viewcollege;
-use app\index\model\Viewequipment;
-use app\index\model\Viewroom;
 use app\index\model\Viewuser;
-use think\console\input\Option;
 use think\Controller;
 use think\Db;
 use think\exception\PDOException;
@@ -194,9 +193,9 @@ class Index extends Controller
         $this->assign('schoolpart_text' ,
             (new Schoolpart())->limit(1)->where(array('schoolpart_id'=>$schoolpart_id))->find()['text_description']);
         $this->assign('college_text' ,
-            (new Viewcollege())->limit(1)->where(array('college_id'=>$college_id))->find()['text_description']);
+            (new College())->limit(1)->where(array('college_id'=>$college_id))->find()['text_description']);
         $this->assign('building_text' ,
-            (new Viewbuilding())->limit(1)->where(array('building_id'=>$building_id))->find()['text_description']);
+            (new Building())->limit(1)->where(array('building_id'=>$building_id))->find()['text_description']);
         return $this->fetch('room');
     }
 
@@ -216,11 +215,11 @@ class Index extends Controller
         $this->assign('schoolpart_text' ,
             (new Schoolpart())->limit(1)->where(array('schoolpart_id'=>$schoolpart_id))->find()['text_description']);
         $this->assign('college_text' ,
-            (new Viewcollege())->limit(1)->where(array('college_id'=>$college_id))->find()['text_description']);
+            (new College())->limit(1)->where(array('college_id'=>$college_id))->find()['text_description']);
         $this->assign('building_text' ,
-            (new Viewbuilding())->limit(1)->where(array('building_id'=>$building_id))->find()['text_description']);
+            (new Building())->limit(1)->where(array('building_id'=>$building_id))->find()['text_description']);
         $this->assign('room_text' ,
-            (new Viewroom())->limit(1)->where(array('room_id'=>$room_id))->find()['room_num']);
+            (new Room())->limit(1)->where(array('room_id'=>$room_id))->find()['room_num']);
         return $this->fetch('equipment');
     }
 
@@ -254,9 +253,11 @@ class Index extends Controller
      * 查询楼栋信息
      */
     public function queryBuilding(){
-        $table = (new Viewbuilding())->where([
-            'schoolpart_id' => $this->request->param('schoolpart_id'),
-            'college_id' => $this->request->param('college_id')])->select();
+        $table = Db::query('call viewbuilding(?,?)',
+            [$this->request->param('schoolpart_id'),$this->request->param('college_id')])[0];
+//        $table = (new Viewbuilding())->where([
+//            'schoolpart_id' => $this->request->param('schoolpart_id'),
+//            'college_id' => $this->request->param('college_id')])->select();
         return ResponseData::getInstance (1,null,array($table),array('total'=>count($table)),$this->request->isAjax());
     }
 
@@ -708,45 +709,13 @@ class Index extends Controller
     //计算用电量，并保存到表里面
     public function savePower(){
         set_time_limit(0);
-        Db::startTrans();
-        $year = Db::table($this->prefix.'main')->field('year')->group('year')->select();
-        $date = Db::table($this->prefix.'main')->field('date')->group('date')->select();
-        $option  = Db::table($this->prefix.'options')->where(array('key'=>'year'))->field('value')->select()[0];
-        $option = json_decode($option['value'],true);
-        try{
-            $data_table = $this->prefix.'main';
-            $var = ['room','building','college','schoolpart'];
-            foreach ($year as $value){
-                if(!in_array((int)intval($value['year']),$option)){
-                    $option[] =(int)intval($value['year']);
-                }
-                foreach ($var as $_var){
-                    $table_name = $this->prefix.$_var.'_power_'.$value['year'];
-                    $tpl_name = $this->prefix.$_var.'_power_tpl';
-                    Db::query('create  table if not exists `'.$table_name.'` like `'.$tpl_name.'`');
-                    Db::query('insert into `'.$table_name.'`('.$_var.'_id,date,num)  '.
-                        'select  '.$_var.'_id,date, SUM(num) AS num  from '.$data_table.' '.
-                        'where  year = '.$value['year'].' '.
-                        'group by '.$_var.'_id,date');
-                }
-            }
-            $now = date('Y-n');
-            Db::query('call deletemain(?)',[$now]);
-            foreach ($year as $_value) {
-                foreach ($var as $_var) {
-                    $table_name = $this->prefix.$_var.'_power_'.$_value['year'];
-                    Db::table($table_name)->where(array('date'=>$now))->delete();
-                }
-            }
-            Db::table($this->prefix.'options')->where(array('key'=>'year'))->update(array('value'=>json_encode($option)));
-        }catch (\Exception $e){
-            set_time_limit(30);
-            Db::rollback();
-            return ResponseData::getInstance (0,$e->getMessage(),array(),array(),$this->request->isAjax());
-        }
+        $message = Db::query('call new_compute(?)',[date('Y-m-d')])[0][1]['message'];
         set_time_limit(30);
-        Db::commit();
-        return ResponseData::getInstance (1,null,array(),array(),$this->request->isAjax());
+        if(intval( $message)==1){
+            return ResponseData::getInstance (1,null,array(),array(),$this->request->isAjax());
+        }else{
+            return ResponseData::getInstance (0,'计算失败',array(),array(),$this->request->isAjax());
+        }
     }
 
     //更改用户所属组
@@ -1078,8 +1047,15 @@ class Index extends Controller
             if($text_description == '')
                 $text_description = '-1';
             $res =Db::query('call countCollegeEquipMent(?,?,?,?,?)',[$schoolpart_id,$college_id,$offset,$size,$text_description]);
-            $equipType = $res[0];
-            $total = $res[1][0]['total'];
+
+
+            if(count($res)==2){
+                $equipType = $res[0];
+                $total = $res[1][0]['total'];
+            }else{
+                $equipType = [];
+                $total = 0;
+            }
 
             $data = new ResponseData(1,null,$equipType,array('total'=>count($equipType)),$this->request->isAjax());
             $data->code = 0;

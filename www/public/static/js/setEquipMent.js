@@ -15,7 +15,8 @@ window.require(['jquery','layui','cookie'],function ($) {
         var element = layui.element,
             table = layui.table,
             layer = layui.layer,form = layui.form;
-        var where = {};
+        var where = {text_description:''};
+        countSchoolPart(where);
         form.on('select(equipmentType)', function(data){
             where['text_description'] = data.value;
             countSchoolPart(where);
