@@ -55,7 +55,9 @@
                         {/if}
                     </dl>
                 </li>
+                <li class="count layui-nav-item"><a href="javascript:void(0);" data-href="/index/countEquipMentView">设备统计</a></li>
                 <li class="compute layui-nav-item"><a href="javascript:void(0);">计算电量</a></li>
+                <li class="setting layui-nav-item"><a href="javascript:void(0);">系统设置</a></li>
                 <li  class="layui-nav-item"><a data-href="/index/editPassView" href="javascript:void(0);">修改密码</a></li>
             </ul>
         </div>

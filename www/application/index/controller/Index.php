@@ -1019,4 +1019,75 @@ class Index extends Controller
         }
         return ResponseData::getInstance (0,'修改密码失败',array(),array(),$this->request->isAjax());
     }
+
+    //统计设备
+    public function countEquipMentView(){
+        $equipment = new Equipment();
+        $equipType = $equipment->field('text_description')->group('text_description')->select();
+        $this->assign('equipType',$equipType);
+        return $this->fetch('countEquipMent');
+    }
+
+    public function countSchoolPartEquipMent(){
+        try{
+            $schoolpart_id = $this->request->param('schoolpart_id');
+            $text_description = $this->request->param('text_description');
+            $size = $this->request->param('limit');
+            $offset = (intval($this->request->param('page'))-1)*$size;
+            $equipType = null;
+            $total = 0;
+            if($schoolpart_id == '')
+                $schoolpart_id = '-1';
+            if($text_description == '')
+                $text_description = '-1';
+            $res =Db::query('call countSchoolPartEquipMent(?,?,?,?)',[$schoolpart_id,$offset,$size,$text_description]);
+            $equipType = $res[0];
+            $total = $res[1][0]['total'];
+
+            $data = new ResponseData(1,null,$equipType,array('total'=>count($equipType)),$this->request->isAjax());
+            $data->code = 0;
+            $data->count = $total;
+            return $this->request->isAjax()?$data:json_encode($data);
+        }catch (\Exception $e){
+            return ResponseData::getInstance (0,$e->getMessage(),array(),array(),$this->request->isAjax());
+        }
+    }
+
+    public function  countCollegeEquipMent(){
+        try{
+            $schoolpart_id = $this->request->param('schoolpart_id');
+            $college_id = $this->request->param('college_id');
+            $text_description = $this->request->param('text_description');
+            $size = $this->request->param('limit');
+            $offset = (intval($this->request->param('page'))-1)*$size;
+            $equipType = null;
+            $total = 0;
+            if($college_id == '')
+                $college_id = '-1';
+            if($schoolpart_id == '')
+                $schoolpart_id = '-1';
+            if($text_description == '')
+                $text_description = '-1';
+            $res =Db::query('call countCollegeEquipMent(?,?,?,?,?)',[$schoolpart_id,$college_id,$offset,$size,$text_description]);
+            $equipType = $res[0];
+            $total = $res[1][0]['total'];
+
+            $data = new ResponseData(1,null,$equipType,array('total'=>count($equipType)),$this->request->isAjax());
+            $data->code = 0;
+            $data->count = $total;
+            return $this->request->isAjax()?$data:json_encode($data);
+        }catch (\Exception $e){
+            return ResponseData::getInstance (0,$e->getMessage(),array(),array(),$this->request->isAjax());
+        }
+    }
+
+    public function getCollege(){
+        try{
+            $schoolpart_id = $this->request->param('schoolpart_id');
+            $data = Db::query("SELECT hqgl_college.college_id,hqgl_college.text_description FROM hqgl_college WHERE  EXISTS(SELECT * FROM hqgl_schoolpartcollege WHERE schoolpart_id = ? AND hqgl_college.college_id = college_id )",[$schoolpart_id]);
+            return ResponseData::getInstance (1,null,array($data),array('count'=>count($data)),$this->request->isAjax());
+        }catch (\Exception $e){
+            return ResponseData::getInstance (0,$e->getMessage(),array(),array(),$this->request->isAjax());
+        }
+    }
 }
