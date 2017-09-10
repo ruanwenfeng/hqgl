@@ -1033,6 +1033,7 @@ class Index extends Controller
             $schoolpart_id = $this->request->param('schoolpart_id');
             $text_description = $this->request->param('text_description');
             $size = $this->request->param('limit');
+            cookie('limit', $size,60*60*24*7);
             $offset = (intval($this->request->param('page'))-1)*$size;
             $equipType = null;
             $total = 0;
@@ -1041,15 +1042,22 @@ class Index extends Controller
             if($text_description == '')
                 $text_description = '-1';
             $res =Db::query('call countSchoolPartEquipMent(?,?,?,?)',[$schoolpart_id,$offset,$size,$text_description]);
-            $equipType = $res[0];
-            $total = $res[1][0]['total'];
-
+            if(count($res)==2){
+                $equipType = $res[0];
+                $total = $res[1][0]['total'];
+            }else{
+                $equipType = [];
+                $total = 0;
+            }
             $data = new ResponseData(1,null,$equipType,array('total'=>count($equipType)),$this->request->isAjax());
             $data->code = 0;
             $data->count = $total;
             return $this->request->isAjax()?$data:json_encode($data);
         }catch (\Exception $e){
-            return ResponseData::getInstance (0,$e->getMessage(),array(),array(),$this->request->isAjax());
+            $data = new ResponseData(1,null,array(),array(),$this->request->isAjax());
+            $data->code = 1;
+            $data->msg = $e->getMessage();
+            return $this->request->isAjax()?$data:json_encode($data);
         }
     }
 
@@ -1060,6 +1068,7 @@ class Index extends Controller
             $text_description = $this->request->param('text_description');
             $size = $this->request->param('limit');
             $offset = (intval($this->request->param('page'))-1)*$size;
+            cookie('limit', $size,60*60*24*7);
             $equipType = null;
             $total = 0;
             if($college_id == '')
@@ -1077,7 +1086,10 @@ class Index extends Controller
             $data->count = $total;
             return $this->request->isAjax()?$data:json_encode($data);
         }catch (\Exception $e){
-            return ResponseData::getInstance (0,$e->getMessage(),array(),array(),$this->request->isAjax());
+            $data = new ResponseData(1,null,array(),array(),$this->request->isAjax());
+            $data->code = 1;
+            $data->msg = $e->getMessage();
+            return $this->request->isAjax()?$data:json_encode($data);
         }
     }
 
@@ -1086,6 +1098,60 @@ class Index extends Controller
             $schoolpart_id = $this->request->param('schoolpart_id');
             $data = Db::query("SELECT hqgl_college.college_id,hqgl_college.text_description FROM hqgl_college WHERE  EXISTS(SELECT * FROM hqgl_schoolpartcollege WHERE schoolpart_id = ? AND hqgl_college.college_id = college_id )",[$schoolpart_id]);
             return ResponseData::getInstance (1,null,array($data),array('count'=>count($data)),$this->request->isAjax());
+        }catch (\Exception $e){
+            return ResponseData::getInstance (0,$e->getMessage(),array(),array(),$this->request->isAjax());
+        }
+    }
+
+    //设置设备
+    public function setEquipMentView(){
+        $equipment = new Equipment();
+        $equipType = $equipment->field('text_description')->group('text_description')->select();
+        $this->assign('equipType',$equipType);
+        return $this->fetch('setEquipMent');
+    }
+
+
+    public function setEquipDataTable(){
+        try{
+            $size = $this->request->param('limit');
+            $offset = (intval($this->request->param('page'))-1)*$size;
+            cookie('limit', $size,60*60*24*7);
+
+            $text_description = $this->request->param('text_description','');
+            $where = $text_description==''?null:array('text_description'=>$text_description);
+            $equipment = new Equipment();
+            if($where){
+                $equipType = $equipment->field('text_description,day_time')->distinct('text_description')->where($where)->select();
+                $count = count($equipType);
+            }else{
+                $equipType = $equipment->field('text_description,day_time')->group('text_description')->limit($offset,$size)->select();
+                $count =$equipment->group('text_description')->count();
+            }
+            $data = new ResponseData(1,null,$equipType,array('total'=>count($equipType)),$this->request->isAjax());
+            $data->code = 0;
+            $data->count = $count;
+            return $this->request->isAjax()?$data:json_encode($data);
+        }catch (\Exception $e){
+            $data = new ResponseData(1,null,array(),array(),$this->request->isAjax());
+            $data->code = 1;
+            $data->msg = $e->getMessage();
+            return $this->request->isAjax()?$data:json_encode($data);
+        }
+    }
+
+    public function updateEquipDayTime(){
+        try{
+            $text_description = $this->request->param('text_description','');
+            $day_time = $this->request->param('day_time');
+            $day_time = intval($day_time);
+            $equipment = new Equipment();
+            $n = $equipment->isUpdate(true)->save(array('day_time'=>$day_time),array('text_description'=>$text_description));
+            if($n>0){
+                return ResponseData::getInstance (1,'修改成功',array(),array(),$this->request->isAjax());
+            }else{
+                return ResponseData::getInstance (0,'修改失败',array(),array(),$this->request->isAjax());
+            }
         }catch (\Exception $e){
             return ResponseData::getInstance (0,$e->getMessage(),array(),array(),$this->request->isAjax());
         }

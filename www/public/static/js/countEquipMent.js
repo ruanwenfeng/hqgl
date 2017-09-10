@@ -1,7 +1,7 @@
 /**
  * Created by Administrator on 2017/9/9.
  */
-window.require(['jquery','layui'],function ($) {
+window.require(['jquery','layui','cookie'],function ($) {
     layui.config({
         dir: '/static/layui/'
     });
@@ -66,7 +66,6 @@ window.require(['jquery','layui'],function ($) {
             console.log(data);
             window.college_id = where['college_id'] = data.value;
             if(window.mode == 1){
-                // countSchoolPart(where);
             }
             else{
                 countCollege(where);
@@ -82,6 +81,7 @@ window.require(['jquery','layui'],function ($) {
         });
         
         function countSchoolPart(where) {
+            loading();
             table.render({
                 elem: '#data-table'
                 ,cols:  [[ //标题栏
@@ -91,6 +91,10 @@ window.require(['jquery','layui'],function ($) {
                     ,{field: 'number',title:'数量',width: 80,sort: true}
                 ]], //设置表头
                 method:'post',
+                done:function () {
+                  closeLoad(1);
+                },
+                limit:typeof $.cookie('limit') == typeof  undefined ? 30 :$.cookie('limit'),
                 page: true,
                 even:true,
                 where:where,
@@ -100,6 +104,7 @@ window.require(['jquery','layui'],function ($) {
         }
 
         function countCollege() {
+            loading();
             table.render({
                 elem: '#data-table'
                 ,cols:  [[ //标题栏
@@ -110,6 +115,10 @@ window.require(['jquery','layui'],function ($) {
                     ,{field: 'number',title:'数量',width: 80,sort: true}
                 ]], //设置表头
                 method:'post',
+                done:function () {
+                    closeLoad(1);
+                },
+                limit:typeof $.cookie('limit') == typeof  undefined ? 30 :$.cookie('limit'),
                 page: true,
                 even:true,
                 where:where,
