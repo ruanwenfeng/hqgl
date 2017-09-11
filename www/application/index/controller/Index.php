@@ -63,23 +63,6 @@ class Index extends Controller
         return ResponseData::getInstance (1,null,array(),array(),false);
     }
 
-    //校区
-//    public function _initialize(){
-//        session('user.user_id',1);
-//        session('user.usergroup_id',3);
-//        session('user.user_name','wkky');
-//
-//        $this->queryAuthorization();
-//        $schoolpart= new Schoolpart();
-//        $table = $schoolpart->where($this->filterSchoolpart)->order('schoolpart_id')->select();
-//        $this->assign('schoolpart_id',-1);
-//        $this->school_part = $table;
-//
-//        $this->prefix = config('database.prefix');
-//        $this->assign('school_part' , $table);
-//    }
-
-
     public function index(){
         return $this->fetch();
     }
@@ -159,7 +142,7 @@ class Index extends Controller
 //        $this->assign('schoolpart_text' ,
 //            (new Schoolpart())->find(array('schoolpart_id'=>$schoolpart_id))['text_description']);
         $this->assign('schoolpart_text' ,
-            (new Schoolpart())->limit(1)->where(array('schoolpart_id'=>$schoolpart_id))->find()['text_description']);
+            (new Schoolpart())->field('text_description')->limit(1)->where(array('schoolpart_id'=>$schoolpart_id))->find()['text_description']);
         return $this->fetch('college');
     }
 
@@ -173,9 +156,9 @@ class Index extends Controller
         $this->assign('college_id',$college_id);
         $this->assign('curr_year',cookie('curr_year'));
         $this->assign('schoolpart_text' ,
-            (new Schoolpart())->limit(1)->where(array('schoolpart_id'=>$schoolpart_id))->find()['text_description']);
+            (new Schoolpart())->field('text_description')->limit(1)->where(array('schoolpart_id'=>$schoolpart_id))->find()['text_description']);
         $this->assign('college_text' ,
-            (new Viewcollege())->limit(1)->where(array('college_id'=>$college_id))->find()['text_description']);
+            (new College())->field('text_description')->limit(1)->where(array('college_id'=>$college_id))->find()['text_description']);
         return $this->fetch('build');
     }
 
@@ -191,11 +174,11 @@ class Index extends Controller
         $this->assign('building_id',$building_id);
         $this->assign('curr_year',cookie('curr_year'));
         $this->assign('schoolpart_text' ,
-            (new Schoolpart())->limit(1)->where(array('schoolpart_id'=>$schoolpart_id))->find()['text_description']);
+            (new Schoolpart())->field('text_description')->limit(1)->where(array('schoolpart_id'=>$schoolpart_id))->find()['text_description']);
         $this->assign('college_text' ,
-            (new College())->limit(1)->where(array('college_id'=>$college_id))->find()['text_description']);
+            (new College())->field('text_description')->limit(1)->where(array('college_id'=>$college_id))->find()['text_description']);
         $this->assign('building_text' ,
-            (new Building())->limit(1)->where(array('building_id'=>$building_id))->find()['text_description']);
+            (new Building())->field('text_description')->limit(1)->where(array('building_id'=>$building_id))->find()['text_description']);
         return $this->fetch('room');
     }
 
@@ -213,13 +196,13 @@ class Index extends Controller
         $this->assign('room_id',$room_id);
         $this->assign('curr_year',cookie('curr_year'));
         $this->assign('schoolpart_text' ,
-            (new Schoolpart())->limit(1)->where(array('schoolpart_id'=>$schoolpart_id))->find()['text_description']);
+            (new Schoolpart())->field('text_description')->limit(1)->where(array('schoolpart_id'=>$schoolpart_id))->find()['text_description']);
         $this->assign('college_text' ,
-            (new College())->limit(1)->where(array('college_id'=>$college_id))->find()['text_description']);
+            (new College())->field('text_description')->limit(1)->where(array('college_id'=>$college_id))->find()['text_description']);
         $this->assign('building_text' ,
-            (new Building())->limit(1)->where(array('building_id'=>$building_id))->find()['text_description']);
+            (new Building())->field('text_description')->limit(1)->where(array('building_id'=>$building_id))->find()['text_description']);
         $this->assign('room_text' ,
-            (new Room())->limit(1)->where(array('room_id'=>$room_id))->find()['room_num']);
+            (new Room())->field('room_num')->limit(1)->where(array('room_id'=>$room_id))->find()['room_num']);
         return $this->fetch('equipment');
     }
 
@@ -268,7 +251,9 @@ class Index extends Controller
         $where = array();
         $this->filterCollege && $where['college_id'] = $this->filterCollege['college_id'];
         $where['schoolpart_id'] = $this->request->param('schoolpart_id');
-        $table = (new Viewcollege())->where($where)->select();
+        $schoolpart_text = (new Schoolpart())->limit(1)
+            ->where(array('schoolpart_id'=> $where['schoolpart_id']))->find()['text_description'];
+        $table = (new College())->field('\''.$schoolpart_text.'\' as `校区名称`,college_id,text_description')->where($where)->select();
         return ResponseData::getInstance (1,null,array($table),array('total'=>count($table)),$this->request->isAjax());
     }
 
@@ -545,8 +530,11 @@ class Index extends Controller
         $tmp = [];
         $authorization = json_decode( $value['authorization'],true);
         $college = $authorization['college']['id'];
-        $_table = Db::table(config('database.prefix').'viewcollege')->where(array('college_id'=>array('in',$college)))->select();
-
+        $_table = Db::table(config('database.prefix').'college college')
+            ->field('college.schoolpart_id,college_id,schoolpart.text_description `校区名称`,hqgl_college.text_description')
+            ->where(array('college_id'=>array('in',$college)))
+            ->join(config('database.prefix').'schoolpart schoolpart','college.schoolpart_id = schoolpart.schoolpart_id')
+            ->select();
         return group_array('schoolpart_id',$_table,function (&$arr,$value,$key){
             $arr[$value[$key]]['college'] = array();
             $arr[$value[$key]]['title']= $value['校区名称'];
@@ -569,14 +557,12 @@ class Index extends Controller
             $full_authorization = Db::table(config('database.prefix').'usergroup usergroup')
                 ->where(array('usergroup.usergroup_id'=>session('user.usergroup_id')))
                 ->select();
-
             $full_schoolpart = json_decode($full_authorization[0]['authorization'],true)['schoolpart']['id'];
-
-
-            $full_authorization = Db::table(config('database.prefix').'viewcollege college')
+            $full_authorization = Db::table(config('database.prefix').'college college')
+                ->field('college.schoolpart_id,college_id,schoolpart.text_description `校区名称`,hqgl_college.text_description')
                 ->where(array('college.schoolpart_id'=>array('in',$full_schoolpart)))
+                ->join(config('database.prefix').'schoolpart schoolpart','college.schoolpart_id = schoolpart.schoolpart_id')
                 ->select();
-
             $full_authorization = group_array('schoolpart_id',$full_authorization,function (&$arr,$value,$key){
                 $arr[$value[$key]]['college'] = array();
                 $arr[$value[$key]]['title']= $value['校区名称'];
@@ -1072,7 +1058,7 @@ class Index extends Controller
     public function getCollege(){
         try{
             $schoolpart_id = $this->request->param('schoolpart_id');
-            $data = Db::query("SELECT hqgl_college.college_id,hqgl_college.text_description FROM hqgl_college WHERE  EXISTS(SELECT * FROM hqgl_schoolpartcollege WHERE schoolpart_id = ? AND hqgl_college.college_id = college_id )",[$schoolpart_id]);
+            $data = Db::query("SELECT hqgl_college.college_id,hqgl_college.text_description FROM hqgl_college WHERE hqgl_college.schoolpart_id = ?",[$schoolpart_id]);
             return ResponseData::getInstance (1,null,array($data),array('count'=>count($data)),$this->request->isAjax());
         }catch (\Exception $e){
             return ResponseData::getInstance (0,$e->getMessage(),array(),array(),$this->request->isAjax());
@@ -1132,5 +1118,37 @@ class Index extends Controller
         }catch (\Exception $e){
             return ResponseData::getInstance (0,$e->getMessage(),array(),array(),$this->request->isAjax());
         }
+    }
+
+    public function createTopUserGroup(){
+
+        $schoolpart = new Schoolpart();
+        $college = new College();
+        $_id = $schoolpart->field('schoolpart_id')->select();
+        $schoolpart_id = [];
+
+        foreach ($_id as $key=>$value){
+            $schoolpart_id[] = $value['schoolpart_id'];
+        }
+
+        $_id = $college->field('college_id')->select();
+        $college_id = [];
+
+        foreach ($_id as $key=>$value){
+            $college_id[] = $value['college_id'];
+        }
+
+        $authorization = ['schoolpart'=>[
+            'action'=>[],'id'=>$schoolpart_id,'full'=>true
+        ],'college'=>[
+            'action'=>[],'id'=>$college_id
+        ]];
+        $res = Db::table(config('database.prefix').'usergroup')
+            ->insert(array(
+                'text_description'=>'顶级用户组',
+                'usergroup_id'=>create_guid(),
+                'user_id'=>'',
+                'authorization'=>json_encode($authorization)
+            ));
     }
 }
