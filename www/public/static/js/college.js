@@ -50,7 +50,7 @@ window.require(['jquery','layui','highcharts','cookie'],function ($) {
                     var tr = obj.tr; //获得当前行 tr 的DOM对象
                     if(layEvent === 'detail'){ //查看
                         console.log(obj.data);
-                        window.location.href = '/index/showBuilding/schoolpart_id/'+obj['data']['schoolpart_id']+'/college_id/'+obj['data']['college_id'];
+                        window.location.href = '/index/showBuilding/schoolpart_id/'+schoolpart_id+'/college_id/'+obj['data']['college_id'];
                     } else if(layEvent === 'del'){ //删除
                         layer.confirm('真的删除行么', function(index){
                             obj.del(); //删除对应行（tr）的DOM结构

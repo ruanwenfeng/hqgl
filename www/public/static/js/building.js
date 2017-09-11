@@ -48,8 +48,8 @@ window.require(['jquery','layui','highcharts','cookie'],function ($) {
                     if(layEvent === 'detail'){ //查看
                         console.log(obj.data);
                         window.location.href =
-                            '/index/showRoom/schoolpart_id/'+obj['data']['schoolpart_id']+
-                            '/college_id/'+obj['data']['college_id']+
+                            '/index/showRoom/schoolpart_id/'+schoolpart_id+
+                            '/college_id/'+college_id+
                             '/building_id/'+obj['data']['building_id'];
                     } else if(layEvent === 'del'){ //删除
                         layer.confirm('真的删除行么', function(index){
