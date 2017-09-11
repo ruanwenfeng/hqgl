@@ -66,9 +66,9 @@ window.require(['jquery','layui','highcharts','cookie'],function ($) {
                     if(layEvent === 'detail'){ //查看
                         console.log(obj.data);
                         window.location.href =
-                            '/index/showEquipMent/schoolpart_id/'+obj['data']['schoolpart_id']+
-                            '/college_id/'+obj['data']['college_id']+
-                            '/building_id/'+obj['data']['building_id']+
+                            '/index/showEquipMent/schoolpart_id/'+schoolpart_id+
+                            '/college_id/'+college_id+
+                            '/building_id/'+building_id+
                             '/room_id/'+obj['data']['room_id'];
                     } else if(layEvent === 'del'){ //删除
                         layer.confirm('真的删除行么', function(index){
