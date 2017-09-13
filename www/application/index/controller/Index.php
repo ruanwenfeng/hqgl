@@ -1071,8 +1071,12 @@ class Index extends Controller
     public function getCollege(){
         try{
             $schoolpart_id = $this->request->param('schoolpart_id');
-            $data = Db::query("SELECT hqgl_college.college_id,hqgl_college.text_description ".
-                "FROM hqgl_college WHERE hqgl_college.schoolpart_id = ?",[$schoolpart_id]);
+            $college = new College();
+            $data = $college->field('college_id,text_description')
+                ->where(array('schoolpart_id'=>$schoolpart_id,'college_id'=>$this->filterCollege['college_id']))
+                ->select();
+//            $data = Db::query("SELECT hqgl_college.college_id,hqgl_college.text_description ".
+//                "FROM hqgl_college WHERE hqgl_college.schoolpart_id = ?",[$schoolpart_id]);
             return ResponseData::getInstance (1,null,array($data),array('count'=>count($data)),
                 $this->request->isAjax());
         }catch (\Exception $e){
