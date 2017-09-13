@@ -3,10 +3,10 @@
  */
 require.config({
     paths : {
-        "jquery" : ['http://libs.baidu.com/jquery/2.0.3/jquery'],
+        "jquery" : ['http://libs.baidu.com/jquery/2.0.3/jquery','../js/jquery-3.2.1.min'],
         'layui':'../layui/layui',
         'cookie':'../js/jquery.cookie',
-        'highcharts':['https://cdn.hcharts.cn/highcharts/highcharts']
+        'highcharts':['https://cdn.hcharts.cn/highcharts/highcharts','../js/highcharts']
     }
 });
 window.complete = true;

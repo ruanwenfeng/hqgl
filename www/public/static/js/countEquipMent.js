@@ -28,6 +28,7 @@ window.require(['jquery','layui','cookie'],function ($) {
         form.on('radio',function (data) {
             window.mode = data.value;
             if(data.value == 1){
+                window.college_id = where['college_id'] = '';
                 $('.div-college').css('display','none');
                 countSchoolPart(where);
             }else{

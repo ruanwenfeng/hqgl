@@ -43,6 +43,7 @@ window.require(['jquery','layui','cookie'],function ($) {
                 ,cols:  [[ //标题栏
                     {field: 'index', title: '编号', align: 'center',width: 80}
                     ,{field: 'text_description', title: '设备类型', sort: true, width: 250}
+                    ,{field: 'power', title: '功率（w）', sort: true, width: 120}
                     ,{field: 'day_time',title:'每日时长（小时）',edit:'text',width: 250,sort: true}
                 ]], //设置表头
                 method:'post',
@@ -73,6 +74,7 @@ window.require(['jquery','layui','cookie'],function ($) {
                 }
                 var formData = new window.FormData();
                 formData.append('text_description',obj.data['text_description']);
+                formData.append('power',obj.data['power']);
                 formData.append('day_time',value);
                 equip.setRequest(new Request('/index/updateEquipDayTime',{
                     credentials: 'include',

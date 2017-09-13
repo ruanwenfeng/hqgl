@@ -46,6 +46,18 @@
                         </dl>
                     </li>
                 {/if}
+
+                <li class="layui-nav-item">
+                    <a href="javascript:void(0);">申报系统</a>
+                    <dl class="layui-nav-child">
+                        {if condition="$admin eq false"}
+                            <dd class=""><a  href="javascript:void(0);" data-href="/index/message_2">通知</a></dd>
+                            <dd class=""><a  href="javascript:void(0);" data-href="/index/addEquipMentView">新增设备</a></dd>
+                            <dd class=""><a  href="javascript:void(0);" data-href="/index/removeEquipMentView">报废设备</a></dd>
+                        {/if}
+                    </dl>
+                </li>
+
                 <li class="layui-nav-item">
                     <a href="javascript:void(0);">报修系统</a>
                     <dl class="layui-nav-child">
@@ -55,8 +67,10 @@
                         {/if}
                     </dl>
                 </li>
-                <li class="count layui-nav-item"><a href="javascript:void(0);" data-href="/index/countEquipMentView">设备统计</a></li>
-                <li class="setting layui-nav-item"><a href="javascript:void(0);" data-href="/index/setEquipMentView">系统设置</a></li>
+                {if condition="$admin eq true"}
+                    <li class="count layui-nav-item"><a href="javascript:void(0);" data-href="/index/countEquipMentView">设备统计</a></li>
+                    <li class="setting layui-nav-item"><a href="javascript:void(0);" data-href="/index/setEquipMentView">系统设置</a></li>
+                {/if}
                 <li class="compute layui-nav-item"><a href="javascript:void(0);">计算电量</a></li>
                 <li  class="layui-nav-item"><a data-href="/index/editPassView" href="javascript:void(0);">修改密码</a></li>
             </ul>
