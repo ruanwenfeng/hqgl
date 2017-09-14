@@ -67,7 +67,6 @@ window.require(['jquery','layui','highcharts','cookie'],function ($) {
             });
             equipment.setOnAfter(function () {
                 $('#chart').length>0? closeLoad(2):closeLoad(1);
-
             });
 
             equipment.getDataFormRemote();

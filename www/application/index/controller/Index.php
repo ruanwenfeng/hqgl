@@ -1355,7 +1355,30 @@ class Index extends Controller
         }
     }
 
+    //报废设备 ，视图
     public function removeEquipMentView(){
         return $this->fetch('removeEquipMent');
     }
+
+    public function queryEquipMentByRoom(){
+        try{
+            $size = $this->request->param('limit');
+            $offset = (intval($this->request->param('page'))-1)*$size;
+            $equipment = new Equipment();
+            $table = $equipment->where(array('room_id'=>$this->request->param('room_id')))
+                ->limit($offset,$size)->select();
+            $count = $equipment->where(array('room_id'=>$this->request->param('room_id')))->count();
+
+            $data = new ResponseData(1,null,$table,array('total'=>count($table)),$this->request->isAjax());
+            $data->code = 0;
+            $data->count = $count;
+            return $this->request->isAjax()?$data:json_encode($data);
+        }catch (\Exception $e){
+            $data = new ResponseData(1,null,array(),array(),$this->request->isAjax());
+            $data->code = 1;
+            $data->msg = $e->getMessage();
+            return $this->request->isAjax()?$data:json_encode($data);
+        }
+    }
+
 }
