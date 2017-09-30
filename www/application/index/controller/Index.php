@@ -1250,6 +1250,10 @@ class Index extends Controller
     }
 
     //通知，界面
+    public function message_1(){
+        return $this->fetch('message_1');
+    }
+
     public function message_2(){
        return $this->fetch('message_2');
     }
@@ -1275,6 +1279,24 @@ class Index extends Controller
         return $this->getMessage($where);
     }
 
+
+    public function updateMessage(){
+        try{
+            $record_id = $this->request->param('record_id');
+            $status = $this->request->param('status');
+            $record = Record::get($record_id);
+            $record['status'] = $status;
+            $res = $record->save();
+            if($res>0){
+                return ResponseData::getInstance (1,null,array(),array(),$this->request->isAjax());
+            }else{
+                return ResponseData::getInstance (0,'操作失败',array(),array(),$this->request->isAjax());
+            }
+        }catch (\Exception $e){
+            return ResponseData::getInstance (0,$e->getMessage(),array(),array(),$this->request->isAjax());
+        }
+    }
+
     public function getMessage(array $where){
 
         try{
@@ -1286,7 +1308,7 @@ class Index extends Controller
                 $table = $record->alias('record')
                     ->field('record_id,text_description,power,number,_create_time,status,type,user.user_name')
                     ->where($where)
-                    ->join($this->prefix.'user user','record.response_id = user.user_id')
+                    ->join($this->prefix.'user user','record.request_id = user.user_id')
                     ->order('_create_time')
                     ->limit($offset,$size)->select();
             }else{
@@ -1299,17 +1321,37 @@ class Index extends Controller
                     ->limit($offset,$size)->select();
             }
             $count = $record->field('count(*) as `count`')->where($where)->select()[0]['count'];
-            $data = new ResponseData(1,null,$table,array('total'=>count($table)),$this->request->isAjax());
+            $data = new ResponseData(1,null,$table,array('total'=>count($table)));
             $data->code = 0;
             $data->count = $count;
             return $this->request->isAjax()?$data:json_encode($data);
         }catch (\Exception $e){
 
-            $data = new ResponseData(1,null,array(),array(),$this->request->isAjax());
+            $data = new ResponseData(1,null,array(),array());
             $data->code = 1;
             $data->msg = $e->getMessage();
             return $this->request->isAjax()?$data:json_encode($data);
         }
+    }
+
+
+    public function messageDetail(){
+        $record_id = $this->request->param('record_id');
+        $record = Record::get($record_id);
+        $school_part = Schoolpart::get($record['schoolpart_id']);
+        $college = College::get($record['college_id']);
+        $building = Building::get($record['building_id']);
+        $room = Room::get($record['room_id']);
+        $tmp = [];
+        foreach ($record->getData() as $key => $value){
+            $tmp[$key]=$value;
+        }
+        $tmp['schoolpart'] = $school_part['text_description'];
+        $tmp['building'] = $college['text_description'];
+        $tmp['college'] = $building['text_description'];
+        $tmp['room'] = $room['room_num'];
+        $this->assign('record',$tmp);
+        return $this->fetch('messageDetail');
     }
     //新增设备
     public function addEquipMentView(){
@@ -1369,12 +1411,12 @@ class Index extends Controller
                 ->limit($offset,$size)->select();
             $count = $equipment->where(array('room_id'=>$this->request->param('room_id')))->count();
 
-            $data = new ResponseData(1,null,$table,array('total'=>count($table)),$this->request->isAjax());
+            $data = new ResponseData(1,null,$table,array('total'=>count($table)));
             $data->code = 0;
             $data->count = $count;
             return $this->request->isAjax()?$data:json_encode($data);
         }catch (\Exception $e){
-            $data = new ResponseData(1,null,array(),array(),$this->request->isAjax());
+            $data = new ResponseData(1,null,array(),array());
             $data->code = 1;
             $data->msg = $e->getMessage();
             return $this->request->isAjax()?$data:json_encode($data);

@@ -83,20 +83,7 @@
             <div class="layui-form-mid layui-word-aux">用于电量计算<span style="color: darkred">（必填）</span></div>
 
         </div>
-<!--        <div class="layui-form-item">-->
-<!--            <label class="layui-form-label">数量</label>-->
-<!--            <div class="layui-input-inline">-->
-<!--                <input type="number" name="number"  placeholder="请输入数量" autocomplete="off" class="layui-input">-->
-<!--            </div>-->
-<!--            <div class="layui-form-mid layui-word-aux"><span style="color: darkred">（必填）</span></div>-->
-<!--        </div>-->
-<!--        <div class="layui-form-item">-->
-<!--            <label class="layui-form-label">每日时长</label>-->
-<!--            <div class="layui-input-inline">-->
-<!--                <input type="number" name="day_time"  placeholder="请输入每日时长" autocomplete="off" class="layui-input">-->
-<!--            </div>-->
-<!--            <div class="layui-form-mid layui-word-aux">用于电量计算<span style="color: darkred">（必填）</span></div>-->
-<!--        </div>-->
+
         <div class="layui-form-item layui-form-text" style="padding-right: 80px;">
             <label class="layui-form-label">备注</label>
             <div class="layui-input-block">

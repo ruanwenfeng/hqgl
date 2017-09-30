@@ -156,19 +156,19 @@ window.require(['jquery','layui'],function ($) {
                 var user_name = data.field['user_name'];
                 var pass = data.field['pass'];
                 var usergroup = data.field['usergroup_id'];
-                if($.trim(user_name) == ''){
+                if($.trim(user_name) === ''){
                     layer.msg('用户名不能为空',function () {
 
                     });
                     return false;
                 }
-                if($.trim(pass)==''){
+                if($.trim(pass)===''){
                     layer.msg('用户组密码不能为空',function () {
 
                     });
                     return false;
                 }
-                if($.trim(usergroup)==''){
+                if($.trim(usergroup)===''){
                     layer.msg('请选择一个用户组',function () {
 
                     });

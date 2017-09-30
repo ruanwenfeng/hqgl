@@ -49,23 +49,17 @@
 
                 <li class="layui-nav-item">
                     <a href="javascript:void(0);">申报系统</a>
-                    <dl class="layui-nav-child">
-                        {if condition="$admin eq false"}
+                    {if condition="$admin eq true"}
+                        <dl class="layui-nav-child">
+                            <dd class=""><a  href="javascript:void(0);" data-href="/index/message_1">通知</a></dd>
+                        </dl>
+                    {else /}
+                        <dl class="layui-nav-child">
                             <dd class=""><a  href="javascript:void(0);" data-href="/index/message_2">通知</a></dd>
                             <dd class=""><a  href="javascript:void(0);" data-href="/index/addEquipMentView">新增设备</a></dd>
                             <dd class=""><a  href="javascript:void(0);" data-href="/index/removeEquipMentView">报废设备</a></dd>
-                        {/if}
-                    </dl>
-                </li>
-
-                <li class="layui-nav-item">
-                    <a href="javascript:void(0);">报修系统</a>
-                    <dl class="layui-nav-child">
-                        <dd class=""><a  href="javascript:void(0);" data-href="/index/showPersonRepair">显示</a></dd>
-                        {if condition="$admin eq false"}
-                            <dd class=""><a  href="javascript:void(0);" data-href="/index/faultRepair">报修</a></dd>
-                        {/if}
-                    </dl>
+                        </dl>
+                    {/if}
                 </li>
                 {if condition="$admin eq true"}
                     <li class="count layui-nav-item"><a href="javascript:void(0);" data-href="/index/countEquipMentView">设备统计</a></li>

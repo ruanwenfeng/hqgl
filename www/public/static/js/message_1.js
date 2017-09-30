@@ -14,6 +14,7 @@ window.require(['jquery','layui','cookie'],function ($) {
         });
         layui.use(['element','table','layer'], function(){
             var table = layui.table;
+
             var unRead = new WkkyData();
             unRead.setOnBefor(befor);
             unRead.setOnSuccess(function (response) {
@@ -42,8 +43,36 @@ window.require(['jquery','layui','cookie'],function ($) {
             history.setOnError(error);
             history.setOnAfter(after);
 
+            var record = new WkkyData();
+            var record2 = new WkkyData();
+            record2.setOnBefor(befor);
+
+            record2.setOnFail(fail);
+            record2.setOnError(error);
+            record2.setOnAfter(after);
+
+
             var element = layui.element;
-            element.on('tab', function(e){
+            element.on('tab', change_tab);
+            $('.layui-tab-title li').eq(0).click();
+            function befor(response) {
+                loading();
+            }
+            function fail(response) {
+                layer.msg(response.getMessage(),function () {
+
+                });
+            }
+            function error(response) {
+                layer.msg('系统错误',function () {
+
+                });
+            }
+            function after(response) {
+                closeLoad(1);
+            }
+
+            function change_tab(e){
                 loading();
                 var url ='';
                 switch (e.index){
@@ -61,7 +90,7 @@ window.require(['jquery','layui','cookie'],function ($) {
                     elem: '#data-table'
                     ,cols:  [[ //标题栏
                         {field: 'index', title: '编号', align: 'center',width: 80},
-                        {field: 'user_name', title: '审核人', width: 150}
+                        {field: 'user_name', title: '申报人', width: 150}
                         ,{field: 'text_description', title: '设备描述',  width: 180}
                         ,{field: 'power', title: '功率（w）',  width: 120}
                         ,{field: 'number',title:'数量',width: 80}
@@ -80,12 +109,12 @@ window.require(['jquery','layui','cookie'],function ($) {
                     url:url,
                     loading: true
                 });
-
                 table.on('tool',function (obj) {
+
                     var data = obj.data; //获得当前行数据
                     var layEvent = obj.event; //获得 lay-event 对应的值
                     var tr = obj.tr; //获得当前行 tr 的DOM对象
-                    var index = layer.open({
+                    var option = {
                         area:['100%','100%'],
                         title:'申报信息详情',
                         type: 2
@@ -94,26 +123,53 @@ window.require(['jquery','layui','cookie'],function ($) {
                         ,content:'/index/messageDetail/record_id/'+data['record_id']
                         ,btnAlign: 'c' //按钮居中
                         ,shade: 0.5 //不显示遮罩
-                    });
+                    };
+                    var reflush;
+                    function add_option() {
+                        option['btn'] = ['批准', '驳回'];
+                        option['btn1']=function (e) {
+                            record2.setRequest(new Request('/index/updateMessage/status/3/record_id/'+data['record_id'],{
+                                credentials: 'include',
+                                method: "POST"
+                            }));
+                            record2._success = [];
+                            record2.setOnSuccess(function (response) {
+                                layer.msg('操作成功');
+                                reflush&&reflush();
+                                layer.close(index);
+                            });
+                            record2.getDataFormRemote();
+                        };
+                        option['btn2']=function (e) {
+                            record2.setRequest(new Request('/index/updateMessage/status/4/record_id/'+data['record_id'],{
+                                credentials: 'include',
+                                method: "POST"
+                            }));
+                            record2._success = [];
+                            record2.setOnSuccess(function (response) {
+                                layer.msg('操作成功');
+                                reflush&&reflush();
+                                layer.close(index);
+                            });
+                            record2.getDataFormRemote();
+                        }
+                    }
+                    if(data['status'] === 1){
+                        record.setRequest(new Request('/index/updateMessage/status/2/record_id/'+data['record_id'],{
+                            credentials: 'include',
+                            method: "POST"
+                        }));
+                        record.getDataFormRemote();
+                        $('.layui-tab-title li').eq(0).click();
+                        add_option();
+                    }else if(data['status']===2){
+                        reflush =function () {
+                            $('.layui-tab-title li').eq(1).click();
+                        };
+                        add_option();
+                    }
+                    var index = layer.open(option);
                 })
-
-            });
-            $('.layui-tab-title li').eq(0).click();
-            function befor(response) {
-                loading();
-            }
-            function fail(response) {
-                layer.msg(response.getMessage(),function () {
-
-                });
-            }
-            function error(response) {
-                layer.msg('系统错误',function () {
-
-                });
-            }
-            function after(response) {
-                closeLoad(1);
             }
         });
     });

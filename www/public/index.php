@@ -1,4 +1,5 @@
 <?php
+session_save_path('./Tmp');
     define('TPL_NAME','tpl');
     define('APP_PATH', __DIR__ . '/../application/');
     define('EXTEND_PATH', '../extend/');
