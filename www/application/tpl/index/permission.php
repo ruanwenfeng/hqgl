@@ -12,7 +12,7 @@
             <input type="text" name="pass"   placeholder="请输入密码" autocomplete="off" class="usergroup-text_description layui-input">
         </div>
         <div class="layui-inline">
-            <select title="usergroup" name="usergroup_id" >
+            <select title="usergroup" name="usergroup_id" lay-search>
                 <option value="">请选择一个用户组</option>
                 {volist name="usergroup" id="item"}
                     <option value="{$item['usergroup_id']}">{$item['text_description']}</option>
