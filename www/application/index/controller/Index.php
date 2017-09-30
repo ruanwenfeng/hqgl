@@ -1056,12 +1056,12 @@ class Index extends Controller
                 $total = 0;
             }
 
-            $data = new ResponseData(1,null,$equipType,array('total'=>count($equipType)),$this->request->isAjax());
+            $data = new ResponseData(1,null,$equipType,array('total'=>count($equipType)));
             $data->code = 0;
             $data->count = $total;
             return $this->request->isAjax()?$data:json_encode($data);
         }catch (\Exception $e){
-            $data = new ResponseData(1,null,array(),array(),$this->request->isAjax());
+            $data = new ResponseData(1,null,array(),array());
             $data->code = 1;
             $data->msg = $e->getMessage();
             return $this->request->isAjax()?$data:json_encode($data);
@@ -1288,6 +1288,37 @@ class Index extends Controller
             $record['status'] = $status;
             $res = $record->save();
             if($res>0){
+                $tmp = [];
+                $data = $record->getData();
+                $tmp['equipment_id'] = create_guid();
+                $tmp['room_id'] = $record['room_id'];
+                $tmp['text_description'] = $record['text_description'];
+                $tmp['name'] = $record['name'];
+                $tmp['brand'] = $record['brand'];
+                $tmp['power'] = $record['power'];
+                $tmp['number'] = $record['number'];
+                $tmp['day_time'] = $record['day_time'];
+                $tmp['status'] = 1;
+                if($status==3){
+                    if($record['mode']==1){
+                        $equipment = Equipment::get(array(
+                            'room_id'=>$record['room_id'],
+                            'text_description'=>$record['text_description']
+                        ));
+                        if($equipment&&$equipment['name']==$record['name']&&
+                            $equipment['brand']==$record['name']&&
+                            $equipment['power']==$record['name']){
+                            $equipment->inc('number',$record['number']);
+                            $res = $equipment->save();
+                        }else{
+                            $equipment = new Equipment();
+                            $res = $equipment->allowField(true)->insert($tmp);
+                        }
+                    }else if($record['mode']==2){
+                        $equipment = new Equipment();
+                        $res = $equipment->allowField(true)->insert($tmp);
+                    }
+                }
                 return ResponseData::getInstance (1,null,array(),array(),$this->request->isAjax());
             }else{
                 return ResponseData::getInstance (0,'操作失败',array(),array(),$this->request->isAjax());
@@ -1347,8 +1378,8 @@ class Index extends Controller
             $tmp[$key]=$value;
         }
         $tmp['schoolpart'] = $school_part['text_description'];
-        $tmp['building'] = $college['text_description'];
-        $tmp['college'] = $building['text_description'];
+        $tmp['college'] = $college['text_description'];
+        $tmp['building'] = $building['text_description'];
         $tmp['room'] = $room['room_num'];
         $this->assign('record',$tmp);
         return $this->fetch('messageDetail');
