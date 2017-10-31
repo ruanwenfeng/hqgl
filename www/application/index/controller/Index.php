@@ -1245,6 +1245,43 @@ class Index extends Controller
         ));
     }
 
+    public function initUserAndGroup(){
+        $college = new College();
+        $user = new User();
+
+        $text=$college->field('text_description')->distinct('text_description')->select();
+
+        foreach ($text as $key=>$value){
+            $schoolpart_id = [];
+            $college_id = [];
+            $res=$college->field('college_id,schoolpart_id')->where(array('text_description'=>$value['text_description']))->select();
+            foreach ($res as $_key=>$_value){
+                $college_id[] = $_value['college_id'];
+                $schoolpart_id[] = $_value['schoolpart_id'];
+            }
+            $authorization = ['schoolpart'=>[
+                'action'=>[],'id'=>$schoolpart_id,'full'=>false
+            ],'college'=>[
+                'action'=>[],'id'=>$college_id
+            ]];
+            $usergroup_id = create_guid();
+            Db::table(config('database.prefix').'usergroup')
+                ->insert(array(
+                    'text_description'=>$value['text_description'],
+                    'usergroup_id'=>$usergroup_id,
+                    'user_id'=>session('user.user_id'),
+                    'authorization'=>json_encode($authorization)
+                ));
+            $data=array(
+                'user_id'=>create_guid(),
+                'user_name'=>$value['text_description'],
+                'pass'=>'123456',
+                'usergroup_id'=>$usergroup_id,
+                'authorization'=>null
+            );
+            $n = $user->insert($data);
+        }
+    }
     public function showMessage(){
 
     }

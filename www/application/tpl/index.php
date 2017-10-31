@@ -77,7 +77,7 @@
         {/block}
     </div>
     <div class="layui-footer">
-        © layui.com - 底部固定区域
+        © hqgl.com - 底部固定区域
     </div>
 </div>
 <script type="text/javascript" data-main="__PUBLIC__/js/main"  src="__PUBLIC__/js/require.js"></script>
