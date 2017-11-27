@@ -1072,8 +1072,11 @@ class Index extends Controller
         try{
             $schoolpart_id = $this->request->param('schoolpart_id');
             $college = new College();
+            $where =array('schoolpart_id'=>$schoolpart_id);
+            if($this->filterCollege['college_id'])
+                $where['college_id'] = $this->filterCollege['college_id'];
             $data = $college->field('college_id,text_description')
-                ->where(array('schoolpart_id'=>$schoolpart_id,'college_id'=>$this->filterCollege['college_id']))
+                ->where($where)
                 ->select();
 //            $data = Db::query("SELECT hqgl_college.college_id,hqgl_college.text_description ".
 //                "FROM hqgl_college WHERE hqgl_college.schoolpart_id = ?",[$schoolpart_id]);
